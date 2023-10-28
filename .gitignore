@@ -36,5 +36,4 @@ bin/
 .DS_Store
 
 # apache airflow pipeline
-!/datapipeline/logs
-datapipeline/logs/*.log
+datapipeline/logs
