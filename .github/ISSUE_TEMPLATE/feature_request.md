@@ -27,5 +27,4 @@ assignees: ''
 * Feature has been merged into the main branch
 * All acceptance criteria were met
 * Product owner approved features
-* All tests are passing
 * Developers agreed to release
