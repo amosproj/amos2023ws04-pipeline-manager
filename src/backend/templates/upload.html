@@ -1,0 +1,38 @@
+<body>
+    <h2>Give The user Deatils</h2>
+    
+          <p>
+           {% with messages = get_flashed_messages() %}
+             {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-primary">
+               <strong>{{ message }}</strong>
+             </div>
+            {% endfor %}
+             {% endif %}
+           {% endwith %}
+          </p>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <p>Name : <input type="text" name="txtusername" value="" placeholder="User Name" required> </p>
+    <p>Email : <input type="email" name="inputEmail" placeholder="Email address" required></p>
+    <h3>Select a file to upload</h3>
+    <label for="file">File:</label>
+    <input type="file" id="file" name="file"><br />
+    <h3>continue to upload</h3>
+    <button>Upload</button>
+</form>
+<style>
+    .alert-primary {
+        color: #004085;
+        background-color: #cce5ff;
+        border-color: #b8daff;
+    }
+    .alert {
+        position: relative;
+        padding: .75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+    }
+    </style>
+    </body>
