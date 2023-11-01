@@ -1,1 +1,0 @@
-This folder will contain all teh external plugin added to the airflow and is used by the pipeline during the task execution
