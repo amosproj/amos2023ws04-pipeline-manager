@@ -1,0 +1,42 @@
+stages:
+  - provision-cluster
+  - provision-bucket
+
+variables:
+  - AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+  - AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+  - AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+
+cluster:
+  image: 
+    name: bearengineer/awscli-kubectl:latest
+    entrypoint: [""]
+  stage: provision-cluster
+  script:
+    - echo "Provisioning cluster"
+    - cd infrastructure/terraform/eks-cluster
+    - terraform init -upgrade
+    - terraform plan
+    - terraform apply -auto-approve
+    - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name dpsm-eks-AA0AOAA0
+    - sleep 100
+    - echo "Cluster provisioned"
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /cluster/
+
+s3-bucket:
+  image: 
+    name: bearengineer/awscli-kubectl:latest
+    entrypoint: [""]
+  stage: provision-bucket
+  script:
+    - echo "Provisioning s3-bucket"
+    - cd infrastructure/terraform/s3-bucket
+    - terraform init -upgrade
+    - terraform plan
+    - terraform apply -auto-approve
+    - echo "s3 bucket provisioned"
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /s3-bucket/
