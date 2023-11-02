@@ -24,6 +24,7 @@ assignees: ''
 
 ## DoD general criteria
 * Feature has been fully implemented
+* Feature has been tested
 * Feature has been merged into the main branch
 * All acceptance criteria were met
 * Product owner approved features
