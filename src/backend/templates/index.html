@@ -1,4 +1,4 @@
-<body>
+gte<body>
     <h2>Welcome to data pipeline and storage managment </h2>
     <h3>click upload to continue</h3>
           <p>
@@ -12,7 +12,9 @@
              {% endif %}
            {% endwith %}
           </p>
-<form action="/upload" method="POST" enctype="multipart/form-data">
-    <button>Upload</button>
-</form>
+          <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="file">File:</label>
+            <input type="file" id="file" name="file"><br />
+            <button>Upload</button>
+        </form>
 </body>
