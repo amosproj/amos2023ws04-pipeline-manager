@@ -1,6 +1,6 @@
 .outer{
     height: 100vh;
-    background: linear-gradient(to top,white 50%, black 90%);
+    background: linear-gradient(to top,white 50%, black 90%)no-repeat;
 }
 .panel-heading{
     text-align: center;
