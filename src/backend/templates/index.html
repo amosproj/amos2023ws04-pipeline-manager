@@ -1,0 +1,20 @@
+gte<body>
+    <h2>Welcome to data pipeline and storage managment </h2>
+    <h3>click upload to continue</h3>
+          <p>
+           {% with messages = get_flashed_messages() %}
+             {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-primary">
+               <strong>{{ message }}</strong>
+             </div>
+            {% endfor %}
+             {% endif %}
+           {% endwith %}
+          </p>
+          <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="file">File:</label>
+            <input type="file" id="file" name="file"><br />
+            <button>Upload</button>
+        </form>
+</body>
