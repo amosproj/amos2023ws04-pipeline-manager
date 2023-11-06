@@ -7,6 +7,11 @@ from .api_service.filescript import process_csv
 from .api_service.upload_to_s3 import upload_to_s3
 #import sys
 #sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
+from ...db.mongo_repo import user
+from .filescript import process_csv
+
+# import sys
+# sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
 
 upload_api = Blueprint("user_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {'csv'}

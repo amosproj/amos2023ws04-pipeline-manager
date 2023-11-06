@@ -1,6 +1,6 @@
 from flask import Flask, render_template, send_from_directory
 from pymongo import MongoClient
-from .apis.upload_api import upload_api
+from .api.services.upload_api import upload_api
 
 user = None
 
