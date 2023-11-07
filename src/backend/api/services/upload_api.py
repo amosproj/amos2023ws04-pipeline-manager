@@ -2,6 +2,7 @@ import os
 
 from flask import request, render_template, redirect, url_for, send_from_directory, Blueprint, jsonify
 from werkzeug.utils import secure_filename
+from ...db.mongo_repo import user, projects
 from .repository.mongo_repo import user
 from .api_service.filescript import process_csv
 from .api_service.upload_to_s3 import upload_to_s3
@@ -9,6 +10,7 @@ from .api_service.upload_to_s3 import upload_to_s3
 #sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
 from ...db.mongo_repo import user
 from .filescript import process_csv
+from ...models.project import Project
 
 # import sys
 # sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
@@ -91,6 +93,16 @@ def uploadcsv():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+
+@upload_api.route('/do_something',  methods=['POST'])
+def do_something():
+    print('hello')
+    testProj = Project("Test Project", None, None)
+    print(testProj)
+    projects.insert_one(testProj)
+
+    print(projects.find())
+    return render_template('index.html')
 
 
 def allowed_file(filename):

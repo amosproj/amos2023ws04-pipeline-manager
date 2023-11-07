@@ -1,10 +1,18 @@
+import uuid
+
 
 # that represents a project instance
 class Project:
 
-        datapipeline = None
-        s3Bucket = None
-        def __init__(self, datapipeline, s3Bucket):
-            self.datapipeline = datapipeline
-            self.s3Bucket = s3Bucket
+        datapipelineId = None
+        s3BucketId = None
+        def __init__(self, datapipelineId, s3BucketId):
 
+            self.datapipelineId = datapipelineId
+            self.s3BucketId = s3BucketId
+
+        def to_json(self):
+            return {
+                'datapipelineId': self.datapipelineId,
+                's3BucketId': self.s3BucketId,
+            }
