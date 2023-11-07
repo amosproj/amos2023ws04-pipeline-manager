@@ -26,6 +26,7 @@ The backend takes care of the orchestration of the described software components
 3. Forwarding the data to the data pipeline
 4. Transfer of the prepared data and raw data to the storage system and database
 <hr>
+
 ### Developers contribution
 
 * @keldami: Backend
