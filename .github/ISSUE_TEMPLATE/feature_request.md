@@ -26,6 +26,7 @@ assignees: ''
 * Feature has been fully implemented
 * Feature has been tested
 * Feature has been merged into the main branch
+* Important parts have been documented in the technology wiki
 * All acceptance criteria were met
 * Product owner approved features
 * Developers agreed to release
