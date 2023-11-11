@@ -37,3 +37,6 @@ bin/
 
 # apache airflow pipeline
 datapipeline/logs
+
+#frontend
+environments/*
