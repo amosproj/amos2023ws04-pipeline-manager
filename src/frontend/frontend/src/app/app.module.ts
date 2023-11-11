@@ -10,7 +10,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { UserComponent } from './components/user/user.component';
-import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { UploadFileComponent } from './components/uploadFile/upload-file/upload-file.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -20,12 +21,12 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     HeaderComponent,
     LandingComponent,
     UserComponent,
-    FileUploadComponent
+    UploadFileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

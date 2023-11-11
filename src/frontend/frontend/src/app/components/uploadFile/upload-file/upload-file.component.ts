@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Component } from '@angular/core';
+import { UploadFileService } from 'src/app/services/UploadFile/upload-file.service';
+import { environment } from 'src/environments/environment';
 import * as AWS from 'aws-sdk/global';
 import * as S3 from 'aws-sdk/clients/s3';
-import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root'
+@Component({
+  selector: 'app-upload-file',
+  templateUrl: './upload-file.component.html',
+  styleUrls: ['./upload-file.component.scss']
 })
-export class UploadFileService {
+export class UploadFileComponent {
+
+  constructor(private uploadService: UploadFileService) {
+  }
   selectedFile: File | null = null;
-  constructor() { }
-  // ! do not change the file will be using it after the environment setup
- /*  onFileSelected(event: any): void {
+  onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0] as File;
   }
 
@@ -47,5 +51,7 @@ export class UploadFileService {
         console.log('File uploaded successfully. S3 Location:', data);
       }
     });
-  } */
+  }
+  
+
 }
