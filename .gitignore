@@ -39,5 +39,5 @@ bin/
 datapipeline/logs
 
 #frontend
-environments/*
+src/frontend/frontend/src/environments/*.ts
 src/frontend/frontend/src/environments/environment.ts
