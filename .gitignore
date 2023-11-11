@@ -40,3 +40,4 @@ datapipeline/logs
 
 #frontend
 environments/*
+src/frontend/frontend/src/environments/environment.ts
