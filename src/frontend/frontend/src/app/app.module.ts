@@ -11,7 +11,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { UserComponent } from './components/user/user.component';
 import { UploadFileComponent } from './components/uploadFile/upload-file/upload-file.component';
-import { environment } from 'src/environments/environment';
+import { AlertModule } from '@full-fledged/alerts';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    AlertModule.forRoot({maxMessages: 5, timeout: 5000})
   ],
   providers: [],
   bootstrap: [AppComponent]

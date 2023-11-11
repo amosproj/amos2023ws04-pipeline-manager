@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import * as AWS from 'aws-sdk/global';
 import * as S3 from 'aws-sdk/clients/s3';
 import { environment } from 'src/environments/environment';
+import { NotifierService } from 'angular-notifier';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UploadFileService {
   selectedFile: File | null = null;
-  constructor() { }
-  // ! do not change the file will be using it after the environment setup
- /*  onFileSelected(event: any): void {
+  constructor() {}
+  onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0] as File;
   }
 
@@ -24,12 +24,12 @@ export class UploadFileService {
     const region = environment.region;
     const accessKeyId = environment.accessKeyId;
     const secretAccessKey = environment.secretAccessKey;
-    const a = environment.secretAccessKey
+
 
     AWS.config.update({
       region,
       accessKeyId,
-      secretAccessKey
+      secretAccessKey,
     });
 
     const s3 = new S3();
@@ -37,15 +37,17 @@ export class UploadFileService {
     const params = {
       Bucket: bucketName,
       Key: this.selectedFile.name,
-      Body: this.selectedFile
+      Body: this.selectedFile,
     };
 
     s3.upload(params, (err: any, data: any) => {
       if (err) {
         console.error('Error uploading file:', err);
+        alert("Oops something went wrong!!!")
       } else {
         console.log('File uploaded successfully. S3 Location:', data);
+        alert("Success: file uploaded successfully.");
       }
     });
-  } */
+  }
 }
