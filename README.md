@@ -33,5 +33,5 @@ The backend takes care of the orchestration of the described software components
 * @krutarth4: Data pipeline
 * @bhanuPrakashMa: Backend
 * @sravanthidatla78: Backend
-* @ingunnaf: Infrastructure
+* @ingunnaf: Infrastructure & Backend
 * @CAgcoder: Frontend
