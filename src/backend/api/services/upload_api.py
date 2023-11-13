@@ -96,12 +96,14 @@ def uploadcsv():
 
 @upload_api.route('/do_something',  methods=['POST'])
 def do_something():
-    print('hello')
-    testProj = Project("Test Project", None, None)
-    print(testProj)
-    projects.insert_one(testProj)
+    testProj = Project("123", None)
+    projects.insert_one(testProj.to_json())
+    print('after insert')
+    all_projects = projects.find()
 
-    print(projects.find())
+    for p in all_projects:
+        print(p)
+
     return render_template('index.html')
 
 
