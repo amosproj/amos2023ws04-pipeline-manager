@@ -1,0 +1,8 @@
+export const environment = {
+    production: false,
+    accessKeyId : '********',
+  secretAccessKey: '*******',
+  region: 'region',
+  bucketName :'bucket name '
+
+};
