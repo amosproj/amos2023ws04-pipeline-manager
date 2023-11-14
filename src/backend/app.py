@@ -3,6 +3,7 @@ from pymongo import MongoClient
 import sys
 import os
 from api.services.upload_api import upload_api
+from api.services.datapipeline import datapipeline
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
@@ -16,6 +17,7 @@ def create_app():
     user = db.user
 
     app.register_blueprint(upload_api)
+    app.register_blueprint(datapipeline)
 
     return app
 
