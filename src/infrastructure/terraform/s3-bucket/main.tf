@@ -1,8 +1,8 @@
-resource "aws_s3_bucket" "example" {
+resource "aws_s3_bucket" "dpsm-bucket" {
   bucket = "dpsm-bucket"
 
   tags = {
-    Name        = "My bucket"
+    Name        = "dpsm-bucket"
     Environment = "Dev"
   }
 }
