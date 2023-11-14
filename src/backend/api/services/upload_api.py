@@ -2,14 +2,14 @@ import os
 
 from flask import request, render_template, redirect, url_for, send_from_directory, Blueprint, jsonify
 from werkzeug.utils import secure_filename
-from backend.database.mongo_repo import user, projects
-from backend.api.services.upload_to_s3 import upload_to_s3
+from database.mongo_repo import user, projects
+from api.services.upload_to_s3 import upload_to_s3
 
 
 #import sys
 #sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
-from backend.api.services.filescript import process_csv
-from backend.models.project import Project
+from api.services.filescript import process_csv
+from models.project import Project
 
 # import sys
 # sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
@@ -20,7 +20,8 @@ ALLOWED_EXTENSIONS = {'csv'}
 # If working on a mac, set your PWD (path to working directory) in your .env file
 # For example: /Users/ingunn/amos2023ws04-pipeline-manager/src
 PWD = os.getenv('PWD')
-os.chdir(PWD)
+if (PWD):
+    os.chdir(str(PWD))
 
 #path='/backend/apis/api_service/cars.csv'
 
