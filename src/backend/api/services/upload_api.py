@@ -2,14 +2,14 @@ import os
 
 from flask import request, render_template, redirect, url_for, send_from_directory, Blueprint, jsonify
 from werkzeug.utils import secure_filename
-from database.mongo_repo import user, projects
+from database.mongo_repo import user, fileWPDB
 from api.services.upload_to_s3 import upload_to_s3
 
 
 #import sys
 #sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
 from api.services.filescript import process_csv
-from models.project import Project
+from models.fileWP import FileWP
 
 # import sys
 # sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
@@ -94,12 +94,17 @@ def uploadcsv():
     except Exception as e:
         return jsonify({'error': str(e)})
 
+@upload_api.route('/ping',  methods=['POST'])
+def ping():
+    print("hello there")
+    return render_template('index.html')
+
 @upload_api.route('/do_something',  methods=['POST'])
 def do_something():
-    testProj = Project("123", None)
-    projects.insert_one(testProj.to_json())
+    testProj = FileWP("123", None)
+    fileWPDB.insert_one(testProj.to_json())
     print('after insert')
-    all_projects = projects.find()
+    all_projects = fileWPDB.find()
 
     for p in all_projects:
         print(p)
