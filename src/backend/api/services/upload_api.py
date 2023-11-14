@@ -2,11 +2,17 @@ import os
 
 from flask import request, render_template, redirect, url_for, send_from_directory, Blueprint, jsonify
 from werkzeug.utils import secure_filename
-from .repository.mongo_repo import user
-from .api_service.filescript import process_csv
-from .api_service.upload_to_s3 import upload_to_s3
+from database.mongo_repo import user, projects
+from api.services.upload_to_s3 import upload_to_s3
+
+
 #import sys
 #sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
+from api.services.filescript import process_csv
+from models.project import Project
+
+# import sys
+# sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
 
 upload_api = Blueprint("user_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {'csv'}
@@ -14,7 +20,8 @@ ALLOWED_EXTENSIONS = {'csv'}
 # If working on a mac, set your PWD (path to working directory) in your .env file
 # For example: /Users/ingunn/amos2023ws04-pipeline-manager/src
 PWD = os.getenv('PWD')
-os.chdir(PWD)
+if (PWD):
+    os.chdir(str(PWD))
 
 #path='/backend/apis/api_service/cars.csv'
 
@@ -86,6 +93,18 @@ def uploadcsv():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+
+@upload_api.route('/do_something',  methods=['POST'])
+def do_something():
+    testProj = Project("123", None)
+    projects.insert_one(testProj.to_json())
+    print('after insert')
+    all_projects = projects.find()
+
+    for p in all_projects:
+        print(p)
+
+    return render_template('index.html')
 
 
 def allowed_file(filename):
