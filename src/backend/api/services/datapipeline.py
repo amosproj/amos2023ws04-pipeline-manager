@@ -6,7 +6,6 @@ from models.datapipeline import Datapipeline
 
 datapipeline = Blueprint("datapipeline", __name__)
 
-
 @datapipeline.route('/datapipeline',methods=['GET'])
 def get_all_datapipelines():
     data = datapipelineDB.find()
@@ -19,6 +18,18 @@ def get_all_datapipelines():
 
 @datapipeline.route('/datapipeline/<id>',methods=['GET'])
 def get_datapipeline(id):
+    d = datapipelineDB.find_one({"uuid": id})
+    return jsonify({'uuid': d['uuid'], 'name': d['name'], 'config': d['config']})
+
+
+@datapipeline.route('/datapipeline/<id>',methods=['POST'])
+def update_datapipeline_by_id(id):
+    data = request.json
+    if 'name' not in data or 'config' not in data:
+        return jsonify({'error': 'Missing id or name in request'}), 400
+
+    datapipelineDB.update_one({"uuid": id}, {'$set': { 'name':data['name'], 'config': data['config'] }})
+
     d = datapipelineDB.find_one({"uuid": id})
     return jsonify({'uuid': d['uuid'], 'name': d['name'], 'config': d['config']})
 

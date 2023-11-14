@@ -2,6 +2,13 @@ Build, user, and technical documentation
 Software architecture description
 
 
+#configuring the environment
+We provided a .env.template
+
+cp src/backend/.env.template src/backend/.env
+
+Change your configuration for your .env
+
 #Start with docker-compose
 docker-compose build
 docker-compose up -d
