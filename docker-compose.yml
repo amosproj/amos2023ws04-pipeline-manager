@@ -8,7 +8,7 @@ services:
     volumes:
       - ./app:/app
     ports:
-      - "5000:5000"
+      - "8000:8000"
     command: ["python", "app.py"]
     depends_on:
       - mongo
