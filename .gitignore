@@ -43,4 +43,10 @@ src/frontend/frontend/src/environments/*.ts
 src/frontend/frontend/src/environments/environment.ts
 
 #General
-.env
+src/.env
+src/backend/.env
+
+# Terraform
+src/infrastructure/terraform/s3-bucket/.terraform.lock.hcl
+src/infrastructure/terraform/s3-bucket/terraform.tfstate
+src/infrastructure/terraform/s3-bucket/.terraform/providers/registry.terraform.io/hashicorp/aws/5.25.0/darwin_amd64/terraform-provider-aws_v5.25.0_x5
