@@ -44,3 +44,6 @@ src/frontend/frontend/src/environments/environment.ts
 
 #General
 .env
+
+#backend
+src/backend/.env
