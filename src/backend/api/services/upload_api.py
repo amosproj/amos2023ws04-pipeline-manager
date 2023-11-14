@@ -2,15 +2,14 @@ import os
 
 from flask import request, render_template, redirect, url_for, send_from_directory, Blueprint, jsonify
 from werkzeug.utils import secure_filename
-from ...db.mongo_repo import user, projects
-from .repository.mongo_repo import user
-from .api_service.filescript import process_csv
-from .api_service.upload_to_s3 import upload_to_s3
+from backend.database.mongo_repo import user, projects
+from backend.api.services.upload_to_s3 import upload_to_s3
+
+
 #import sys
 #sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
-from ...db.mongo_repo import user
-from .filescript import process_csv
-from ...models.project import Project
+from backend.api.services.filescript import process_csv
+from backend.models.project import Project
 
 # import sys
 # sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')

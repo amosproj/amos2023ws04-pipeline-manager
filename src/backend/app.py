@@ -1,7 +1,10 @@
 from flask import Flask, render_template, send_from_directory
 from pymongo import MongoClient
-from .api.services.upload_api import upload_api
+import sys
+import os
+from backend.api.services.upload_api import upload_api
 
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 user = None
 
