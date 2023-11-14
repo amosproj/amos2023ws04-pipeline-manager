@@ -31,7 +31,7 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
       }
       
 
-      this.http.get(`${this.apiURL}+datapipeline+/${id}`, options).pipe().subscribe(
+      this.http.get(`${this.apiURL}datapipeline`, options).pipe().subscribe(
         (data) => {
           resolve(data)
           
