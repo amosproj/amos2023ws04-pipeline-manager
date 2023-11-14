@@ -24,11 +24,20 @@ Navigate to the backend directory. Run pipenv install to install dependencies. T
 
 ```pipenv install <package_name>```
 
-This will update the Pipfile and Pipfile.lock automatically.
+This will update the Pipfile and Pipfile.lock automatically. If you update the Pipfile manually, you can use
+
+```
+pipenv lock
+```
+to update your Pipfile.lock
 
 ### Environment variables
 
-You need the following environment variables in a .env file.
+You need the following environment variables to be accessible. For example you can export their value in the terminal, ie:
+
+```
+export AWS_ACCESS_KEY=my-access-key
+```
 
 FLASK_APP - for flask run to find your app.py
 AWS_ACCESS_KEY -  you can generate a keypair in the aws console
