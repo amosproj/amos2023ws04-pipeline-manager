@@ -1,8 +1,8 @@
 import uuid
 
 
-# that represents a project instance
-class Project:
+# that represents a file work process
+class FileWP:
 
         datapipelineId = None
         s3BucketId = None
