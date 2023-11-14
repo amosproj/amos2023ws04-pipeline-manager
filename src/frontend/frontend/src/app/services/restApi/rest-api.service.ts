@@ -5,7 +5,7 @@ import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 })
 export class RestApiService {
 
-  apiURL:string="http://localhost:5000/"
+  apiURL:string="http://localhost:8000/"
 
   constructor(private http: HttpClient) { }
 
@@ -19,6 +19,7 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
   GET
 
   */
+
   
   getAllDataPipelines(id?: string): Promise<any>{
     
@@ -41,7 +42,7 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
 
   }
 
-  uploadCSV(filePath:String) {
+  uploadCSV(filePath:File|null) {
     return new Promise((resolve) => {
       const options = {
         headers: new HttpHeaders(),
@@ -49,7 +50,7 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
       var requestBody: any = {
         file: filePath
       };
-      this.http.post(this.apiURL + "/uploadcsv", requestBody, options).subscribe(
+      this.http.post(this.apiURL + "uploadcsv", requestBody, options).subscribe(
         (data: any) => {
 
           resolve(data);
@@ -65,7 +66,7 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
   }
 
 
-  createDataPipeline(datapipelineName:string, config:String) {
+  createDataPipeline(datapipelineName:string, config:string) {
     return new Promise((resolve) => {
       const options = {
         headers: new HttpHeaders(),
@@ -74,7 +75,7 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
         name: datapipelineName,
         config: config,
       };
-      this.http.post(this.apiURL + "/datapipeline/new", requestBody, options).subscribe(
+      this.http.post(this.apiURL + "datapipeline/new", requestBody, options).subscribe(
         (data: any) => {
 
           resolve(data);
