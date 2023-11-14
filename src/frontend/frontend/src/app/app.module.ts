@@ -27,7 +27,8 @@ import { AlertModule } from '@full-fledged/alerts';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    AlertModule.forRoot({maxMessages: 5, timeout: 5000})
+    AlertModule.forRoot({ maxMessages: 5, timeout: 5000 }),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
