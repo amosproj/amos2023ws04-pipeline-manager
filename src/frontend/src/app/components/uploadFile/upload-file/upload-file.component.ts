@@ -32,12 +32,11 @@ export class UploadFileComponent {
   selectedFile: File | null = null;
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0] as File;
+    console.log("filepath",event.target.value)
+    console.log(this.selectedFile)
     // check condition
 
   }
-
-
-
 
 
   getallEndpoint() {
@@ -50,7 +49,7 @@ export class UploadFileComponent {
   }
 
   getDataPipelineId(id:string) {
-    console.log("getting all pipeline")
+    console.log("getting pipeline with id")
     this.restapi.getAllDataPipelines(id).then((data) => {
       console.log(" pipeline with id", data)
     }, (error) => {
@@ -59,7 +58,7 @@ export class UploadFileComponent {
   }
 
   createDatapipeline() {
-    console.log("getting all pipeline")
+    console.log("creating pipeline")
     this.restapi.createDataPipeline("newPipeline","trying new pipleine ").then((data) => {
       console.log("create pipeline ", data)
     }, (error) => {
@@ -69,7 +68,7 @@ export class UploadFileComponent {
 
   uploadBackendCSV() {
     this.restapi.uploadCSV(this.selectedFile).then((data) => {
-      console.log("upload succesful ")
+      console.log("upload succesful")
     }, (error) => {
       console.error("creating pipeline",error)
     })
