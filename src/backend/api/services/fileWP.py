@@ -19,7 +19,10 @@ def get_all_fileWPs():
 @fileWP.route('/fileWP/<id>',methods=['GET'])
 def get_fileWP(id):
     d = fileWPDB.find_one({"uuid": id})
-    return jsonify({'uuid': d['uuid'], 'name': d['name'], 'datapipelineId': d['datapipelineId']})
+    if d:
+        return jsonify({'uuid': d['uuid'], 'name': d['name'], 'datapipelineId': d['datapipelineId']})
+    else:
+        return jsonify({'error': 'Entity not found'}), 400
 
 @fileWP.route('/fileWP/<id>',methods=['POST'])
 def update_fileWP_by_id(id):
@@ -30,7 +33,10 @@ def update_fileWP_by_id(id):
     fileWPDB.update_one({"uuid": id}, {'$set': { 'name':data['name'], 'datapipelineId': data['datapipelineId'] }})
 
     d = fileWPDB.find_one({"uuid": id})
-    return jsonify({'uuid': d['uuid'], 'name': d['name'], 'datapipelineId': d['datapipelineId']})
+    if d:
+        return jsonify({'uuid': d['uuid'], 'name': d['name'], 'datapipelineId': d['datapipelineId']})
+    else:
+        return jsonify({'error': 'Entity not found'}), 400
 
 
 @fileWP.route('/fileWP/new',methods=['POST'])
@@ -45,3 +51,14 @@ def create_fileWP():
     fileWPDB.insert_one(fileWP.to_json())
 
     return jsonify({'message': 'Entity created successfully'}), 201
+
+
+@fileWP.route('/datapipeline/<id>',methods=['DELETE'])
+def delete_datapipeline(id):
+
+    result = fileWPDB.delete_one({"uuid": id})
+
+    if result.deleted_count > 0:
+        return jsonify({'message': 'Sucessfully deleted'}), 201
+    else:
+        return jsonify({'error': 'Entity not found'}), 400
