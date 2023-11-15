@@ -54,7 +54,7 @@ export class UploadFileComponent {
     this.restapi.uploadCSV(this.selectedFile).then((data) => {
       console.log("upload succesful")
     }, (error) => {
-      console.error("creating pipeline",error)
+      console.error("upload successful ",error)
     })
   
   }

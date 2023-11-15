@@ -1,6 +1,6 @@
 version: '3.1'
 services:
-  frontend1:
+  amos-frontend:
     build: ./src/frontend
     ports:
       - "4200:4200"
