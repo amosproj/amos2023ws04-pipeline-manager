@@ -1,47 +1,47 @@
-# version: '3.1'
-# services:
-#   web:
-#     container_name: flask-app
-#     build: .
-#     volumes:
-#       - ./app:/app
-#     ports:
-#       - "8000:8000"
-#     command: ["python", "app.py"]
-#     depends_on:
-#       - mongo
+version: '3.1'
+services:
+  web:
+    container_name: flask-app
+    build: .
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+    command: ["python", "app.py"]
+    depends_on:
+      - mongo
 
-#   mongo:
-#     image: mongo
-#     container_name: mongo-db
-#     ports:
-#       - "27017:27017"
+  mongo:
+    image: mongo
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
 
 
 # Use root/example as user/password credentials
-version: '3.1'
+# version: '3.1'
 
-services:
-  app:
-    build: .
-    command: python -u app.py
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/app
-    links:
-      - db
-  db:
-    image: mongo:latest
-    hostname: test_mongodb
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: pass
-      MONGO_INITDB_DATABASE: animal_db
-    volumes:
-      - ./init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
-    ports:
-      - "27017:27017"
+# services:
+#   app:
+#     build: .
+#     command: python -u app.py
+#     ports:
+#       - "8000:8000"
+#     volumes:
+#       - .:/app
+#     links:
+#       - db
+#   db:
+#     image: mongo:latest
+#     hostname: test_mongodb
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: admin
+#       MONGO_INITDB_ROOT_PASSWORD: pass
+#       MONGO_INITDB_DATABASE: animal_db
+#     volumes:
+#       - ./init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
+#     ports:
+#       - "27017:27017"
   
 
 

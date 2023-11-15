@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { log } from 'console';
-import { UploadFileService } from 'src/app/services/UploadFile/upload-file.service';
 import { RestApiService } from 'src/app/services/restApi/rest-api.service';
-import { deprecate } from 'util';
 
 
 @Component({
@@ -12,22 +9,9 @@ import { deprecate } from 'util';
 })
 export class UploadFileComponent {
 
-  constructor(private uploadService: UploadFileService, private restapi: RestApiService) {
+  constructor( private restapi: RestApiService) {
   }
 
-  // ! not used anymore
-
-  /* selectedFile: File | null = null;
-  onFileSelected(event: any): void {
-    this.uploadService.onFileSelected(event)
-  }
-
-  uploadFile(): void {
-   this.uploadService.uploadFile()
-  }
-  showNotification() {
-    alert("done")
-  } */
 
   selectedFile: File | null = null;
   onFileSelected(event: any): void {
@@ -70,7 +54,7 @@ export class UploadFileComponent {
     this.restapi.uploadCSV(this.selectedFile).then((data) => {
       console.log("upload succesful")
     }, (error) => {
-      console.error("creating pipeline",error)
+      console.error("upload successful ",error)
     })
   
   }
