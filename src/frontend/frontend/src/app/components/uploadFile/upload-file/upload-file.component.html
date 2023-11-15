@@ -1,4 +1,10 @@
+<input type="file" accept=".csv,csv" class="file-input"
+(change)="onFileSelected($event)" #fileUpload>
 <div>
-  <input type="file" (change)="onFileSelected($event)" />
-  <button (click)="uploadFile()">Upload File</button>
+  <button type="upload" class="btn btn-success btn-block mt-4 w-30"
+  (click)="fileUpload.click()">Upload File</button>
 </div>
+
+
+
+
