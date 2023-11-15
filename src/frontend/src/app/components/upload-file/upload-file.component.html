@@ -6,3 +6,14 @@
   <button (click)="createDatapipeline()">create-</button>
 
 </div>
+
+<div>
+  <input type="file" accept=".csv,csv" class="file-input"
+(change)="onFileSelected($event)" #fileUpload>
+<div>
+  <button type="upload" class="btn btn-success btn-block mt-4 w-30"
+  (click)="fileUpload.click()">Upload File</button>
+</div>
+
+
+</div>
