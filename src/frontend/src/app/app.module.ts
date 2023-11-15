@@ -12,6 +12,10 @@ import { LandingComponent } from './components/landing/landing.component';
 import { UserComponent } from './components/user/user.component';
 import { UploadFileComponent } from './components/uploadFile/upload-file/upload-file.component';
 import { AlertModule } from '@full-fledged/alerts';
+import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { ProjectComponent } from './components/project/project.component';
+import { PiplineComponent } from './components/pipline/pipline.component';
+import { DownloadComponent } from './components/download/download.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { AlertModule } from '@full-fledged/alerts';
     HeaderComponent,
     LandingComponent,
     UserComponent,
-    UploadFileComponent
+    UploadFileComponent,
+    SideBarComponent,
+    ProjectComponent,
+    PiplineComponent,
+    DownloadComponent
   ],
   imports: [
     BrowserModule,
