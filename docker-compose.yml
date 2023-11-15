@@ -1,5 +1,13 @@
 version: '3.1'
 services:
+  frontend1:
+    build: ./src/frontend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./src/frontend:/project
+      - /project/node_modules
+
   web:
     image: python:3.12-bullseye
     container_name: flask-app
