@@ -3,14 +3,16 @@ import * as AWS from 'aws-sdk/global';
 import * as S3 from 'aws-sdk/clients/s3';
 import { environment } from 'src/environments/environment';
 import { NotifierService } from 'angular-notifier';
+import { deprecate } from 'util';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UploadFileService {
   selectedFile: File | null = null;
-  constructor() {}
-  onFileSelected(event: any): void {
+  constructor() { }
+
+/*   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0] as File;
   }
 
@@ -49,5 +51,5 @@ export class UploadFileService {
         alert("Success: file uploaded successfully.");
       }
     });
-  }
+  } */
 }
