@@ -8,7 +8,7 @@ from api.services.upload_to_s3 import upload_to_s3
 from api.services.filescript import process_csv
 from models.fileWP import FileWP
 
-upload_api = Blueprint("user_api", __name__, template_folder="templates")
+upload_api = Blueprint("upload_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {'csv'}
 
 @upload_api.route('/')
