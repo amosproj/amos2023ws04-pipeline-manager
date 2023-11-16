@@ -3,7 +3,7 @@ from database.mongo_repo import fileWPDB
 from flask import jsonify
 
 
-# that represents a file work process
+# represents a file work process
 class FileWP:
 
         uuid = None

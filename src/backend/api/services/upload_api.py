@@ -5,25 +5,11 @@ from werkzeug.utils import secure_filename
 from database.mongo_repo import user, fileWPDB
 from api.services.upload_to_s3 import upload_to_s3
 
-
-#import sys
-#sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
 from api.services.filescript import process_csv
 from models.fileWP import FileWP
 
-# import sys
-# sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
-
 upload_api = Blueprint("user_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {'csv'}
-
-# If working on a mac, set your PWD (path to working directory) in your .env file
-# For example: /Users/ingunn/amos2023ws04-pipeline-manager/src
-# PWD = os.getenv('PWD')
-# if (PWD):
-#     os.chdir(str(PWD))
-
-#path='/backend/apis/api_service/cars.csv'
 
 @upload_api.route('/')
 def index():
@@ -37,7 +23,7 @@ def upload():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             new_filename = f'{filename.split(".")[0]}_get.csv'
-            save_location = os.path.join('mainapp', new_filename)
+            save_location = os.path.join('tmp', new_filename)
 
             rs_username = request.form['txtusername']
             inputEmail = request.form['inputEmail']
@@ -58,12 +44,12 @@ def upload():
 
 @upload_api.route('/download')
 def download():
-    return render_template('download.html', files=os.listdir('mainapp'))
+    return render_template('download.html', files=os.listdir('tmp'))
 
 
 @upload_api.route('/download/<filename>')
 def download_file(filename):
-    return send_from_directory('mainapp', filename)
+    return send_from_directory('tmp', filename)
 
 @upload_api.route('/uploadcsv', methods=['POST'])
 def uploadcsv():

@@ -1,6 +1,4 @@
-import os
-
-from flask import Flask, request, jsonify, render_template, redirect, url_for, send_from_directory, Blueprint
+from flask import request, jsonify, Blueprint
 from database.mongo_repo import fileWPDB
 from models.fileWP import FileWP
 
