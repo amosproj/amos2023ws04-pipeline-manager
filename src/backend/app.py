@@ -4,6 +4,15 @@ import os
 from api.services.upload_api import upload_api
 from api.services.datapipeline import datapipeline
 from api.services.fileWP import fileWP
+:wq
+
+
+
+
+
+
+
+
 from dotenv import load_dotenv
 from api.services.air_flow_api import air_flow_api
 from flask_restful import Api, Resource
