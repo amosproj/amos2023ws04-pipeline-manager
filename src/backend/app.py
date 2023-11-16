@@ -13,7 +13,7 @@ user = None
 app = Flask(__name__)
 
 def create_app():
-    client = MongoClient('localhost', 27017)
+    client = MongoClient("mongodb://test_mongodb:27017")
     db = client.flask_db
     user = db.user
 
