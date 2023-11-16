@@ -10,6 +10,14 @@ from database.models.fileWP import FileWP
 upload_api = Blueprint("upload_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {'csv'}
 
+# If working on a mac, set your PWD (path to working directory) in your .env file
+# For example: /Users/ingunn/amos2023ws04-pipeline-manager/src
+PWD = os.getenv('PWD')
+if (PWD):
+    os.chdir(str(PWD))
+
+#path='/backend/apis/api_service/cars.csv'
+
 @upload_api.route('/')
 def index():
     return "Register/SignIn Page"
