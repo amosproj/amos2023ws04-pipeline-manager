@@ -1,11 +1,16 @@
 from pymongo import MongoClient
 import os
+from dotenv import load_dotenv
 
-client = MongoClient(host='test_mongodb',
-                        port=27017)
-# client = MongoClient(os.getenv(MONGODB_URL), os.getenv(MONGODB_PORT))
+load_dotenv()
 
-db = client.flask_db
-user = db.user
-fileWPDB = db.fileWP
-datapipelineDB = db.datapipeline
+client = MongoClient(host=os.getenv('MONGODB_URL'),
+                     port=int(os.getenv('MONGODB_PORT')),
+                     username=os.getenv('MONGODB_USER'),
+                     password=os.getenv('MONGODB_PASSWORD'),
+                     authSource='admin')
+
+db = client['dpms_db']
+user = db['user']
+fileWPDB = db['fileWP']
+datapipelineDB = db['datapipeline']

@@ -47,3 +47,4 @@ src/frontend/frontend/src/environments/environment.ts
 
 #backend
 src/backend/.env
+src/backend/tmp/*
