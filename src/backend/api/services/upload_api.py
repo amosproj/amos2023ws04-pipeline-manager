@@ -82,21 +82,7 @@ def uploadcsv():
 
 @upload_api.route('/ping',  methods=['POST'])
 def ping():
-    print("hello there")
-    return render_template('index.html')
-
-@upload_api.route('/do_something',  methods=['POST'])
-def do_something():
-    testProj = FileWP("123", None)
-    fileWPDB.insert_one(testProj.to_json())
-    print('after insert')
-    all_projects = fileWPDB.find()
-
-    for p in all_projects:
-        print(p)
-
-    return render_template('index.html')
-
+    return jsonify({'message': 'Ping successfully'})
 
 def allowed_file(filename):
     return '.' in filename and \
