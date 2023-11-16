@@ -8,24 +8,33 @@ services:
       - ./src/frontend:/project
       - /project/node_modules
 
-#   web:
-#     image: python:3.12-bullseye
-#     container_name: flask-app
-#     working_dir: /backend
-#     build: src/backend
-#     volumes:
-#       - ./app:/app
-#     ports:
-#       - "8000:8000"
-#     command: ["python", "app.py"]
-#     depends_on:
-#       - mongo
-
-#   mongo:
-#     image: mongo
-#     container_name: mongo-db
-#     ports:
-#       - "27017:27017"
+  app:
+    environment:
+      - MONGODB_URL=amos_mongodb
+      - MONGODB_PORT=27017
+      - MONGODB_USER=root
+      - MONGODB_PASSWORD=pass
+      - HOST_URL=0.0.0.0
+      - HOST_PORT=8000
+    build: ./src/backend
+    volumes:
+      - ./src/backend:/app
+    ports:
+      - "8000:8000"
+    command: python -u app.py
+    links:
+      - db
+  db:
+    image: mongo:latest
+    hostname: amos_mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=dpms_db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+    volumes:
+       - ./src/backend/tmpDatabase:/docker-databases
+    ports:
+      - 27017:27017
       
 
 # # Licensed to the Apache Software Foundation (ASF) under one
