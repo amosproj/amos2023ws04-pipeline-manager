@@ -2,7 +2,7 @@ import boto3
 from dotenv import load_dotenv
 from botocore.exceptions import NoCredentialsError
 import os
-from models.s3_detials_entity.py import S3ObjectDetails
+from database.models.s3_detials_entity import S3ObjectDetails
 from io import BytesIO
 
 # AWS S3 configuration
