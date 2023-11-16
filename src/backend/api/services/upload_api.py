@@ -1,20 +1,16 @@
 import os
 
-from flask import request, render_template, redirect, url_for, send_from_directory, Blueprint, jsonify
+from flask import request, render_template, redirect, url_for, send_file, Blueprint, jsonify
 from werkzeug.utils import secure_filename
 from database.mongo_repo import user, fileWPDB
-from api.services.upload_to_s3 import upload_to_s3
-
-
-#import sys
-#sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
+from api.services.upload_to_s3 import upload_to_s3 , download_file, list_file
 from api.services.filescript import process_csv
 from models.fileWP import FileWP
 
 # import sys
 # sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
 
-upload_api = Blueprint("user_api", __name__, template_folder="templates")
+upload_api = Blueprint("upload_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {'csv'}
 
 # If working on a mac, set your PWD (path to working directory) in your .env file
@@ -32,12 +28,14 @@ def index():
 
 @upload_api.route('/upload', methods=['GET', 'POST'])
 def upload():
+    BUCKET_NAME = os.getenv('BUCKET_NAME')
     if request.method == 'POST':
         file = request.files['file']
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             new_filename = f'{filename.split(".")[0]}_get.csv'
             save_location = os.path.join('mainapp', new_filename)
+            s3_key = 'uploads/' + file.filename
 
             rs_username = request.form['txtusername']
             inputEmail = request.form['inputEmail']
@@ -45,7 +43,8 @@ def upload():
             filename = secure_filename(file.filename)
             user.insert_one({'name': rs_username, 'mail': inputEmail})
             file.save(save_location)
-
+            upload_to_s3(save_location, BUCKET_NAME, s3_key)
+            return jsonify({'message': 'File uploaded successfully'})
             output_file = process_csv(save_location)
             # return send_from_directory('output', output_file)
             return redirect(url_for('download'))
@@ -58,12 +57,38 @@ def upload():
 
 @upload_api.route('/download')
 def download():
-    return render_template('download.html', files=os.listdir('mainapp'))
+    BUCKET_NAME = os.getenv('BUCKET_NAME')
+    # List objects in the bucket
+    try:
+
+        objects = list_file(BUCKET_NAME)
+
+        if objects:
+            files = [obj['Key'] for obj in objects]
+            return render_template('list.html', files=files)
+        else:
+            return "The bucket is empty."
+    except Exception as e:
+        return f"Error: {e}"
 
 
 @upload_api.route('/download/<filename>')
-def download_file(filename):
-    return send_from_directory('mainapp', filename)
+def download_file_csv(filename):
+    AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY')
+    AWS_SECRET_KEY = os.getenv('AWS_SECRET_KEY')
+    REGION = os.getenv('REGION')
+    BUCKET_NAME = os.getenv('BUCKET_NAME')
+    try:
+        # Download the object from S3
+        file = download_file(filename)
+
+        response = send_file(file, as_attachment=True)
+        print(response.headers)
+        return response
+
+        # Send the file for download
+    except Exception as e:
+        return f"Error: {e}"
 
 @upload_api.route('/uploadcsv', methods=['POST'])
 def uploadcsv():

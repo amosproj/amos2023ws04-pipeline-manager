@@ -5,12 +5,16 @@ import os
 from api.services.upload_api import upload_api
 from api.services.datapipeline import datapipeline
 from api.services.fileWP import fileWP
+from api.services.air_flow_api import air_flow_api
+from flask_restful import Api, Resource
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 user = None
 
 app = Flask(__name__)
+api = Api(app, version='1.0', title='My API', description='A simple API')
+
 
 def create_app():
     client = MongoClient('localhost', 27017)
@@ -20,6 +24,7 @@ def create_app():
     app.register_blueprint(upload_api)
     app.register_blueprint(datapipeline)
     app.register_blueprint(fileWP)
+    app.register_blueprint(air_flow_api)
 
 
     return app
