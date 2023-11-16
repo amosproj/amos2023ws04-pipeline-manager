@@ -6,12 +6,8 @@ from api.services.datapipeline import datapipeline
 from api.services.fileWP import fileWP
 from dotenv import load_dotenv
 
-
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
 app = Flask(__name__)
 
-load_dotenv()
 
 def register_api():
 
@@ -27,5 +23,7 @@ def index():
 
 if __name__ == "__main__":
     register_api()
+
+    load_dotenv()
     # Please do not set debug=True in production
     app.run(host=os.getenv('HOST_URL'), port=int(os.getenv('HOST_PORT')), debug=True)
