@@ -7,8 +7,19 @@ from services.upload_to_s3 import upload_to_s3 , download_file, list_file
 from services.filescript import process_csv
 from database.models.fileWP import FileWP
 
+# import sys
+# sys.path.append('E:\Amos Backend\amos2023ws04-pipeline-manager\src')
+
 upload_api = Blueprint("upload_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {'csv'}
+
+# If working on a mac, set your PWD (path to working directory) in your .env file
+# For example: /Users/ingunn/amos2023ws04-pipeline-manager/src
+PWD = os.getenv('PWD')
+if (PWD):
+    os.chdir(str(PWD))
+
+#path='/backend/apis/api_service/cars.csv'
 
 @upload_api.route('/')
 def index():
@@ -110,7 +121,21 @@ def uploadcsv():
 
 @upload_api.route('/ping',  methods=['POST'])
 def ping():
-    return jsonify({'message': 'Ping successfully'})
+    print("hello there")
+    return render_template('index.html')
+
+@upload_api.route('/do_something',  methods=['POST'])
+def do_something():
+    testProj = FileWP("123", None)
+    fileWPDB.insert_one(testProj.to_json())
+    print('after insert')
+    all_projects = fileWPDB.find()
+
+    for p in all_projects:
+        print(p)
+
+    return render_template('index.html')
+
 
 def allowed_file(filename):
     return '.' in filename and \

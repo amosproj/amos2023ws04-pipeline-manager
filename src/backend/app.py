@@ -2,12 +2,6 @@ from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 import sys
 import os
-from api.services.upload_api import upload_api
-from api.services.datapipeline import datapipeline
-from api.services.fileWP import fileWP
-from dotenv import load_dotenv
-from api.services.air_flow_api import air_flow_api
-from flask_restful import Api, Resource
 import requests
 from api.upload_api import upload_api
 from api.datapipeline import datapipeline
@@ -20,6 +14,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 user = None
 
 app = Flask(__name__)
+api = Api(app)
+
 api = Api(app)
 
 
@@ -46,8 +42,10 @@ class StartAirFlow(Resource):
             return jsonify({'error': 'Failed to trigger Airflow DAG'}), 500
 
 
-
-def register_api():
+def create_app():
+    client = MongoClient('localhost', 27017)
+    db = client.flask_db
+    user = db.user
 
     app.register_blueprint(upload_api)
     app.register_blueprint(datapipeline)
