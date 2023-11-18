@@ -42,5 +42,17 @@ datapipeline/logs
 src/frontend/frontend/src/environments/*.ts
 src/frontend/frontend/src/environments/environment.ts
 
-#General
+# General
 .env
+
+# Terraform
+src/infrastructure/terraform/eks-cluster/.terraform.lock.hcl
+src/infrastructure/terraform/eks-cluster/.terraform/providers/registry.terraform.io/hashicorp/aws/5.25.0/darwin_amd64/terraform-provider-aws_v5.25.0_x5
+src/infrastructure/terraform/eks-cluster/.terraform/providers/registry.terraform.io/hashicorp/cloudinit/2.3.2/darwin_amd64/terraform-provider-cloudinit_v2.3.2_x5
+src/infrastructure/terraform/eks-cluster/.terraform/providers/registry.terraform.io/hashicorp/kubernetes/2.23.0/darwin_amd64/terraform-provider-kubernetes_v2.23.0_x5
+src/infrastructure/terraform/eks-cluster/.terraform/providers/registry.terraform.io/hashicorp/random/3.5.1/darwin_amd64/terraform-provider-random_v3.5.1_x5
+src/infrastructure/terraform/eks-cluster/.terraform/providers/registry.terraform.io/hashicorp/time/0.9.1/darwin_amd64/terraform-provider-time_v0.9.1_x5
+src/infrastructure/terraform/eks-cluster/.terraform/providers/registry.terraform.io/hashicorp/tls/4.0.4/darwin_amd64/terraform-provider-tls_v4.0.4_x5
+src/infrastructure/terraform/s3-bucket/.terraform.lock.hcl
+src/infrastructure/terraform/s3-bucket/terraform.tfstate
+src/infrastructure/terraform/s3-bucket/.terraform/providers/registry.terraform.io/hashicorp/aws/5.25.0/darwin_amd64/terraform-provider-aws_v5.25.0_x5
