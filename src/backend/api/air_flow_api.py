@@ -4,10 +4,11 @@ from flask_restx import Api, Resource
 from database.models.file_details import TaskExecutionDetails
 
 air_flow_api = Blueprint("air_flow_api", __name__, template_folder="templates")
-air_api = Api(air_flow_api, doc='/swagger')
+air_api = Api(air_flow_api)
 
 # Define a route to start Airflow DAG
 api1 = air_api.namespace('api1', description='Air Flow Start')
+air_api.add_namespace(api1)
 
 
 @api1.route('/start_airflow', methods=['GET'])
@@ -26,6 +27,7 @@ class StartAirFlow(Resource):
 
 # Define  route to get details, logs, and output
 api2 = air_api.namespace('api2', description="Get Details")
+air_api.add_namespace(api2)
 
 
 @api2.route('/get_airflow_details', methods=['GET'])
