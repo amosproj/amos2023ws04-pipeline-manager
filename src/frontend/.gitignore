@@ -41,5 +41,3 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Environment files discarded
-src/environments/*.ts
