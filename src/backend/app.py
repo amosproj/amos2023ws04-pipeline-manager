@@ -8,6 +8,7 @@ from api.datapipeline import datapipeline
 from api.fileWP import fileWP
 from api.air_flow_api import air_flow_api
 from flask_restx import Api, Resource
+from flask_swagger import swagger
 from dotenv import load_dotenv
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -18,13 +19,18 @@ app = Flask(__name__)
 api = Api(app)
 
 
+@app.route('/swagger')
+def swagger_ui():
+    return jsonify(swagger(app))
+
+
 @api.route('/hello')
 class HelloWorld(Resource):
     def get(self):
         return 'hello'
 
 
-api1 = api.namespace("start", description="airflow strats")
+api1 = api.namespace("/", description="airflow strats")
 
 
 @api1.route('/start_airflow', methods=['GET'])
