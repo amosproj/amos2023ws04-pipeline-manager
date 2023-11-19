@@ -9,29 +9,23 @@ from io import BytesIO
 AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY')
 AWS_SECRET_KEY = os.getenv('AWS_SECRET_KEY')
 REGION = os.getenv('REGION')
-BUCKET_NAME = ""
+BUCKET_NAME = os.getenv('BUCKET_NAME')
 
-
-def upload_file(path, bucket_name, s3_key):
+'''def upload_file(path, bucket_name, s3_key):
     s3 = boto3.client('s3')
-    s3.upload_file(path, bucket_name, s3_key)
+    s3.upload_file(path, bucket_name, s3_key)'''
 
 
 # Function to upload a file to AWS S3
-def upload_to_s3(path, bucket_name, s3_key):
+def upload_to_s3(path, s3_key):
     load_dotenv()
-    # AWS S3 configuration
-    AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY')
-    AWS_SECRET_KEY = os.getenv('AWS_SECRET_KEY')
-    REGION = os.getenv('REGION')
 
     try:
         s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY,
                           region_name=REGION)
-        s3.upload_file(path, bucket_name, s3_key)
-        file_data = get_file_details(path, bucket_name, s3_key)
-        s3.list_objects_v2(Bucket=bucket_name)
-        return file_data
+        s3.upload_fileobj(path, BUCKET_NAME, s3_key)
+        # file_data = get_file_details(path, BUCKET_NAME, s3_key)
+        return "file_data"
     except FileNotFoundError:
         return False
     except NoCredentialsError:
@@ -40,7 +34,6 @@ def upload_to_s3(path, bucket_name, s3_key):
 
 def get_file_details(path, bucket_name, s3_key):
     # Get details of a specific file
-    global s3_file_data
     try:
         s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY,
                           region_name=REGION)
@@ -74,13 +67,26 @@ def download_file(file_name):
         print(f"Error: {e}")
 
 
-def list_file(bucket):
+def list_file():
     try:
         s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY,
                           region_name=REGION)
-        response = s3.list_objects(Bucket=bucket)
+        response = s3.list_objects(Bucket=BUCKET_NAME)
         objects = response.get('Contents', [])
-
+        print("s3 connected")
         return objects
     except Exception as e:
         print(f"Error: {e}")
+
+
+def file_name_check(file_name):
+    try:
+        s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY,
+                          region_name=REGION)
+        # HeadObject returns metadata for an object
+        s3.head_object(Bucket=BUCKET_NAME, Key=file_name)
+        return True  # File exists
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
