@@ -1,0 +1,21 @@
+name: Docker Image ECR CI 
+
+on:
+  push:
+    branches: [ "feature/ci-pipeline2" ]
+  
+    pull_request:
+    branches: [ "feature/ci-pipeline2" ]
+
+jobs:
+
+  docker_image:
+    runs-on: ubuntu-latest
+    steps:
+    id: ecr-publish
+      uses: bitovi/github-actions-ecr-publish@v0.1.0
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_default_region: eu-north-1
+          aws_ecr_repo_name: DPSM
