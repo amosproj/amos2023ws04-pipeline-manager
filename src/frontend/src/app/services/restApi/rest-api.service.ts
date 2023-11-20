@@ -58,7 +58,7 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
       var requestBody: any = {
         file: filePath
       };
-      this.http.post(this.apiURL + "uploadcsv", requestBody, options).subscribe(
+      this.http.post(this.apiURL + "upload", requestBody, options).subscribe(
         (data: any) => {
 
           resolve(data);
