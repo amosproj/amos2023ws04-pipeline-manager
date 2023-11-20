@@ -63,6 +63,22 @@ The backend takes care of the orchestration of the described software components
 4. Transfer of the prepared data and raw data to the storage system and database
 <hr>
 
+### SD Issue creation Guidelines
+Please take a look at the SD wiki for creating personal tickets/Issues for the project. 
+
+[Issue creation Guidlines for SD's](Documentation/SD_Issue_Guidelines.md)
+
+<hr>
+
+### Documentations
+
+- [Frontend Documentation](src/frontend/README.md)
+- [Backend Documentation](src/backend/README.md)
+- [Data pipeline Documentation ](src/datapipeline/README.md)
+- [IaaC terraform Documentation](src/infrastructure/terraform/README.md)
+
+
+
 ### contributers
 
 * @keldami
@@ -71,9 +87,8 @@ The backend takes care of the orchestration of the described software components
 * @sravanthidatla78
 * @ingunnaf
 * @CAgcoder
-* @eubec
 * @elementator
 * @lalitha2395
 
-<hr>
 
+<hr>
