@@ -2,6 +2,42 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.8.
 
+# Frontend angular
+
+Pre-Requisite:
+
+- node version ~ 21.1.0
+- Npm version ~ 10.2.3
+
+### Install angular locally
+
+- check that npm is installed by running
+
+```bash
+npm --version 
+```
+
+- install Angular cli using  version 16.2.10.
+
+```bash
+sudo npm i @angular/cli@16.2.10
+```
+
+- install the required packages
+
+```bash
+npm install 
+```
+
+- for running the application
+
+```tsx
+ng serve
+```
+
+The frontend should be visible on : http://localhost:4200/
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
@@ -25,3 +61,56 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## CORS S3
+CORS by-pass for angular to integrate with S3 bucket :
+```
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "HEAD",
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": [
+            "ETag"
+        ]
+    },
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "PUT",
+            "POST",
+            "DELETE"
+        ],
+        "AllowedOrigins": [
+            "http://www.example2.com"
+        ],
+        "ExposeHeaders": [
+            "ETag"
+        ]
+    },
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "GET"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": []
+    }
+]
+```
