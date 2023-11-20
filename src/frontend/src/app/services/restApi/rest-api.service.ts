@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,6 +20,13 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
   GET
 
   */
+  getUploadedFiles(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiURL}/files`);
+  }
+
+  downloadFile(fileName: string): Observable<Blob> {
+    return this.http.get(`${this.apiURL}/download/${fileName}`, { responseType: 'blob' });
+  }
 
   
   getAllDataPipelines(id?: string): Promise<any>{

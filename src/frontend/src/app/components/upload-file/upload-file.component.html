@@ -9,7 +9,7 @@
 
 <div>
   <input type="file" accept=".csv,csv" class="file-input"
-(change)="onFileSelected($event)" #fileUpload>
+(change)="uploadBackendCSV()" #fileUpload>
 <div>
   <button type="upload" class="btn btn-success btn-block mt-4 w-30"
   (click)="fileUpload.click()">Upload File</button>
