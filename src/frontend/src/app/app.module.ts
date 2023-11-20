@@ -11,6 +11,7 @@ import { UserComponent } from './components/user/user.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { AlertModule } from '@full-fledged/alerts';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { ProjectComponent } from './components/project/project.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
     UserComponent,
     SideBarComponent,
     UploadFileComponent,
+    ProjectComponent,
     
 
 
