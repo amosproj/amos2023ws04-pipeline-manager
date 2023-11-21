@@ -3,8 +3,8 @@ import requests
 from flask_restx import Api, Resource
 from database.models.file_details import TaskExecutionDetails
 
-air_flow_api = Blueprint("air_flow_api", __name__, template_folder="templates")
-air_api = Api(air_flow_api)
+airflow_api = Blueprint("airflow_api", __name__, template_folder="templates")
+air_api = Api(airflow_api)
 
 # Define a route to start Airflow DAG
 api1 = air_api.namespace('api1', description='Air Flow Start')

@@ -5,7 +5,7 @@ import requests
 from api.upload_api import upload_api
 from api.datapipeline import datapipeline
 from api.fileWP import fileWP
-from api.air_flow_api import air_flow_api
+from api.airflow_api import airflow_api
 from flask_restx import Api, Resource
 from flask_swagger import swagger
 from dotenv import load_dotenv
@@ -52,7 +52,7 @@ def register_api():
     app.register_blueprint(upload_api)
     app.register_blueprint(datapipeline)
     app.register_blueprint(fileWP)
-    app.register_blueprint(air_flow_api)
+    app.register_blueprint(airflow_api)
 
     return app
 
