@@ -11,10 +11,6 @@ AWS_SECRET_KEY = os.getenv('AWS_SECRET_KEY')
 REGION = os.getenv('REGION')
 BUCKET_NAME = os.getenv('BUCKET_NAME')
 
-'''def upload_file(path, bucket_name, s3_key):
-    s3 = boto3.client('s3')
-    s3.upload_file(path, bucket_name, s3_key)'''
-
 
 # Function to upload a file to AWS S3
 def upload_to_s3(path, s3_key):
