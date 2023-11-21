@@ -1,9 +1,6 @@
-import os
-
-from flask import Flask, request, render_template, redirect, url_for, send_from_directory, Blueprint
+from flask import Blueprint
 
 user_api = Blueprint("user_api", template_folder="templates")
-
 
 @user_api.route('/')
 def index():

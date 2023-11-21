@@ -1,24 +1,12 @@
-import os
-
-from flask import request, render_template, redirect, url_for, send_file, Blueprint, jsonify
+from flask import request, render_template, send_file, Blueprint, jsonify
 from werkzeug.utils import secure_filename
-from database.mongo_repo import user, fileWPDB
 from services.upload_to_s3 import upload_to_s3, download_file, list_file, file_name_check
-from database.models.fileWP import FileWP
 from flask_restx import Api, Resource
 
 upload_api = Blueprint("upload_api", __name__, template_folder="templates")
 api = Api(upload_api)
 ALLOWED_EXTENSIONS = {'csv'}
 
-# If working on a mac, set your PWD (path to working directory) in your .env file
-# For example: /Users/ingunn/amos2023ws04-pipeline-manager/src
-PWD = os.getenv('PWD')
-if PWD:
-    os.chdir(str(PWD))
-
-
-# path='/backend/apis/api_service/cars.csv'
 
 @upload_api.route('/')
 def index():
@@ -38,14 +26,7 @@ def upload():
         else:
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                new_filename = f'{filename.split(".")[0]}_get.csv'
-                s3_key = file.filename
-
-                rs_username = request.form['username']
-                input_email = request.form['inputEmail']
-
-                # user.insert_one({'name': rs_username, 'mail': input_email})
-                upload_to_s3(file, file.filename)
+                upload_to_s3(file, filename)
                 return jsonify({'message': 'File uploaded successfully'})
 
     # return render_template('upload.html')
