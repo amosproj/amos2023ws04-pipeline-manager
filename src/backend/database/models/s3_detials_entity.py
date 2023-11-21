@@ -8,7 +8,7 @@ class S3ObjectDetails:
         self.etag = etag
         self.storage_class = storage_class
 
-    def to_dict(self):
+    def to_json(self):
         return {
             "key": self.key,
             "last_modified": self.last_modified,
