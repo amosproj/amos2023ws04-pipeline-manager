@@ -51,8 +51,8 @@ def create_fileWP():
     return jsonify({'message': 'Entity created successfully'}), 201
 
 
-@fileWP.route('/datapipeline/<id>',methods=['DELETE'])
-def delete_datapipeline(id):
+@fileWP.route('/fileWP/<id>',methods=['DELETE'])
+def delete_fileWP(id):
 
     result = fileWPDB.delete_one({"uuid": id})
 
