@@ -30,7 +30,7 @@ jobs:
       
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ env.IMAGE_NAME }}:${{ env.TAG }} .
+          docker build -t ${{ env.IMAGE_NAME }}:${{ env.TAG }} /src/backend/Dockerfile
           docker tag ${{ env.IMAGE_NAME }}:${{ env.TAG }} ${{ env.DOCKERHUB_URI }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
           docker push ${{ env.ECR_REPO_URI }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
 
