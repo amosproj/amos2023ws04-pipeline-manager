@@ -2,20 +2,36 @@ name: Docker Image ECR CI
 
 on:
   push:
-    branches: [ "feature/ci-pipeline2" ]
-  
-    pull_request:
-    branches: [ "feature/ci-pipeline2" ]
+    branches:
+      - '**'
+
+env:
+  AWS_REGION: eu-central-1
+  ECR_REPO_URI: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/flask-app
+  IMAGE_NAME: flask-app
+  TAG: latest
 
 jobs:
-
-  docker_image:
+  docker-build-push:
     runs-on: ubuntu-latest
+
     steps:
-    id: ecr-publish
-      uses: bitovi/github-actions-ecr-publish@v0.1.0
+      - name: Checkout repository
+      - uses: actions/checkout@v4
+    
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_default_region: eu-north-1
-          aws_ecr_repo_name: DPSM
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+          
+      - name: Login to Amazon ECR
+        id: login-ecr
+        run: |
+          echo ${{ env.AWS_SECRET_ACCESS_KEY }} | docker login --username AWS --password-stdin ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }}:${{ env.TAG }} .
+          docker tag ${{ env.IMAGE_NAME }}:${{ env.TAG }} ${{ env.ECR_REPO_URI }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          docker push ${{ env.ECR_REPO_URI }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
