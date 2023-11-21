@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { RestApiService } from 'src/app/services/restApi/rest-api.service'
 
 @Component({
-  selector: 'app-project',
-  templateUrl: './project.component.html',
-  styleUrls: ['./project.component.scss']
+  selector: 'app-download',
+  templateUrl: './download.component.html',
+  styleUrls: ['./download.component.scss']
 })
-export class ProjectComponent implements OnInit {
+export class DownloadComponent implements OnInit {
   uploadedFiles: string[] = [];
 
   constructor(private restapiservice: RestApiService) {}

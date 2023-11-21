@@ -1,0 +1,14 @@
+
+
+  <div class="row">
+    <div class="sidebar col-md-3 col-lg-2 p-0 ">
+        <app-side-bar></app-side-bar>
+    </div>
+  
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div *ngFor="let file of uploadedFiles">
+            <p>{{ file }}</p>
+            <button (click)="downloadFile(file)">Download</button>
+         </div>
+    </main>
+  </div>

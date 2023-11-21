@@ -11,7 +11,8 @@ import { UserComponent } from './components/user/user.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { AlertModule } from '@full-fledged/alerts';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
-import { ProjectComponent } from './components/project/project.component';
+import { DownloadComponent } from './components/download/download.component';
+import { PipelineComponent } from './components/pipeline/pipeline.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ProjectComponent } from './components/project/project.component';
     UserComponent,
     SideBarComponent,
     UploadFileComponent,
-    ProjectComponent,
+    DownloadComponent,
+    PipelineComponent,
     
 
 
