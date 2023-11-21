@@ -18,10 +18,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-          
+
+       - name: Configure AWS credentials 
+         uses: aws-actions/configure-aws-credentials@v4
+         with:
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
       - name: Login to Amazon ECR
         run: |
-          echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+          aws ecr get-login-password \
+          --region ${{ env.AWS_REGION }} \
+          | docker login \
+          --username AWS \
+          --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
 
       - name: Build and Push Docker Image
         run: |
