@@ -48,7 +48,7 @@ def upload():
                 upload_to_s3(file, file.filename)
                 return jsonify({'message': 'File uploaded successfully'})
 
-    return render_template('upload.html')
+    # return render_template('upload.html')
 
 
 @upload_api.route('/download')
@@ -115,6 +115,7 @@ def uploadcsv():
 @upload_api.route('/ping', methods=['POST'])
 def ping():
     return jsonify({'message': 'Ping successfully'})
+
 
 def allowed_file(filename):
     return '.' in filename and \

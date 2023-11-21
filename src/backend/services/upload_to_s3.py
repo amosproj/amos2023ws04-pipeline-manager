@@ -54,7 +54,17 @@ def get_file_details(path, bucket_name, s3_key):
 
 def download_file(file_name):
     try:
-        s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY,
+        try:
+            s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
+
+            url = s3.generate_presigned_url('get_object', Params={'Bucket': BUCKET_NAME, 'Key': file_name}, ExpiresIn=3600)
+
+            return {'download_url': url}
+
+        except NoCredentialsError:
+            return {'error': 'AWS credentials not available or incorrect.'}
+
+        '''s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY,
                           region_name=REGION)
         path = os.path.join('s3files', file_name)
         print("Starting download...")
@@ -62,7 +72,7 @@ def download_file(file_name):
         print("Download completed.")
 
         file_stream = BytesIO(file_content)
-        return file_stream
+        return file_stream'''
     except Exception as e:
         print(f"Error: {e}")
 
