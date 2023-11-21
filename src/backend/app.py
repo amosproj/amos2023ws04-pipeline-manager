@@ -1,12 +1,50 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 import sys
 import os
-from api.services.upload_api import upload_api
-from api.services.datapipeline import datapipeline
-from api.services.fileWP import fileWP
+import requests
+from api.upload_api import upload_api
+from api.datapipeline import datapipeline
+from api.fileWP import fileWP
+from api.airflow_api import airflow_api
+from flask_restx import Api, Resource
+from flask_swagger import swagger
 from dotenv import load_dotenv
 
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+user = None
+
 app = Flask(__name__)
+api = Api(app)
+
+
+@app.route('/swagger')
+def swagger_ui():
+    return jsonify(swagger(app))
+
+
+@api.route('/hello')
+class HelloWorld(Resource):
+    def get(self):
+        return 'hello'
+
+
+api1 = api.namespace("/", description="airflow strats")
+
+
+@api1.route('/start_airflow', methods=['GET'])
+class StartAirFlow(Resource):
+    def get(self):
+        # Trigger Airflow DAG using the REST API
+        dag_id = request.args.get('parameter')
+        airflow_api_url = f'http://airflow-server:8080/api/v1/dags/{dag_id}/dagRuns'
+        response = requests.post(airflow_api_url)
+
+        if response.status_code == 200:
+            return jsonify({'message': 'Airflow DAG triggered successfully'})
+        else:
+            return jsonify({'error': 'Failed to trigger Airflow DAG'}), 500
+
 
 
 def register_api():
@@ -14,12 +52,15 @@ def register_api():
     app.register_blueprint(upload_api)
     app.register_blueprint(datapipeline)
     app.register_blueprint(fileWP)
+    app.register_blueprint(airflow_api)
 
     return app
+
 
 @app.route('/')
 def index():
     return render_template("index.html")
+
 
 if __name__ == "__main__":
     register_api()
