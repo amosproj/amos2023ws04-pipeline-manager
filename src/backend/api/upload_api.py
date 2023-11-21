@@ -6,11 +6,6 @@ upload_api = Blueprint("upload_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {'csv'}
 
 
-@upload_api.route('/')
-def index():
-    return "Register/SignIn Page"
-
-
 @upload_api.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST':

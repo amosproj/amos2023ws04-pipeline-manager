@@ -5,6 +5,8 @@ from api.upload_api import upload_api
 from api.datapipeline import datapipeline
 from api.fileWP import fileWP
 from api.airflow_api import airflow_api
+from flask_restx import Api
+from flask_swagger import swagger
 from dotenv import load_dotenv
 from flask_cors import CORS
 
@@ -15,9 +17,17 @@ user = None
 app = Flask(__name__)
 # TODO get origin figured out nicely
 CORS(app)
+api = Api(app)
+
+
+@app.route('/swagger')
+def swagger_ui():
+    return jsonify(swagger(app))
+
+
+
 
 def register_api():
-
     app.register_blueprint(upload_api)
     app.register_blueprint(datapipeline)
     app.register_blueprint(fileWP)
