@@ -12,11 +12,11 @@ airflow_api = Blueprint("airflow_api", __name__, template_folder="templates")
 air_api = Api(airflow_api)
 
 # Define a route to start Airflow DAG
-api1 = air_api.namespace('api1', description='Air Flow Start')
-air_api.add_namespace(api1)
+start_api = air_api.namespace('start_api', description='Air Flow Start')
+air_api.add_namespace(start_api)
 
 
-@api1.route('/start_airflow', methods=['GET'])
+@start_api.route('/start_airflow', methods=['GET'])
 class StartAirFlow(Resource):
     def get(self):
         # Trigger Airflow DAG using the REST API
@@ -31,11 +31,11 @@ class StartAirFlow(Resource):
 
 
 # Define  route to get details, logs, and output
-api2 = air_api.namespace('api2', description="Get Details")
-air_api.add_namespace(api2)
+details_api = air_api.namespace('details_api', description="Get Details")
+air_api.add_namespace(details_api)
 
 
-@api2.route('/get_airflow_details', methods=['GET'])
+@details_api.route('/get_airflow_details', methods=['GET'])
 class GetAirFlow(Resource):
     def get(self):
         # Get the execution_date of the most recent DAG run
