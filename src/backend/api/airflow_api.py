@@ -1,7 +1,12 @@
+import os
+
 from flask import jsonify, Blueprint, request
 import requests
 from flask_restx import Api, Resource
 from database.models.file_details import TaskExecutionDetails
+from dotenv import load_dotenv
+
+load_dotenv()
 
 airflow_api = Blueprint("airflow_api", __name__, template_folder="templates")
 air_api = Api(airflow_api)
@@ -16,7 +21,7 @@ class StartAirFlow(Resource):
     def get(self):
         # Trigger Airflow DAG using the REST API
         dag_id = request.args.get('parameter')
-        airflow_api_url = f'http://airflow-server:8080/api/v1/dags/{dag_id}/dagRuns'
+        airflow_api_url = os.getenv('AIRFLOW_SERVER_URL') + f'/api/v1/dags/{dag_id}/dagRuns'
         response = requests.post(airflow_api_url)
 
         if response.status_code == 200:
@@ -35,7 +40,7 @@ class GetAirFlow(Resource):
     def get(self):
         # Get the execution_date of the most recent DAG run
         dag_id = request.args.get('parameter')
-        dag_run_url = f'http://airflow-server:8080/api/v1/dags/{dag_id}/dagRuns'
+        dag_run_url = os.getenv('AIRFLOW_SERVER_URL') + f'/api/v1/dags/{dag_id}/dagRuns'
         dag_runs = requests.get(dag_run_url).json()['dag_runs']
 
         if not dag_runs:
@@ -44,11 +49,11 @@ class GetAirFlow(Resource):
         execution_date = dag_runs[0]['execution_date']
 
         # Get the task instance
-        task_instance_url = f'http://airflow-server:8080/api/v1/dags/{dag_id}/dagRuns/{execution_date}/taskInstances'
+        task_instance_url = os.getenv('AIRFLOW_SERVER_URL') + f'/api/v1/dags/{dag_id}/dagRuns/{execution_date}/taskInstances'
         task_instance = requests.get(task_instance_url).json()[0]
 
         # Get the task log
-        task_log_url = f'http://airflow-server:8080/api/v1/dags/{dag_id}/dagRuns/{execution_date}/taskInstances/{task_instance["task_id"]}/logs'
+        task_log_url = os.getenv('AIRFLOW_SERVER_URL') + f'/api/v1/dags/{dag_id}/dagRuns/{execution_date}/taskInstances/{task_instance["task_id"]}/logs'
         task_log = requests.get(task_log_url).text
 
         result = TaskExecutionDetails(
