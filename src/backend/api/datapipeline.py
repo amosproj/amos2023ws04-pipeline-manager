@@ -1,6 +1,6 @@
 from flask import request, jsonify, Blueprint
 from database.mongo_repo import datapipelineDB
-from models.datapipeline import Datapipeline
+from database.models.datapipeline import Datapipeline
 
 datapipeline = Blueprint("datapipeline", __name__)
 
