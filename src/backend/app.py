@@ -5,11 +5,10 @@ from api.upload_api import upload_api
 from api.datapipeline import datapipeline
 from api.fileWP import fileWP
 from api.airflow_api import airflow_api
-from flask_restx import Api
-from flask_swagger import swagger
 from dotenv import load_dotenv
-from flask_cors import CORS
+from flask_oidc import OpenIDConnect
 
+from flask_cors import CORS
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 user = None
@@ -17,14 +16,26 @@ user = None
 app = Flask(__name__)
 # TODO get origin figured out nicely
 CORS(app)
-api = Api(app)
+
+app.config.update({
+    'SECRET_KEY': os.getenv('OIDC_SECRET_KEY'),
+    'OIDC_CLIENT_SECRETS': 'client_secrets.json',
+    'OIDC_OPENID_REALM': 'flask-dpms',
+    'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post',
+    'OIDC_ID_TOKEN_COOKIE_SECURE': False,
+    'OIDC_SCOPES': ['openid', 'email', 'profile'],
+})
+
+oidc = OpenIDConnect(app)
 
 
-@app.route('/swagger')
-def swagger_ui():
-    return jsonify(swagger(app))
 
-
+@app.route('/')
+def index():
+    if oidc.user_loggedin:
+        return 'Welcome %s' % oidc.user_getfield('email')
+    else:
+        return 'Not logged in'
 
 
 def register_api():
@@ -34,11 +45,6 @@ def register_api():
     app.register_blueprint(airflow_api)
 
     return app
-
-
-@app.route('/')
-def index():
-    return render_template("index.html")
 
 
 if __name__ == "__main__":
