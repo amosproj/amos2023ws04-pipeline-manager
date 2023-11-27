@@ -1,49 +1,40 @@
-<div class=" d-flex flex-column flex-shrink-0 text-bg-dark p-3 " style="height: 92.7vh;width: 250px;">
-
-    <a href="/user" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ms-md-auto text-white text-decoration-none">
-      <span class=" fs-4 ">User</span>
-    </a>
-
-    <hr>
-
-    <ul class="nav nav-pills flex-column mb-auto me-md-auto ms-md-auto">
-      <li class="nav-item">
-        <a href="/upload" class="nav-link text-white">
-          Upload
-        </a>
-      </li>
-      
-      <li class="nav-item">
-        <a href="/download" class="nav-link text-white" aria-current="page">
-          Download
-          <!-- active -->
-        </a>
-      </li>
-      <li>
-        <a href="/pipeline" class="nav-link text-white">
-          Pipeline
-        </a>
-      </li>
-    </ul>
-    <hr>
-    <input type="file" accept=".csv,csv" class="file-input"
-(change)="onFileSelected($event)" #fileUpload>
-    <div class="dropdown">
-      <a href="/user" class="d-flex align-items-center text-white  text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        
-        <!-- <img src="" alt="" width="32" height="32" class="rounded-circle me-2"> -->
-       
-       
-       
-       
-        <strong class="fs-3">user</strong>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow ">
-        <li><a routerLink="/app-upload" class="dropdown-item" (click)="fileUpload.click()">Upload file</a></li>
-        <li><a class="dropdown-item" href="">Settings</a></li>
-        <li><a class="dropdown-item" href="#">Profile</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
-      </ul>
+<div class="sidebar" [ngClass]="{ 'expanded': isExpanded }">
+  <div class="header">
+    <h1 class="title">
+      DPSM
+    </h1>
+    <div class="toggle" (click)="handleSidebarToggle()">
+      <span class="chevron"></span>
     </div>
   </div>
+  <div class="content">
+    <div class="link">
+      <div class="content" [routerLink]="['/home']" [routerLinkActive]="'active'">
+
+        <div class="icon"></div>
+
+        <div class="title">Home</div>
+      </div>
+    </div>
+
+    <div class="link">
+      <div class="content" [routerLink]="['/datapipeline']" [routerLinkActive]="'active'">
+
+        <div class="icon"></div>
+
+        <div class="title">Datapipeline</div>
+      </div>
+    </div>
+
+    <div class="link">
+      <div class="content" [routerLink]="['/s3_entities']" [routerLinkActive]="'active'">
+
+        <div class="icon"></div>
+
+        <div class="title">S3 Entities</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer"></div>
+</div>

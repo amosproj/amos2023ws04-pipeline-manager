@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-side-bar',
@@ -6,14 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./side-bar.component.scss']
 })
 export class SideBarComponent {
-  constructor() {
-  }
-  selectedFile: File | null = null;
-  onFileSelected(event: any): void {
-    // this.uploadFile.uploadFile(event)
 
-    console.log("file upload clicked")
-  }
+  @Input() isExpanded: boolean = false;
+  @Output() toggleSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  handleSidebarToggle = () => this.toggleSidebar.emit(!this.isExpanded);
 
 }

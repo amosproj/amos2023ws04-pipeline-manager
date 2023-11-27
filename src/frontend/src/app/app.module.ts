@@ -9,7 +9,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { UserComponent } from './components/user/user.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
-// import { AlertModule } from '@full-fledged/alerts';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { DownloadComponent } from './components/download/download.component';
 import { PipelineComponent } from './components/pipeline/pipeline.component';
@@ -27,18 +26,13 @@ import { DataTablesModule } from "angular-datatables";
     UploadFileComponent,
     DownloadComponent,
     PipelineComponent,
-    
-
-
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    // AlertModule.forRoot({ maxMessages: 5, timeout: 5000 }),
     HttpClientModule,
-    DataTablesModule 
-
+    DataTablesModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -9,11 +9,14 @@ import { PipelineComponent } from './components/pipeline/pipeline.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', component: LandingComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: LandingComponent },
   { path: 'user', component: UserComponent },
   { path: 'upload', component: UploadFileComponent },
   { path: 'download', component: DownloadComponent },
-  { path:'pipeline',component:PipelineComponent}
+  { path:'datapipeline',component: PipelineComponent},
+  // TODO
+  // { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
