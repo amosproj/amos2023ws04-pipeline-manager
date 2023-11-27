@@ -30,7 +30,7 @@ def upload():
                 upload_to_s3(file, filename)
                 return jsonify({'message': 'File uploaded successfully'})
 
-    # return render_template('upload.html')
+    return render_template('upload.html')
 
 
 @upload_api.route('/download')

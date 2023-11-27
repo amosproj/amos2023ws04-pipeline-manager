@@ -4,6 +4,7 @@ from flask import jsonify, Blueprint, request
 import requests
 
 from database.models.file_details import TaskExecutionDetails
+from services.upload_to_s3 import download_file
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -14,9 +15,14 @@ airflow_api = Blueprint("airflow_api", __name__, template_folder="templates")
 class StartAirFlow:
     def get(self):
         # Trigger Airflow DAG using the REST API
-        dag_id = request.args.get('parameter')
-        airflow_api_url = os.getenv('AIRFLOW_SERVER_URL') + f'/api/v1/dags/{dag_id}/dagRuns'
-        response = requests.post(airflow_api_url)
+        file_name = request.args.get('parameter')
+        download_url = download_file(file_name)
+        dag_id = "triggerTask"
+        airflow_api_url = f'http://airflow-server:8080/api/v1/dags/{dag_id}/dagRuns'
+        response = requests.post(
+            airflow_api_url,
+            json={'conf': {'download_url': download_url}}
+        )
 
         if response.status_code == 200:
             return jsonify({'message': 'Airflow DAG triggered successfully'})
