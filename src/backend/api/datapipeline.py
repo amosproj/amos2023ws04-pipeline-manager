@@ -1,10 +1,13 @@
 from flask import request, jsonify, Blueprint
+
 from database.mongo_repo import datapipelineDB
 from database.models.datapipeline import Datapipeline
+from services.auth_service import secure
 
-datapipeline = Blueprint("datapipeline", __name__)
+datapipeline = Blueprint("datapipeline", __name__, template_folder='templates')
 
-@datapipeline.route('/datapipeline',methods=['GET'])
+@datapipeline.route('/datapipeline', methods=['GET'])
+@secure
 def get_all_datapipelines():
     data = datapipelineDB.find()
 
@@ -14,7 +17,8 @@ def get_all_datapipelines():
 
     return jsonify(allData), 201
 
-@datapipeline.route('/datapipeline/<id>',methods=['GET'])
+@datapipeline.route('/datapipeline/<id>', methods=['GET'])
+@secure
 def get_datapipeline(id):
     d = datapipelineDB.find_one({"uuid": id})
     if d:
@@ -24,6 +28,7 @@ def get_datapipeline(id):
 
 
 @datapipeline.route('/datapipeline/<id>',methods=['POST'])
+@secure
 def update_datapipeline_by_id(id):
     data = request.json
     if 'name' not in data or 'config' not in data:
@@ -41,6 +46,7 @@ def update_datapipeline_by_id(id):
 
 
 @datapipeline.route('/datapipeline/new',methods=['POST'])
+@secure
 def create_datapipeline():
     data = request.json
 
@@ -55,6 +61,7 @@ def create_datapipeline():
 
 
 @datapipeline.route('/datapipeline/<id>',methods=['DELETE'])
+@secure
 def delete_datapipeline(id):
 
     result = datapipelineDB.delete_one({"uuid": id})
