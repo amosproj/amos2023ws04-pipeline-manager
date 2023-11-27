@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RestApiService } from 'src/app/services/restApi/rest-api.service';
+import { RestApiService } from 'src/app/core/services/restApi/rest-api.service';
 
 
 @Component({
@@ -7,12 +7,12 @@ import { RestApiService } from 'src/app/services/restApi/rest-api.service';
   templateUrl: './upload-file.component.html',
   styleUrls: ['./upload-file.component.scss']
 })
-  
+
 export class UploadFileComponent {
   private selectedFile: File | null = null;
   constructor( private restapi: RestApiService) {
   }
- 
+
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
   }
@@ -32,9 +32,9 @@ export class UploadFileComponent {
   //   console.log(this.selectedFile)
   //   // check condition
   // }
-  
 
-  
+
+
 
 
   // getallEndpoint() {
@@ -70,7 +70,7 @@ export class UploadFileComponent {
   //   }, (error) => {
   //     console.error("upload successful ",error)
   //   })
-  
+
   // }
 
   // ngOnInit(): void {
@@ -83,6 +83,6 @@ export class UploadFileComponent {
   //   });
   // }
 
-  
+
 
 }

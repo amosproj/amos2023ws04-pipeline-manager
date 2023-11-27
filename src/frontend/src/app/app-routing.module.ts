@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingComponent } from './components/landing/landing.component';
-import { UploadFileComponent } from './components/upload-file/upload-file.component';
-import { DownloadComponent } from './components/download/download.component';
-import { PipelineComponent } from './components/pipeline/pipeline.component';
+import { LandingComponent } from './pages/landing/landing.component';
+import { UploadFileComponent } from './modules/upload-file/upload-file.component';
+import { DownloadComponent } from './modules/download/download.component';
+import { PipelineComponent } from './pages/pipeline/pipeline.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },

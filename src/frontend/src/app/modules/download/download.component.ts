@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { RestApiService } from 'src/app/services/restApi/rest-api.service'
+import { RestApiService } from 'src/app/core/services/restApi/rest-api.service'
 
 
 
@@ -14,7 +14,7 @@ export class DownloadComponent implements OnInit {
   downloadheader: any;
 
   constructor(private restapiservice: RestApiService) { }
-  
+
   downloadCsv(): void {
     this.restapiservice.downloadCsvFile();
   }
@@ -22,7 +22,7 @@ export class DownloadComponent implements OnInit {
   // dtTrigger: Subject<any> = new Subject<any>();
 
   ngOnInit(): void {
-    // this.dtoptions = { 
+    // this.dtoptions = {
     //   pagingType : "full_numbers"
     // };
     // this.getUploadedFiles();
@@ -52,13 +52,13 @@ export class DownloadComponent implements OnInit {
   //   document.body.removeChild(a);
   //   window.URL.revokeObjectURL(url);
   // });
-    
+
   // LoadInvoice() {
   //   this.service.GetAllInvoice().subscribe(res => {
   //     this.Invoiceheader = res;
   //     this.dtTrigger.next(null);
   //   });
   // }
-    
+
 }
 
