@@ -9,8 +9,8 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { UploadFileComponent } from './modules/upload-file/upload-file.component';
 import { SideBarComponent } from './modules/side-bar/side-bar.component';
 import { DownloadComponent } from './modules/download/download.component';
-import { PipelineComponent } from './pages/pipeline/pipeline.component';
 import { DataTablesModule } from "angular-datatables";
+import {DatapipelineModule} from "./pages/datapipeline/datapipeline.module";
 
 
 @NgModule({
@@ -21,14 +21,14 @@ import { DataTablesModule } from "angular-datatables";
     SideBarComponent,
     UploadFileComponent,
     DownloadComponent,
-    PipelineComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
+    DatapipelineModule
   ],
   providers: [],
   bootstrap: [AppComponent],

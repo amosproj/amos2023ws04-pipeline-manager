@@ -3,14 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { LandingComponent } from './pages/landing/landing.component';
 import { UploadFileComponent } from './modules/upload-file/upload-file.component';
 import { DownloadComponent } from './modules/download/download.component';
-import { PipelineComponent } from './pages/pipeline/pipeline.component';
+import {ListDatapipelineComponent} from "./pages/datapipeline/pages/list-datapipeline/list-datapipeline.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: LandingComponent },
   { path: 'upload', component: UploadFileComponent },
   { path: 'download', component: DownloadComponent },
-  { path:'datapipeline',component: PipelineComponent},
+  { path:'datapipeline',component: ListDatapipelineComponent},
   // TODO
   // { path: '**', component: PageNotFoundComponent }
 ];
