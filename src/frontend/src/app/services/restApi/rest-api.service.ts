@@ -9,6 +9,7 @@ export class RestApiService {
   apiURL:string="http://localhost:8000/"
 
   constructor(private http: HttpClient) { }
+  private videoToUpload: any;
 
 
   
@@ -24,10 +25,73 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
     return this.http.get<string[]>(`${this.apiURL}/files`);
   }
 
-  downloadFile(fileName: string): Observable<Blob> {
-    return this.http.get(`${this.apiURL}/download/${fileName}`, { responseType: 'blob' });
+  // downloadFile(fileName: string): Observable<Blob> {
+  //   return this.http.get(`${this.apiURL}/download?fileName=${fileName}`, { responseType: 'blob' });
+  // }
+  // uploadFile(file: File): Observable<any> {
+  //   const formData = new FormData();
+  //   formData.append('file', file);
+  //   return this.http.post(`${this.apiURL}/upload`, formData);
+  // }
+
+  getPresignedUrl(): Promise<string> {
+    return this.http.get<any>('apiURL/get-presigned-url')
+      .toPromise()
+      .then(response => response.presigned_url)
+      .catch(error => {
+        console.error('Error fetching presigned URL', error);
+        throw error;
+      });
   }
 
+  uploadCsvFile(file: File): Promise<void> {
+    return this.getPresignedUrl()
+      .then(presignedUrl => this.uploadFile(file, presignedUrl));
+  }
+
+  private uploadFile(file: File, presignedUrl: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', presignedUrl, true);
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          resolve();
+        } else {
+          reject(`Failed to upload file. Status: ${xhr.status}`);
+        }
+      };
+      xhr.onerror = () => {
+        reject('Failed to upload file.');
+      };
+      xhr.send(file);
+    });
+  }
+
+  downloadCsvFile(): void {
+    this.getPresignedUrl()
+      .then(url => this.downloadFile(url))
+      .catch(error => console.error('Error getting presigned URL', error));
+  }
+
+  private downloadFile(url: string): void {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'your-file.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+
+
+
+
+
+
+
+
+  
+ 
   
   getAllDataPipelines(id?: string): Promise<any>{
     

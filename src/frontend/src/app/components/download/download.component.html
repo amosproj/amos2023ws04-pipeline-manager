@@ -1,14 +1,60 @@
 
 
   <div class="row">
-    <div class="sidebar col-md-3 col-lg-2 p-0 ">
+    <!-- <div class="sidebar col-md-3 col-lg-2 p-0 ">
         <app-side-bar></app-side-bar>
+    </div> -->
+    <div class = "card-body ">
+      <!-- <table datatable [dtOptions] = "dtoptions" [dtTrigger]="dtTrigger" class="table table-bordered"> -->
+        <thead class="bg-dark text-white"></thead>
+          <tr>
+            <td>Data Name</td>
+            <td>Pipeline</td>
+            <td>Size</td>
+            <td>Date</td>
+          </tr>
+      <!-- </table> -->
     </div>
-  
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <div *ngFor="let file of uploadedFiles">
+
+    <tbody>
+      <tr *ngFor="let item of downloadheader">
+          <td>{{item.invoiceNo}}</td>
+          <td>{{item.customerName}}</td>
+          <td>{{item.remarks}}</td>
+          <td>{{item.total | currency}}</td>
+          <td>{{item.tax | currency}}</td>
+          <td>{{item.netTotal | currency}}</td>
+          <td style="width: 30%">
+      <!-- <a class="btn btn-primary" (click)="downloadFile(item.invoiceNo)">Edit</a> | 
+      <a class="btn btn-danger" (click)="downloadFile(item.invoiceNo)">Delete</a> |
+      <a class="btn btn-success" (click)="downloadFile(item.invoiceNo)">Print</a> |
+      <a class="btn btn-success" (click)="downloadFile(item.invoiceNo)">Download</a> -->
+          </td>
+      
+      </tr>
+      </tbody>
+
+                  <!-- <ng-template #content let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title">Preview Invoice : <b>{{invoiceno}}</b></h4>
+                      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+                    </div>
+                    <div class="modal-body">
+                      <ngx-extended-pdf-viewer [src]="pdfurl"></ngx-extended-pdf-viewer>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" (click)="d('Cross click')">Close</button>
+                    </div>
+                  </ng-template>
+       -->
+
+    
+<!--   
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"> -->
+        <!-- <div *ngFor="let file of uploadedFiles">
             <p>{{ file }}</p>
             <button (click)="downloadFile(file)">Download</button>
-         </div>
-    </main>
+         </div> -->
+
+    <!-- </main> -->
   </div>

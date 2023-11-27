@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { RestApiService } from 'src/app/services/restApi/rest-api.service'
+
+
 
 @Component({
   selector: 'app-download',
@@ -8,29 +11,54 @@ import { RestApiService } from 'src/app/services/restApi/rest-api.service'
 })
 export class DownloadComponent implements OnInit {
   uploadedFiles: string[] = [];
+  downloadheader: any;
 
-  constructor(private restapiservice: RestApiService) {}
+  constructor(private restapiservice: RestApiService) { }
+  
+  downloadCsv(): void {
+    this.restapiservice.downloadCsvFile();
+  }
+  // dtoptions: DataTables.Settings = {};
+  // dtTrigger: Subject<any> = new Subject<any>();
 
   ngOnInit(): void {
-    this.getUploadedFiles();
+    // this.dtoptions = { 
+    //   pagingType : "full_numbers"
+    // };
+    // this.getUploadedFiles();
   }
-  getUploadedFiles(): void {
-    this.restapiservice.getUploadedFiles().subscribe(files => {
-      this.uploadedFiles = files;
-    });
-  }
-  downloadFile(fileName: string): void {
-  this.restapiservice.downloadFile(fileName).subscribe(data => {
-    const blob = new Blob([data]);
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  });
+  // downloadFile() {
+  //   this.restapiservice.downloadFile('my-csv-file.csv').subscribe(response => {
+  //     const blob = new Blob([response], { type: 'text/csv' });
+  //     const url = window.URL.createObjectURL(blob);
+  //     window.open(url);
+  //   });
+  // }
+  // getUploadedFiles(): void {
+  //   this.restapiservice.getUploadedFiles().subscribe(files => {
+  //     this.uploadedFiles = files;
+  //     this.dtTrigger.next(null);
+  //   });
+  // }
+  // downloadFile(fileName: string): void {
+  // this.restapiservice.downloadFile(fileName).subscribe(data => {
+  //   const blob = new Blob([data]);
+  //   const url = window.URL.createObjectURL(blob);
+  //   const a = document.createElement('a');
+  //   a.href = url;
+  //   a.download = fileName;
+  //   document.body.appendChild(a);
+  //   a.click();
+  //   document.body.removeChild(a);
+  //   window.URL.revokeObjectURL(url);
+  // });
+    
+  // LoadInvoice() {
+  //   this.service.GetAllInvoice().subscribe(res => {
+  //     this.Invoiceheader = res;
+  //     this.dtTrigger.next(null);
+  //   });
+  // }
+    
 }
 
-}
