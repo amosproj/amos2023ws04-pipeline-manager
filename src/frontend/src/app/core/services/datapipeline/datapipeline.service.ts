@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
 import {CrudService} from "../crud/crud.service";
 import {HttpClient} from "@angular/common/http";
+import {Datapipeline} from "../../../entity/datapipeline";
 
-
-interface Datapipeline {
-  uuid: string;
-  name: string;
-  config: string;
-}
 
 @Injectable({
   providedIn: 'root'

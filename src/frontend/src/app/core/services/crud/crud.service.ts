@@ -22,14 +22,19 @@ export class CrudService<Entity> {
     return this.http.get(environment.SERVER_URL + this.baseUrl + "/" + id) as Observable<Entity>;
   }
 
-  // create(): Observable<Entity> {
-  //   return null;
-  // }
-  //
-  // update(): Observable<Entity> {
-  //   return null;
-  //
-  // }
+  create(entity: Partial<Entity>) {
+    console.log(environment.SERVER_URL + this.baseUrl + '/new');
+    return this.http.post(environment.SERVER_URL + this.baseUrl + '/new', entity,
+      {headers: {
+          "Access-Control-Allow-Origin": "*"
+        }}).subscribe((value) =>
+    console.log(value));
+  }
+
+  update(id: string, updateEntity: Entity): Observable<Entity> {
+    return this.http.post(environment.SERVER_URL + this.baseUrl + "/" + id, updateEntity) as Observable<Entity>;
+  }
+
   // delete(): Observable<Boolean> {
   //   return null;
   // }

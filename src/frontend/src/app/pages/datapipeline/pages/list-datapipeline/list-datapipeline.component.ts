@@ -2,13 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {DatapipelineService} from "../../../../core/services/datapipeline/datapipeline.service";
+import {Datapipeline} from "../../../../entity/datapipeline";
 
-
-interface Datapipeline {
-  uuid: string;
-  name: string;
-  config: string;
-}
 
 
 @Component({
