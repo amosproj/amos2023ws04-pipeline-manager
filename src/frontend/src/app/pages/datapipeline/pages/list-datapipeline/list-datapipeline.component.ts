@@ -28,4 +28,8 @@ export class ListDatapipelineComponent implements OnInit{
   delete(uuid: string | null) {
     throw Error('unimplemented error');
   }
+
+  upload(uuid: string | null) {
+    throw Error('unimplemented error');
+  }
 }
