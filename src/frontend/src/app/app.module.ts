@@ -11,6 +11,7 @@ import { SideBarComponent } from './modules/side-bar/side-bar.component';
 import { DownloadComponent } from './modules/download/download.component';
 import { DataTablesModule } from "angular-datatables";
 import {DatapipelineModule} from "./pages/datapipeline/datapipeline.module";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {DatapipelineModule} from "./pages/datapipeline/datapipeline.module";
     HttpClientModule,
     HttpClientModule,
     DataTablesModule,
-    DatapipelineModule
+    DatapipelineModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent],
