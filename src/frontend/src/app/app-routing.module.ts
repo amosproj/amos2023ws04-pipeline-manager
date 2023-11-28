@@ -1,15 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { LandingComponent } from './components/landing/landing.component';
-import { UserComponent } from './components/user/user.component';
-import { UploadFileComponent } from './components/upload-file/upload-file.component';
+import { LandingComponent } from './pages/landing/landing.component';
+import { UploadFileComponent } from './modules/upload-file/upload-file.component';
+import { DownloadComponent } from './modules/download/download.component';
+import {ListDatapipelineComponent} from "./pages/datapipeline/pages/list-datapipeline/list-datapipeline.component";
+import {EditDatapipelineComponent} from "./pages/datapipeline/pages/edit-datapipeline/edit-datapipeline.component";
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: '', component: LandingComponent },
-  { path: 'user', component: UserComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: LandingComponent },
   { path: 'upload', component: UploadFileComponent },
+  { path: 'download', component: DownloadComponent },
+  { path:'datapipeline',component: ListDatapipelineComponent},
+  { path:'datapipeline/new',component: EditDatapipelineComponent},
+  { path:'datapipeline/:id',component: EditDatapipelineComponent},
+
+  // TODO
+  // { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

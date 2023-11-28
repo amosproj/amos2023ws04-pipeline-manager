@@ -1,0 +1,26 @@
+<button type="button" class="btn btn-primary" routerLink="/datapipeline/new" routerLinkActive="active" >Create new datapipeline</button>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Name</th>
+    <th scope="col">Config</th>
+    <th scope="col">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let datapipeline of (datapiplines | async); index as i">
+    <tr>
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        {{ datapipeline.name }}
+      </td>
+      <td>{{ datapipeline.config }}</td>
+      <td><button type="button" class="btn btn-primary" (click)="edit(datapipeline.uuid)" >Edit</button>
+      <button type="button" class="btn btn-danger" (click)="delete(datapipeline.uuid)">Delete</button>
+        <button type="button" class="btn btn-info" (click)="upload(datapipeline.uuid)">Upload</button></td>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>

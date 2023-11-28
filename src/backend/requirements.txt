@@ -5,3 +5,4 @@ python-dotenv>=0.19,<1.0
 flask_swagger==0.2.14
 flask_restx==1.2.0
 requests==2.31.0
+flask_cors==4.0.0

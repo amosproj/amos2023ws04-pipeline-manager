@@ -1,0 +1,19 @@
+<form [formGroup]="datapipelineForm" (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="name">
+      Name
+    </label>
+    <input id="name" type="text" formControlName="name">
+  </div>
+
+  <div>
+    <label for="config">
+      Configuration
+    </label>
+    <input id="config" type="text" formControlName="config">
+  </div>
+
+  <button class="button" type="submit">Save</button>
+
+</form>

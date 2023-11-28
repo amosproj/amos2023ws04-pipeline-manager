@@ -1,10 +1,8 @@
 from flask import request, render_template, send_file, Blueprint, jsonify
 from werkzeug.utils import secure_filename
 from services.upload_to_s3 import upload_to_s3, download_file, list_file, file_name_check
-from flask_restx import Api, Resource
 
 upload_api = Blueprint("upload_api", __name__, template_folder="templates")
-api = Api(upload_api)
 ALLOWED_EXTENSIONS = {'csv'}
 
 

@@ -1,0 +1,40 @@
+<div class="sidebar" [ngClass]="{ 'expanded': isExpanded }">
+  <div class="header">
+    <h1 class="title">
+      DPSM
+    </h1>
+    <div class="toggle" (click)="handleSidebarToggle()">
+      <span class="chevron"></span>
+    </div>
+  </div>
+  <div class="content">
+    <div class="link">
+      <div class="content" [routerLink]="['/home']" [routerLinkActive]="'active'">
+
+        <div class="icon"></div>
+
+        <div class="title">Home</div>
+      </div>
+    </div>
+
+    <div class="link">
+      <div class="content" [routerLink]="['/datapipeline']" [routerLinkActive]="'active'">
+
+        <div class="icon"></div>
+
+        <div class="title">Datapipeline</div>
+      </div>
+    </div>
+
+    <div class="link">
+      <div class="content" [routerLink]="['/s3_entities']" [routerLinkActive]="'active'">
+
+        <div class="icon"></div>
+
+        <div class="title">S3 Entities</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer"></div>
+</div>

@@ -4,34 +4,33 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { HeaderComponent } from './components/header/header.component';
-import { LandingComponent } from './components/landing/landing.component';
-import { UserComponent } from './components/user/user.component';
-import { UploadFileComponent } from './components/upload-file/upload-file.component';
-import { AlertModule } from '@full-fledged/alerts';
-import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { HeaderComponent } from './modules/header/header.component';
+import { LandingComponent } from './pages/landing/landing.component';
+import { UploadFileComponent } from './modules/upload-file/upload-file.component';
+import { SideBarComponent } from './modules/side-bar/side-bar.component';
+import { DownloadComponent } from './modules/download/download.component';
+import { DataTablesModule } from "angular-datatables";
+import {DatapipelineModule} from "./pages/datapipeline/datapipeline.module";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     HeaderComponent,
     LandingComponent,
-    UserComponent,
     SideBarComponent,
     UploadFileComponent,
-    
-
-
+    DownloadComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    AlertModule.forRoot({ maxMessages: 5, timeout: 5000 }),
     HttpClientModule,
+    DataTablesModule,
+    DatapipelineModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent],
