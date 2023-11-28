@@ -2,22 +2,16 @@ import os
 
 from flask import jsonify, Blueprint, request
 import requests
-from flask_restx import Api, Resource
 from database.models.file_details import TaskExecutionDetails
 from dotenv import load_dotenv
 
 load_dotenv()
 
 airflow_api = Blueprint("airflow_api", __name__, template_folder="templates")
-air_api = Api(airflow_api)
-
-# Define a route to start Airflow DAG
-start_api = air_api.namespace('start_api', description='Air Flow Start')
-air_api.add_namespace(start_api)
 
 
-@start_api.route('/start_airflow', methods=['GET'])
-class StartAirFlow(Resource):
+@airflow_api.route('/start_airflow', methods=['GET'])
+class StartAirFlow():
     def get(self):
         # Trigger Airflow DAG using the REST API
         dag_id = request.args.get('parameter')
@@ -30,13 +24,9 @@ class StartAirFlow(Resource):
             return jsonify({'error': 'Failed to trigger Airflow DAG'}), 500
 
 
-# Define  route to get details, logs, and output
-details_api = air_api.namespace('details_api', description="Get Details")
-air_api.add_namespace(details_api)
 
-
-@details_api.route('/get_airflow_details', methods=['GET'])
-class GetAirFlow(Resource):
+@airflow_api.route('/get_airflow_details', methods=['GET'])
+class GetAirFlow():
     def get(self):
         # Get the execution_date of the most recent DAG run
         dag_id = request.args.get('parameter')
