@@ -21,4 +21,11 @@ export class ListDatapipelineComponent implements OnInit{
   ngOnInit(): void {
     this.datapiplines = this.datapipelineService.getAll();
   }
+  edit(uuid: string | null) {
+    throw Error('unimplemented error');
+  }
+
+  delete(uuid: string | null) {
+    throw Error('unimplemented error');
+  }
 }

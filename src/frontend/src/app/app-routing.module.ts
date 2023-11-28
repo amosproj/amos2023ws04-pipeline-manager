@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'download', component: DownloadComponent },
   { path:'datapipeline',component: ListDatapipelineComponent},
   { path:'datapipeline/new',component: EditDatapipelineComponent},
-  { path:'datapipeline/<id>',component: EditDatapipelineComponent},
+  { path:'datapipeline/:id',component: EditDatapipelineComponent},
 
   // TODO
   // { path: '**', component: PageNotFoundComponent }
