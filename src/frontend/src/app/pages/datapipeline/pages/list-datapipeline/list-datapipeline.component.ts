@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {DatapipelineService} from "../../../../core/services/datapipeline/datapipeline.service";
 
 
 interface Datapipeline {
@@ -19,10 +20,10 @@ export class ListDatapipelineComponent implements OnInit{
 
   public datapiplines = new Observable<Datapipeline[]>;
 
-  constructor(private http: HttpClient) {
+  constructor(private datapipelineService: DatapipelineService) {
   }
 
   ngOnInit(): void {
-    this.datapiplines = this.http.get('http://localhost:8000/datapipeline') as Observable<Datapipeline[]>;
+    this.datapiplines = this.datapipelineService.getAll();
   }
 }
