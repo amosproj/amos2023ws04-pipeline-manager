@@ -31,7 +31,17 @@ Navigate to the main root folder using:
 cd amos2023ws04-pipeline-manager
 ```
 
-In order to get the system up and running, execute the following:
+As we have secrets in the backend app, we need to copy the template env to an .env
+```bash
+cp src/backend/.env.template src/backen/.env
+```
+And then configure the environment variables to connect to your ASW connections.
+
+To build the images:
+```bash
+docker compose build
+```
+And then in order to get the system up and running, execute the following:
 
 ```bash
 docker compose up -d # in detached mode

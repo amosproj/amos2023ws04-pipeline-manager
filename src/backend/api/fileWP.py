@@ -1,10 +1,13 @@
 from flask import request, jsonify, Blueprint
+
 from database.mongo_repo import fileWPDB
 from database.models.fileWP import FileWP
+from services.auth_service import secure
 
-fileWP = Blueprint("fileWP", __name__)
+fileWP = Blueprint("fileWP", __name__, template_folder='templates')
 
 @fileWP.route('/fileWP',methods=['GET'])
+@secure
 def get_all_fileWPs():
     data = fileWPDB.find()
 
@@ -15,6 +18,7 @@ def get_all_fileWPs():
     return jsonify(allData), 201
 
 @fileWP.route('/fileWP/<id>',methods=['GET'])
+@secure
 def get_fileWP(id):
     d = fileWPDB.find_one({"uuid": id})
     if d:
@@ -23,6 +27,7 @@ def get_fileWP(id):
         return jsonify({'error': 'Entity not found'}), 400
 
 @fileWP.route('/fileWP/<id>',methods=['POST'])
+@secure
 def update_fileWP_by_id(id):
     data = request.json
     if 'name' not in data or 'config' not in data:
@@ -38,6 +43,7 @@ def update_fileWP_by_id(id):
 
 
 @fileWP.route('/fileWP/new',methods=['POST'])
+@secure
 def create_fileWP():
     data = request.json
 
@@ -51,8 +57,9 @@ def create_fileWP():
     return jsonify({'message': 'Entity created successfully'}), 201
 
 
-@fileWP.route('/datapipeline/<id>',methods=['DELETE'])
-def delete_datapipeline(id):
+@fileWP.route('/fileWP/<id>',methods=['DELETE'])
+@secure
+def delete_fileWP(id):
 
     result = fileWPDB.delete_one({"uuid": id})
 

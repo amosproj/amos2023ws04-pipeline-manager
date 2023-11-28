@@ -1,17 +1,16 @@
 from flask import request, render_template, send_file, Blueprint, jsonify
 from werkzeug.utils import secure_filename
+
+from services.auth_service import secure
 from services.upload_to_s3 import upload_to_s3, download_file, list_file, file_name_check
+
 
 upload_api = Blueprint("upload_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {'csv'}
 
 
-@upload_api.route('/')
-def index():
-    return "Register/SignIn Page"
-
-
 @upload_api.route('/upload', methods=['GET', 'POST'])
+@secure
 def upload():
     if request.method == 'POST':
         if 'file' not in request.files:
@@ -31,6 +30,7 @@ def upload():
 
 
 @upload_api.route('/download')
+@secure
 def download():
     # List objects in the bucket
     try:
@@ -47,6 +47,7 @@ def download():
 
 
 @upload_api.route('/download/<filename>')
+@secure
 def download_file_csv(filename):
     try:
         # Download the object from S3
