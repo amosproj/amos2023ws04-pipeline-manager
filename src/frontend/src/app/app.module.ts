@@ -12,6 +12,7 @@ import { DownloadComponent } from './modules/download/download.component';
 import { DataTablesModule } from "angular-datatables";
 import {DatapipelineModule} from "./pages/datapipeline/datapipeline.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ListS3bucketfilesComponent } from './pages/s3bucketfiles/list-s3bucketfiles/list-s3bucketfiles.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SideBarComponent,
     UploadFileComponent,
     DownloadComponent,
+    ListS3bucketfilesComponent,
   ],
   imports: [
     BrowserModule,

@@ -73,7 +73,7 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
       .catch(error => console.error('Error getting presigned URL', error));
   }
 
-  private downloadFile(url: string): void {
+  downloadFile(url: string): void {
     const link = document.createElement('a');
     link.href = url;
     link.download = 'your-file.csv';

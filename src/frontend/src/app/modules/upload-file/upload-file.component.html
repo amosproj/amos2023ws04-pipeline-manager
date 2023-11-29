@@ -1,29 +1,12 @@
-<div><input type="file" (change)="onFileSelected($event)">
+<div><input type="file" accept=".csv,csv" (change)="onFileSelected($event)">
   <button (click)="uploadCsv()">Upload</button>
 </div>
 
 
 
-<!-- <div class="contianer-fluid">
-  <div class="row">
-    <div class="sidebar col-md-3 col-lg-2 p-0 ">
-      <app-side-bar></app-side-bar>
-    </div>
-
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <div>
-        <input type="file" accept=".csv,csv" (change)="onFileSelected($event)" />
-        <button (click)="uploadBackendCSV()">Upload File</button>
-        <button (click)="getallEndpoint()">get all </button>
-        <button (click)="getDataPipelineId('1')">get id pipeline File</button>
-        <button (click)="createDatapipeline()">create-pipeline</button>
-      </div>
-    </main>
-  </div>
 
 
 
-</div> -->
 
 
   <!-- <div>
