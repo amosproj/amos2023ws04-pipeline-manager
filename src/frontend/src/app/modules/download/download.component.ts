@@ -16,7 +16,7 @@ export class DownloadComponent implements OnInit {
   constructor(private restapiservice: RestApiService) { }
 
   downloadCsv(): void {
-    this.restapiservice.downloadCsvFile();
+    this.restapiservice.download();
   }
   // dtoptions: DataTables.Settings = {};
   // dtTrigger: Subject<any> = new Subject<any>();

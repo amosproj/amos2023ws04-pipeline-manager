@@ -1,5 +1,7 @@
 import { Component,OnInit} from '@angular/core';
 import { RestApiService } from 'src/app/core/services/restApi/rest-api.service';
+import {FileService} from "../../../core/services/file/file.service";
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -12,7 +14,11 @@ export class ListS3bucketfilesComponent implements OnInit {
   private selectedFile: File | null = null;
   uploadedFiles: string[] = [];
   downloadheader: any;
-  constructor( private restapi: RestApiService) {
+  public fileDownload: Observable<any>;
+  constructor( private restapi: RestApiService, private fileService: FileService) {
+
+    this.fileDownload = this.fileService.download();
+
   }
   ngOnInit(): void { }
 
@@ -20,7 +26,7 @@ export class ListS3bucketfilesComponent implements OnInit {
     this.selectedFile = event.target.files[0];
   }
 
-  uploadCsv(): void {
+  upload(): void {
     if (this.selectedFile) {
       this.restapi.uploadCsvFile(this.selectedFile)
         .then(() => console.log('File uploaded successfully'))
@@ -30,12 +36,17 @@ export class ListS3bucketfilesComponent implements OnInit {
     }
   }
 
-  downloadCsv(): void {
-      this.restapi.downloadCsvFile();
+  handleDownload(id: string) {
+    this.fileService.downloadById(id).subscribe((value: any) =>
+    {
+      if (value.download_url){
+        window.open(value.download_url)
+      }
+    }
+  );
   }
-
 }
-    
+
 
 
 
