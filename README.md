@@ -33,7 +33,9 @@ cd amos2023ws04-pipeline-manager
 
 As we have secrets in the backend app, we need to copy the template env to an .env
 ```bash
-cp src/backend/.env.template src/backen/.env
+cp src/backend/.env.template src/backend/.env
+cp src/backend/client_secrets.template.json src/backend/client_secrets.json
+
 ```
 And then configure the environment variables to connect to your ASW connections.
 
