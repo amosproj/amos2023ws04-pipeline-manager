@@ -1,7 +1,8 @@
 import { Component,OnInit} from '@angular/core';
 import { RestApiService } from 'src/app/core/services/restApi/rest-api.service';
 import {FileService} from "../../../core/services/file/file.service";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
+import {s3PresignedUploadInfo} from "../../../entity/s3";
 
 
 @Component({
@@ -15,9 +16,11 @@ export class ListS3bucketfilesComponent implements OnInit {
   uploadedFiles: string[] = [];
   downloadheader: any;
   public fileDownload: Observable<any>;
+  public upload_url_info : s3PresignedUploadInfo | null = null;
   constructor( private restapi: RestApiService, private fileService: FileService) {
 
     this.fileDownload = this.fileService.download();
+    this.fileService.get_upload_url().subscribe((value) => this.upload_url_info = value);
 
   }
   ngOnInit(): void { }
@@ -37,6 +40,7 @@ export class ListS3bucketfilesComponent implements OnInit {
   }
 
   handleDownload(id: string) {
+    // TODO bad subscibe as the subscription is not ending here,
     this.fileService.downloadById(id).subscribe((value: any) =>
     {
       if (value.download_url){
@@ -44,6 +48,13 @@ export class ListS3bucketfilesComponent implements OnInit {
       }
     }
   );
+  }
+
+
+  upload_file_to_url(file: any) {
+    if (this.upload_url_info) {
+      this.fileService.upload_file_to_url(this.upload_url_info, file);
+    }
   }
 }
 

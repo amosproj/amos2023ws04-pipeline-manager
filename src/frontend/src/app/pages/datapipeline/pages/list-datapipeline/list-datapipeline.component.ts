@@ -40,7 +40,7 @@ export class ListDatapipelineComponent implements OnInit{
     uuid = uuid ??'null value'
     this.datapipelineService.delete(uuid).subscribe(res => {
       "Delete successful"
-    }, err => { 
+    }, err => {
       "Delete failed"
     });
     // throw Error('unimplemented error');
