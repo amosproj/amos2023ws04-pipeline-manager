@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {DatapipelineService} from "../../../../core/services/datapipeline/datapipeline.service";
@@ -13,16 +14,17 @@ import {Datapipeline} from "../../../../entity/datapipeline";
 })
 export class ListDatapipelineComponent implements OnInit{
 
-  public datapiplines = new Observable<Datapipeline[]>;
+  public datapipelines = new Observable<Datapipeline[]>;
 
-  constructor(private datapipelineService: DatapipelineService) {
+  constructor(private datapipelineService: DatapipelineService,private router : Router) {
   }
 
   ngOnInit(): void {
-    this.datapiplines = this.datapipelineService.getAll();
+    this.datapipelines = this.datapipelineService.getAll();
   }
   edit(uuid: string | null) {
-    throw Error('unimplemented error');
+    this.router.navigate(['/datapipeline', uuid]);
+    // throw Error('unimplemented error');
   }
 
   delete(uuid: string | null) {
