@@ -1,5 +1,4 @@
 <form [formGroup]="datapipelineForm" (ngSubmit)="onSubmit()">
-
   <div>
     <label for="name">
       Name
@@ -14,6 +13,6 @@
     <input id="config" type="text" formControlName="config">
   </div>
 
-  <button class="button" type="submit">Save</button>
-
+  <button class="button" type="submit">Update</button>
+  <button class="button" routerLink="/datapipeline" routerLinkActive="Active" >Back</button>
 </form>
