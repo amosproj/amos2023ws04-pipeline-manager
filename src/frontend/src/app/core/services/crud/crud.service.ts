@@ -39,7 +39,7 @@ export class CrudService<Entity> {
     return this.http.post(environment.SERVER_URL + this.baseUrl + "/" + id, updateEntity) as Observable<Entity>;
   }
 
-  // delete(): Observable<Boolean> {
-  //   return null;
-  // }
+  delete(id:string): Observable<Object> {
+    return this.http.delete(environment.SERVER_URL+this.baseUrl+"/"+id);
+  }
 }
