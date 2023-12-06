@@ -1,4 +1,4 @@
-<button type="button" class="btn btn-primary" routerLink="/datapipeline/new" routerLinkActive="active" >Create new datapipeline</button>
+<button type="button" class="btn btn-primary" routerLink="/newdatapipeline" routerLinkActive="active" >Create new datapipeline</button>
 
 <table class="table table-striped">
   <thead>
@@ -10,7 +10,7 @@
   </tr>
   </thead>
   <tbody>
-  <ng-container *ngFor="let datapipeline of (datapiplines | async); index as i">
+  <ng-container *ngFor="let datapipeline of (datapipelines | async); index as i">
     <tr>
       <th scope="row">{{ i + 1 }}</th>
       <td>

@@ -1,0 +1,28 @@
+<div>
+    <input type="file" (change)="onFileSelected($event)">
+    <button (click)="upload()">Upload</button>
+</div>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Name</th>
+    <th scope="col">StorageClass</th>
+<!--    <th scope="col">Action</th>-->
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let file of (fileDownload | async); index as i">
+    <tr>
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        {{ file.Key }}
+      </td>
+      <td>{{ file.StorageClass }}</td>
+      <td><button type="button" class="btn btn-primary" (click)="handleDownload(file.Key)" >Download</button>
+      </td>
+    </tr>
+  </ng-container>
+  </tbody>
+ </table>
+

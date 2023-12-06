@@ -4,11 +4,13 @@ import { ListDatapipelineComponent } from './pages/list-datapipeline/list-datapi
 import { EditDatapipelineComponent } from './pages/edit-datapipeline/edit-datapipeline.component';
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {ReactiveFormsModule} from "@angular/forms";
+import { CreateDatapipelineComponent } from './pages/create-datapipeline/create-datapipeline.component';
 
 @NgModule({
   declarations: [
     ListDatapipelineComponent,
-    EditDatapipelineComponent
+    EditDatapipelineComponent,
+    CreateDatapipelineComponent
   ],
   imports: [
     CommonModule,

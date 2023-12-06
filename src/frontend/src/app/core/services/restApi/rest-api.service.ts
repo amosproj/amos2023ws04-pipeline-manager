@@ -12,7 +12,7 @@ export class RestApiService {
   private videoToUpload: any;
 
 
-  
+
 
   /*
   localhost:5000/datapipeline GET "gets all the datapipelines"
@@ -67,13 +67,13 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
     });
   }
 
-  downloadCsvFile(): void {
+  download(): void {
     this.getPresignedUrl()
       .then(url => this.downloadFile(url))
       .catch(error => console.error('Error getting presigned URL', error));
   }
 
-  private downloadFile(url: string): void {
+  downloadFile(url: string): void {
     const link = document.createElement('a');
     link.href = url;
     link.download = 'your-file.csv';
@@ -90,26 +90,26 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
 
 
 
-  
- 
-  
+
+
+
   getAllDataPipelines(id?: string): Promise<any>{
-    
+
     return new Promise((resolve) => {
       const options = {
       };
       if (!id) {
         id=""
       }
-      
+
 
       this.http.get(`${this.apiURL}datapipeline`, options).pipe().subscribe(
         (data) => {
           resolve(data)
-          
+
         }
       )
-      
+
     })
 
   }
@@ -134,7 +134,7 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
     });
 
 
-    
+
   }
 
 
@@ -157,7 +157,7 @@ localhost:5000/datapipeline/<id> GET "get the specific datapipeline"
         }
       );
     });
-    
+
   }
 
 

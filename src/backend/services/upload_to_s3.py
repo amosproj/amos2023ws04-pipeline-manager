@@ -1,4 +1,8 @@
+import string
+import random
+
 import boto3
+from botocore.config import Config
 from dotenv import load_dotenv
 from botocore.exceptions import NoCredentialsError
 import os
@@ -28,6 +32,18 @@ def upload_to_s3(path, s3_key):
         return False
 
 
+def get_upload_rul():
+    try:
+        key = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10))
+        s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY,
+                          region_name=REGION)
+        url = s3.generate_presigned_post(Bucket=BUCKET_NAME, Key=key, ExpiresIn=3600)
+        return url
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+
 def get_file_details(path, bucket_name, s3_key):
     # Get details of a specific file
     try:
@@ -51,24 +67,16 @@ def get_file_details(path, bucket_name, s3_key):
 def download_file(file_name):
     try:
         try:
-            s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
+            s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY,
+                              region_name=REGION)
 
-            url = s3.generate_presigned_url('get_object', Params={'Bucket': BUCKET_NAME, 'Key': file_name}, ExpiresIn=3600)
-
+            url = s3.generate_presigned_url('get_object', Params={'Bucket': BUCKET_NAME, 'Key': file_name},
+                                            ExpiresIn=3600)
             return {'download_url': url}
 
         except NoCredentialsError:
             return {'error': 'AWS credentials not available or incorrect.'}
 
-        '''s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY,
-                          region_name=REGION)
-        path = os.path.join('s3files', file_name)
-        print("Starting download...")
-        file_content = s3.download_file(BUCKET_NAME, file_name, path)
-        print("Download completed.")
-
-        file_stream = BytesIO(file_content)
-        return file_stream'''
     except Exception as e:
         print(f"Error: {e}")
 
