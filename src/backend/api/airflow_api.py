@@ -2,59 +2,85 @@ import os
 
 from flask import jsonify, Blueprint, request
 import requests
+from requests.auth import HTTPBasicAuth
 
-from database.models.file_details import TaskExecutionDetails
-from services.upload_to_s3 import download_file
 from dotenv import load_dotenv
+
+from services.auth_service import secure
+from services.upload_to_s3 import download_file
+
 
 load_dotenv()
 airflow_api = Blueprint("airflow_api", __name__, template_folder="templates")
 
+def airflow_get(url):
+    basic = HTTPBasicAuth(os.getenv('AIRFLOW_USERNAME'), os.getenv('AIRFLOW_PASSWORD'))
+    response = requests.get(os.getenv('AIRFLOW_SERVER_URL') + 'api/v1/' + url,
+                            auth=basic, headers={'content-type': 'application/json'})
+    return response
 
-@airflow_api.route('/start_airflow', methods=['GET'])
-class StartAirFlow:
-    def get(self):
-        # Trigger Airflow DAG using the REST API
-        file_name = request.args.get('parameter')
-        download_url = download_file(file_name)
-        dag_id = "triggerTask"
-        airflow_api_url = f'http://airflow-server:8080/api/v1/dags/{dag_id}/dagRuns'
-        response = requests.post(
-            airflow_api_url,
-            json={'conf': {'download_url': download_url}}
-        )
+def airflow_post(url, data):
+    basic = HTTPBasicAuth(os.getenv('AIRFLOW_USERNAME'), os.getenv('AIRFLOW_PASSWORD'))
+    response = requests.post(os.getenv('AIRFLOW_SERVER_URL') + 'api/v1/' + url, data,
+                             auth=basic, headers={'content-type': 'application/json'})
+    return response
+
+
+@airflow_api.route('/dags', methods=['GET'])
+@secure
+def dags():
+    response = airflow_get('dags')
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return jsonify({'error': 'Failed to trigger Airflow DAG'}), 500
+
+@airflow_api.route('/dags/<id>/execute', methods=['GET'])
+@secure
+def dagsExecuteById(id):
+    file_name = request.args.get('parameter')
+    data = { "conf": download_file(file_name) }
+
+    response = airflow_post('dags/' + id + '/dagRuns', json=data)
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return jsonify({'error': 'Failed to trigger Airflow DAG'}), 500
+
+
+@airflow_api.route('/dags/<id>/dagRuns', methods=['GET'])
+@secure
+def dagsDetailsById(id):
+        # Get the execution_date of the most recent DAG run
+        response = airflow_get('dags/' + id + '/dagRuns')
 
         if response.status_code == 200:
-            return jsonify({'message': 'Airflow DAG triggered successfully'})
+            return jsonify(response.json())
         else:
             return jsonify({'error': 'Failed to trigger Airflow DAG'}), 500
 
 
+@airflow_api.route('/dags/<id>/dagRuns/<execution_date>', methods=['GET'])
+@secure
+def dagsDetailsByIdByExecutionDate(id, execution_date):
 
-@airflow_api.route('/get_airflow_details', methods=['GET'])
-class GetAirFlow:
-    def get(self):
-        # Get the execution_date of the most recent DAG run
-        dag_id = request.args.get('parameter')
-        dag_run_url = os.getenv('AIRFLOW_SERVER_URL') + f'/api/v1/dags/{dag_id}/dagRuns'
-        dag_runs = requests.get(dag_run_url).json()['dag_runs']
+    # Get the execution_date of the most recent DAG run
+    response = airflow_get('dags/' + id + '/dagRuns/' + execution_date + '/taskInstances')
 
-        if not dag_runs:
-            return jsonify({'error': 'No DAG runs found'}), 404
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return jsonify({'error': 'Failed to trigger Airflow DAG'}), 500
 
-        execution_date = dag_runs[0]['execution_date']
+@airflow_api.route('/dags/<id>/dagRuns/<execution_date>/taskInstances/<task_instance>', methods=['GET'])
+@secure
+def dagsDetailsByIdByExecutionDateByTaskInstance(id, execution_date, task_instance):
 
-        # Get the task instance
-        task_instance_url = os.getenv('AIRFLOW_SERVER_URL') + f'/api/v1/dags/{dag_id}/dagRuns/{execution_date}/taskInstances'
-        task_instance = requests.get(task_instance_url).json()[0]
+    # Get the execution_date of the most recent DAG run
+    response = airflow_get('dags/' + id + '/dagRuns/' + execution_date + '/taskInstances/' + task_instance + 'logs')
 
-        # Get the task log
-        task_log_url = os.getenv('AIRFLOW_SERVER_URL') + f'/api/v1/dags/{dag_id}/dagRuns/{execution_date}/taskInstances/{task_instance["task_id"]}/logs'
-        task_log = requests.get(task_log_url).text
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return jsonify({'error': 'Failed to trigger Airflow DAG'}), 500
 
-        result = TaskExecutionDetails(
-            execution_date=execution_date,
-            task_instance=task_instance,
-            task_log=task_log)
-
-        return result
