@@ -11,15 +11,17 @@ from services.upload_to_s3 import (
     delete_s3file,
 )
 
-
 upload_api = Blueprint("upload_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {"csv"}
 
 
-@upload_api.route("/upload_url", methods=["GET"])
+@upload_api.route('/upload_url', methods=['GET'])
 @secure
 def upload_url():
-    return jsonify(get_upload_rul())
+    file_name = request.args.get('fileName')
+    if file_name:
+        return jsonify(get_upload_rul(file_name))
+
 
 
 @upload_api.route("/upload", methods=["GET", "POST"])
