@@ -4,14 +4,17 @@ from werkzeug.utils import secure_filename
 from services.auth_service import secure
 from services.upload_to_s3 import upload_to_s3, download_file, list_file, file_name_check, get_upload_rul
 
-
 upload_api = Blueprint("upload_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {'csv'}
+
 
 @upload_api.route('/upload_url', methods=['GET'])
 @secure
 def upload_url():
-    return jsonify(get_upload_rul())
+    file_name = request.args.get('fileName')
+    if file_name:
+        return jsonify(get_upload_rul(file_name))
+
 
 @upload_api.route('/upload', methods=['GET', 'POST'])
 @secure
