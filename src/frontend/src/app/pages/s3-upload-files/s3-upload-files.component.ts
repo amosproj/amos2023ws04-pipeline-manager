@@ -9,33 +9,33 @@ import { S3FileUploadService } from 'src/app/core/services/s3-file-upload.servic
 export class S3UploadFilesComponent {
     private selectedFile!: File;
     public successMessage!: string;
-  
+
     constructor(private fileUploadService: S3FileUploadService) { }
-  
+
     selectFile() {
       const fileInput: HTMLInputElement | null = document.querySelector('input[type="file"]');
-      
+
       if (fileInput !== null) {
         fileInput.click();
-    
+
         fileInput.addEventListener('change', (event) => {
           const selectedFile: File | undefined = fileInput.files?.[0];
-    
+
           if (selectedFile !== undefined) {
             this.selectedFile = selectedFile;
           }
         });
       }
     }
-    
-  
+
+
     uploadFile() {
       if (!this.selectedFile) {
         return;
       }
-  
+
       const formData = this.fileUploadService.uploadCsv(this.selectedFile);
-  
+
       this.fileUploadService.uploadFileToS3(formData).subscribe(
         response => {
           this.successMessage = 'File uploaded successfully!';
@@ -47,8 +47,8 @@ export class S3UploadFilesComponent {
       );
     }
 
-    
-  
+
+
 
   uploadFileWithUrl() {
     if (!this.selectedFile) {

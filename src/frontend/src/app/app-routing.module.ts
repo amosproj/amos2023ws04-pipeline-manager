@@ -15,13 +15,13 @@ const routes: Routes = [
   { path: 'home', component: LandingComponent },
   { path: 'upload', component: UploadFileComponent },
   { path: 'download', component: DownloadComponent },
-  { path:'datapipeline',component: ListDatapipelineComponent},
-  { path:'datapipeline/new',component: CreateDatapipelineComponent},
-  { path:'datapipeline/:id',component: EditDatapipelineComponent},
+  { path: 'datapipeline',component: ListDatapipelineComponent},
+  { path: 'datapipeline/new',component: EditDatapipelineComponent},
+  { path: 'datapipeline/:id',component: EditDatapipelineComponent},
+  { path: 'startpipeline',component: startDataPipelineComponent},
   { path: 's3list', component: ListS3bucketfilesComponent },
-  {path:'newdatapipeline',component:CreateDatapipelineComponent},
-  { path:'s3upload',component: S3UploadFilesComponent},
-  { path:'startpipeline',component: startDataPipelineComponent},
+  { path: 'newdatapipeline',component:CreateDatapipelineComponent},
+  { path: 's3upload',component: S3UploadFilesComponent},
   // TODO
   // { path: '**', component: PageNotFoundComponent }
 ];

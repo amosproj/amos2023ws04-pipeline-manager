@@ -22,10 +22,10 @@ export class S3FileUploadService {
   uploadFileToS3(formData: FormData): Observable<any> {
     return this.http.post(`${this.backendUrl}/upload`, formData);
   }
- 
+
  getPresignedUrl(fileName: string): Observable<string> {
   return this.http.get<string>(`${this.backendUrl}upload_url?fileName=${fileName}`);
- } 
+ }
 
  uploadFileToS3Presigned(presignedUrl: string, formData: FormData): Observable<any> {
   return this.http.put(presignedUrl, formData);
