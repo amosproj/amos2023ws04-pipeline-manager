@@ -5,6 +5,9 @@ import { UploadFileComponent } from './modules/upload-file/upload-file.component
 import { DownloadComponent } from './modules/download/download.component';
 import {ListDatapipelineComponent} from "./pages/datapipeline/pages/list-datapipeline/list-datapipeline.component";
 import {EditDatapipelineComponent} from "./pages/datapipeline/pages/edit-datapipeline/edit-datapipeline.component";
+import { ListS3bucketfilesComponent } from './pages/s3bucketfiles/list-s3bucketfiles/list-s3bucketfiles.component';
+import { CreateDatapipelineComponent } from './pages/datapipeline/pages/create-datapipeline/create-datapipeline.component';
+import {S3UploadFilesComponent} from './pages/s3-upload-files/s3-upload-files.component';
 import {S3UploadFilesComponent} from './pages/s3-upload-files/s3-upload-files.component';
 import { startDataPipelineComponent } from './pages/start-data-pipeline/start-data-pipeline.component';
 
@@ -18,6 +21,9 @@ const routes: Routes = [
   { path:'datapipeline/:id',component: EditDatapipelineComponent},
   { path:'s3upload',component: S3UploadFilesComponent},
   { path:'startpipeline',component: startDataPipelineComponent},
+  { path: 's3list', component: ListS3bucketfilesComponent },
+  {path:'newdatapipeline',component:CreateDatapipelineComponent},
+  { path:'s3upload',component: S3UploadFilesComponent},
   // TODO
   // { path: '**', component: PageNotFoundComponent }
 ];
