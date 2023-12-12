@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'upload', component: UploadFileComponent },
   { path: 'download', component: DownloadComponent },
   { path:'datapipeline',component: ListDatapipelineComponent},
-  { path:'datapipeline/new',component: EditDatapipelineComponent},
+  { path:'datapipeline/new',component: CreateDatapipelineComponent},
   { path:'datapipeline/:id',component: EditDatapipelineComponent},
   { path:'s3upload',component: S3UploadFilesComponent},
   { path:'startpipeline',component: startDataPipelineComponent},
