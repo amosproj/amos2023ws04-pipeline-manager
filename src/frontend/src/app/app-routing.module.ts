@@ -23,6 +23,8 @@ const routes: Routes = [
   { path:'startpipeline',component: startDataPipelineComponent},
   { path: 's3list', component: ListS3bucketfilesComponent },
   {path:'newdatapipeline',component:CreateDatapipelineComponent},
+  { path:'startdatapipeline',component: PipelineComponent},
+
   { path:'s3upload',component: S3UploadFilesComponent},
   { path:'startpipeline',component: startDataPipelineComponent},
   // TODO
