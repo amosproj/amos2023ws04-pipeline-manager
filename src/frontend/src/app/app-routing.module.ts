@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 's3list', component: ListS3bucketfilesComponent },
   {path:'newdatapipeline',component:CreateDatapipelineComponent},
   { path:'s3upload',component: S3UploadFilesComponent},
+  { path:'startpipeline',component: startDataPipelineComponent},
   // TODO
   // { path: '**', component: PageNotFoundComponent }
 ];
