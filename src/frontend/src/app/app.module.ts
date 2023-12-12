@@ -12,9 +12,10 @@ import { DownloadComponent } from './modules/download/download.component';
 import { DataTablesModule } from "angular-datatables";
 import {DatapipelineModule} from "./pages/datapipeline/datapipeline.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PipelineComponent } from './start-data-pipeline/start-data-pipeline.component';
 import { FormsModule } from '@angular/forms';
 import { S3UploadFilesComponent } from './pages/s3-upload-files/s3-upload-files.component';
+import { startDataPipelineComponent } from './pages/start-data-pipeline/start-data-pipeline.component';
+
 
 
 @NgModule({
@@ -25,8 +26,8 @@ import { S3UploadFilesComponent } from './pages/s3-upload-files/s3-upload-files.
     SideBarComponent,
     UploadFileComponent,
     DownloadComponent,
-    PipelineComponent,
     S3UploadFilesComponent,
+    startDataPipelineComponent,
   ],
   imports: [
     BrowserModule,

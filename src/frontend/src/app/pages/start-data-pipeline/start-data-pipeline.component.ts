@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { DatapipelineService } from '../core/services/datapipeline/datapipeline.service';
 import { Observable } from 'rxjs/internal/Observable';
-import { Datapipeline } from '../entity/datapipeline';
 import { HttpClient } from '@angular/common/http';
-import { BackendService } from '../core/services/lists3bucket/lists3bucket.service';
+import { BackendService } from 'src/app/core/services/lists3bucket/lists3bucket.service';
+
 
 @Component({
   selector: 'app-start-data-pipeline',
@@ -11,7 +10,7 @@ import { BackendService } from '../core/services/lists3bucket/lists3bucket.servi
   styleUrls: ['./start-data-pipeline.component.scss']
 })
 
-export class PipelineComponent {
+export class startDataPipelineComponent {
   s3Files: string[] = [];
   pipelines: any[] | undefined;
   selectedS3File: string | undefined;

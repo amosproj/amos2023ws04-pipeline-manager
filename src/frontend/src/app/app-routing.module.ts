@@ -5,10 +5,8 @@ import { UploadFileComponent } from './modules/upload-file/upload-file.component
 import { DownloadComponent } from './modules/download/download.component';
 import {ListDatapipelineComponent} from "./pages/datapipeline/pages/list-datapipeline/list-datapipeline.component";
 import {EditDatapipelineComponent} from "./pages/datapipeline/pages/edit-datapipeline/edit-datapipeline.component";
-import { PipelineComponent } from './start-data-pipeline/start-data-pipeline.component';
-
-
 import {S3UploadFilesComponent} from './pages/s3-upload-files/s3-upload-files.component';
+import { startDataPipelineComponent } from './pages/start-data-pipeline/start-data-pipeline.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,9 +16,8 @@ const routes: Routes = [
   { path:'datapipeline',component: ListDatapipelineComponent},
   { path:'datapipeline/new',component: EditDatapipelineComponent},
   { path:'datapipeline/:id',component: EditDatapipelineComponent},
-  { path:'startdatapipeline',component: PipelineComponent},
-
   { path:'s3upload',component: S3UploadFilesComponent},
+  { path:'startpipeline',component: startDataPipelineComponent},
   // TODO
   // { path: '**', component: PageNotFoundComponent }
 ];
