@@ -19,11 +19,14 @@ def airflow_get(url):
                             auth=basic, headers={'content-type': 'application/json'})
     return response
 
-def airflow_post(url, data):
+def airflow_post(url, json_object):
     basic = HTTPBasicAuth(os.getenv('AIRFLOW_USERNAME'), os.getenv('AIRFLOW_PASSWORD'))
-    response = requests.post(os.getenv('AIRFLOW_SERVER_URL') + 'api/v1/' + url, data,
+    response = requests.post(os.getenv('AIRFLOW_SERVER_URL') + 'api/v1/' + url, json=json_object,
                              auth=basic, headers={'content-type': 'application/json'})
-    return response
+    if response.status_code == 200:
+        return response
+    else:
+        return jsonify({'error': 'Failed to post to apache airflow'}), 500
 
 
 @airflow_api.route('/dags', methods=['GET'])
@@ -39,9 +42,9 @@ def dags():
 @secure
 def dagsExecuteById(id):
     file_name = request.args.get('parameter')
-    data = { "conf": download_file(file_name) }
+    json_config = {'conf': download_file(file_name)}
 
-    response = airflow_post('dags/' + id + '/dagRuns', json=data)
+    response = airflow_post('dags/' + id + '/dagRuns', json_config)
     if response.status_code == 200:
         return jsonify(response.json())
     else:
