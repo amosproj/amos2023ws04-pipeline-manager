@@ -17,7 +17,6 @@ import { FormsModule } from '@angular/forms';
 import { S3UploadFilesComponent } from './pages/s3-upload-files/s3-upload-files.component';
 import { startDataPipelineComponent } from './pages/start-data-pipeline/start-data-pipeline.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
