@@ -26,7 +26,6 @@ const routes: Routes = [
   { path:'startdatapipeline',component: PipelineComponent},
 
   { path:'s3upload',component: S3UploadFilesComponent},
-  { path:'startpipeline',component: startDataPipelineComponent},
   // TODO
   // { path: '**', component: PageNotFoundComponent }
 ];
