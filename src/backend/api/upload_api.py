@@ -54,7 +54,11 @@ def download():
     try:
         objects = list_file()
         if objects:
-            return jsonify(objects)
+            files = [obj['Key'] for obj in objects]
+            # return render_template('list.html', files=files)
+            return jsonify({"files": files})
+        else:
+            return "The bucket is empty."
 
     except Exception as e:
         return jsonify({f"Error: {e}"})
