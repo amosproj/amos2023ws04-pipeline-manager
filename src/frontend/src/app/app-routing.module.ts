@@ -5,8 +5,9 @@ import { UploadFileComponent } from './modules/upload-file/upload-file.component
 import { DownloadComponent } from './modules/download/download.component';
 import {ListDatapipelineComponent} from "./pages/datapipeline/pages/list-datapipeline/list-datapipeline.component";
 import {EditDatapipelineComponent} from "./pages/datapipeline/pages/edit-datapipeline/edit-datapipeline.component";
-import { ListS3bucketfilesComponent } from './pages/s3bucketfiles/list-s3bucketfiles/list-s3bucketfiles.component';
-import { CreateDatapipelineComponent } from './pages/datapipeline/pages/create-datapipeline/create-datapipeline.component';
+import { PipelineComponent } from './start-data-pipeline/start-data-pipeline.component';
+
+
 import {S3UploadFilesComponent} from './pages/s3-upload-files/s3-upload-files.component';
 
 const routes: Routes = [
@@ -15,10 +16,10 @@ const routes: Routes = [
   { path: 'upload', component: UploadFileComponent },
   { path: 'download', component: DownloadComponent },
   { path:'datapipeline',component: ListDatapipelineComponent},
-  { path:'datapipeline/new',component: CreateDatapipelineComponent},
+  { path:'datapipeline/new',component: EditDatapipelineComponent},
   { path:'datapipeline/:id',component: EditDatapipelineComponent},
-  { path: 's3list', component: ListS3bucketfilesComponent },
-  {path:'newdatapipeline',component:CreateDatapipelineComponent},
+  { path:'startdatapipeline',component: PipelineComponent},
+
   { path:'s3upload',component: S3UploadFilesComponent},
   // TODO
   // { path: '**', component: PageNotFoundComponent }
