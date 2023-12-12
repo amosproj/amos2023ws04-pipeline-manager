@@ -17,6 +17,8 @@ import { S3UploadFilesComponent } from './pages/s3-upload-files/s3-upload-files.
 import { startDataPipelineComponent } from './pages/start-data-pipeline/start-data-pipeline.component';
 
 import { ListS3bucketfilesComponent } from './pages/s3bucketfiles/list-s3bucketfiles/list-s3bucketfiles.component';
+import { PipelineComponent } from './start-data-pipeline/start-data-pipeline.component';
+import { FormsModule } from '@angular/forms';
 import { S3UploadFilesComponent } from './pages/s3-upload-files/s3-upload-files.component';
 
 
@@ -28,7 +30,7 @@ import { S3UploadFilesComponent } from './pages/s3-upload-files/s3-upload-files.
     SideBarComponent,
     UploadFileComponent,
     DownloadComponent,
-    ListS3bucketfilesComponent,
+    PipelineComponent,
     S3UploadFilesComponent,
     S3UploadFilesComponent,
     startDataPipelineComponent,
