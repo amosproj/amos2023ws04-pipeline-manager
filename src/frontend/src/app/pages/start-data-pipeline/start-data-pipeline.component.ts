@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
-import { HttpClient } from '@angular/common/http';
 import { BackendService } from 'src/app/core/services/lists3bucket/lists3bucket.service';
 
 
