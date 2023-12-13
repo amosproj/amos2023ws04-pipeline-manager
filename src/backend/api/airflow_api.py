@@ -87,3 +87,15 @@ def dagsDetailsByIdByExecutionDateByTaskInstance(id, execution_date, task_instan
     else:
         return jsonify({'error': 'Failed to trigger Airflow DAG'}), 500
 
+
+@airflow_api.route('/inputData', methods=['POST'])
+def test_input_endpoint():
+
+    data = request.json
+    print(data)
+    print(id)
+    if data:
+        return jsonify({'message': 'successful data transfer for: '}), 200
+    else:
+        return jsonify({'error': 'Entity not found'}), 400
+
