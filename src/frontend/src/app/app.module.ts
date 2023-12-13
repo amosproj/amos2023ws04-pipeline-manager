@@ -12,7 +12,10 @@ import { DownloadComponent } from './modules/download/download.component';
 import { DataTablesModule } from "angular-datatables";
 import {DatapipelineModule} from "./pages/datapipeline/datapipeline.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ListS3bucketfilesComponent } from './pages/s3bucketfiles/list-s3bucketfiles/list-s3bucketfiles.component';
+import { FormsModule } from '@angular/forms';
+import { S3UploadFilesComponent } from './pages/s3-upload-files/s3-upload-files.component';
+import { startDataPipelineComponent } from './pages/start-data-pipeline/start-data-pipeline.component';
+
 
 
 @NgModule({
@@ -23,7 +26,8 @@ import { ListS3bucketfilesComponent } from './pages/s3bucketfiles/list-s3bucketf
     SideBarComponent,
     UploadFileComponent,
     DownloadComponent,
-    ListS3bucketfilesComponent,
+    S3UploadFilesComponent,
+    startDataPipelineComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +36,8 @@ import { ListS3bucketfilesComponent } from './pages/s3bucketfiles/list-s3bucketf
     HttpClientModule,
     DataTablesModule,
     DatapipelineModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
