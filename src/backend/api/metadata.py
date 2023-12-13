@@ -34,7 +34,7 @@ def get_all_datapipeline_metadatas():
             )
         else:
             continue
-        return jsonify(allData), 201
+    return jsonify(allData), 201
 
 
 @metadata.route("/s3files_metadata", methods=["GET"])
