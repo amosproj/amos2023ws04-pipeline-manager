@@ -2,38 +2,52 @@ from flask import request, render_template, send_file, Blueprint, jsonify
 from werkzeug.utils import secure_filename
 
 from services.auth_service import secure
-from services.upload_to_s3 import upload_to_s3, download_file, list_file, file_name_check, get_upload_rul
+from services.upload_to_s3 import (
+    upload_to_s3,
+    download_file,
+    list_file,
+    file_name_check,
+    get_upload_rul,
+    delete_s3file,
+)
 
 
 upload_api = Blueprint("upload_api", __name__, template_folder="templates")
-ALLOWED_EXTENSIONS = {'csv'}
+ALLOWED_EXTENSIONS = {"csv"}
 
-@upload_api.route('/upload_url', methods=['GET'])
+
+@upload_api.route("/upload_url", methods=["GET"])
 @secure
 def upload_url():
     return jsonify(get_upload_rul())
 
-@upload_api.route('/upload', methods=['GET', 'POST'])
+
+@upload_api.route("/upload", methods=["GET", "POST"])
 @secure
 def upload():
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            return jsonify({'error': 'No file part'})
-        file = request.files['file']
+    if request.method == "POST":
+        if "file" not in request.files:
+            return jsonify({"error": "No file part"})
+        file = request.files["file"]
         if file_name_check(file.filename):
-            print(f"File '{file.filename}' already exists in the bucket. Choose appropriate action.")
+            print(
+                f"File '{file.filename}' already exists in the bucket. Choose appropriate action."
+            )
             return jsonify(
-                {'message': f"File '{file.filename}' already exists in the bucket. Choose appropriate action."})
+                {
+                    "message": f"File '{file.filename}' already exists in the bucket. Choose appropriate action."
+                }
+            )
         else:
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 upload_to_s3(file, filename)
-                return jsonify({'message': 'File uploaded successfully'})
+                return jsonify({"message": "File uploaded successfully"})
 
-    return render_template('upload.html')
+    return render_template("upload.html")
 
 
-@upload_api.route('/download')
+@upload_api.route("/download")
 @secure
 def download():
     # List objects in the bucket
@@ -46,7 +60,7 @@ def download():
         return jsonify({f"Error: {e}"})
 
 
-@upload_api.route('/download/<filename>')
+@upload_api.route("/download/<filename>")
 @secure
 def download_file_csv(filename):
     try:
@@ -59,7 +73,14 @@ def download_file_csv(filename):
         return f"Error: {e}"
 
 
-'''@upload_api.route('/uploadcsv', methods=['POST'])
+@upload_api.route("/delete/<file_name>", methods=["DELETE"])
+@secure
+def delete_file_s3(file_name):
+    response = delete_s3file(file_name)
+    return jsonify(response)
+
+
+"""@upload_api.route('/uploadcsv', methods=['POST'])
 def uploadcsv():
     BUCKET_NAME = os.getenv('BUCKET_NAME')
 
@@ -86,14 +107,13 @@ def uploadcsv():
             return jsonify({'error': 'Failed to upload file to AWS S3'})
 
     except Exception as e:
-        return jsonify({'error': str(e)})'''
+        return jsonify({'error': str(e)})"""
 
 
-@upload_api.route('/ping', methods=['POST'])
+@upload_api.route("/ping", methods=["POST"])
 def ping():
-    return jsonify({'message': 'Ping successfully'})
+    return jsonify({"message": "Ping successfully"})
 
 
 def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
