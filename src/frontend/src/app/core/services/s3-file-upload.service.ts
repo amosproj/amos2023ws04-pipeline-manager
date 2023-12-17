@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class S3FileUploadService {
 
-  private backendUrl = "http://192.168.1.41:5000/"; // actual backend URL
+  private backendUrl = environment.BACKEND_URL; // actual backend URL
 
   constructor(private http: HttpClient) { }
 
@@ -28,6 +30,9 @@ export class S3FileUploadService {
  uploadFileToS3Presigned(presignedUrl: string, formData: FormData): Observable<any> {
   return this.http.put(presignedUrl, formData);
 
+ }
+ storeFileDetails(fileName: string): Observable<string> {
+  return this.http.get<string>(`${this.backendUrl}/store_file_data?fileName=${fileName}`);
  }
 }
 
