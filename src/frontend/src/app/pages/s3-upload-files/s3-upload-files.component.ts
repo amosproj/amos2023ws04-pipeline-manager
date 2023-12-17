@@ -59,7 +59,7 @@ export class S3UploadFilesComponent {
 
     this.fileUploadService.getPresignedUrl(this.selectedFile.name).subscribe(
       (presignedUrl) => {
-        this.uploadToPresignedUrl(presignedUrl, formData);
+        this.uploadToPresignedUrl(presignedUrl, formData, this.selectedFile.name);
       },
       (error) => {
         console.error('Error getting presigned URL:', error);
@@ -67,11 +67,12 @@ export class S3UploadFilesComponent {
     );
   }
 
-  private uploadToPresignedUrl(presignedUrl: string, formData: FormData): void {
+  private uploadToPresignedUrl(presignedUrl: string, formData: FormData, fileName: string): void {
     this.fileUploadService.uploadFileToS3Presigned(presignedUrl, formData).subscribe(
       (response) => {
         this.successMessage = 'File uploaded successfully!';
         console.log(response);
+        this.fileUploadService.storeFileDetails(fileName)
       },
       (error) => {
         console.error('Error uploading file:', error);

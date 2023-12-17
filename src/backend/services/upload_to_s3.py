@@ -1,13 +1,11 @@
 import string
 import random
-
+import uuid
 import boto3
-from botocore.config import Config
 from dotenv import load_dotenv
 from botocore.exceptions import NoCredentialsError
 import os
 from database.models.s3_detials_entity import S3ObjectDetails
-from io import BytesIO
 
 # AWS S3 configuration
 AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY')
@@ -32,9 +30,21 @@ def upload_to_s3(path, s3_key):
         return False
 
 
+def generated_key_check(file_name):
+    if file_name_check(file_name):
+        get_name = file_name.split("_")
+        key = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10))
+        file_name = str(key) + "_" + get_name[1]
+        generated_key_check(file_name)
+        return file_name
+    else:
+        return file_name
+
+
 def get_upload_rul(file_name):
     try:
         key = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10))
+        file_name = generated_key_check(str(key) + "_" + file_name)
         s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY,
                           region_name=REGION)
         url = s3.generate_presigned_url('put_object', Params={'Bucket': BUCKET_NAME, 'Key': file_name}, ExpiresIn=3600)
