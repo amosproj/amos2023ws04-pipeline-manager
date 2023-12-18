@@ -32,15 +32,16 @@ def upload_to_s3(path, s3_key):
         return False
 
 
-def get_upload_rul(file_name):
+def get_upload_rul():
     try:
         key = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10))
         s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY,
                           region_name=REGION)
-        url = s3.generate_presigned_url('put_object', Params={'Bucket': BUCKET_NAME, 'Key': file_name}, ExpiresIn=3600)
+        url = s3.generate_presigned_post(Bucket=BUCKET_NAME, Key=key, ExpiresIn=3600)
         return url
     except Exception as e:
         print(f"Error: {e}")
+
 
 
 def get_file_details(path, bucket_name, s3_key):
