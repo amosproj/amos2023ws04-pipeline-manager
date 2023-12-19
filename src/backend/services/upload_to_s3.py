@@ -9,6 +9,7 @@ import os
 from database.models.s3_detials_entity import S3ObjectDetails
 from io import BytesIO
 import humanfriendly
+import humanfriendly
 
 # AWS S3 configuration
 AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
@@ -117,10 +118,15 @@ def list_file():
         objects = response.get("Contents", [])
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         for size in objects:
             size["Size"] = humanfriendly.format_size(size["Size"])
 =======
 >>>>>>> 367d186 (feat(delete file in the s3bucket):created a service and endpoint for delete a file in the s3bucket)
+=======
+        for size in objects:
+            size["Size"] = humanfriendly.format_size(size["Size"])
+>>>>>>> 7c73c00 (fix(make size be more readable):make s3 bucket file size more readable)
 =======
         for size in objects:
             size["Size"] = humanfriendly.format_size(size["Size"])
