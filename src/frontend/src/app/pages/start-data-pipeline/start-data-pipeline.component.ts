@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { BackendService } from 'src/app/core/services/lists3bucket/lists3bucket.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { HttpClient } from '@angular/common/http';
+import { startdatapipeline } from 'src/app/core/services/lists3bucket/lists3bucket.service';
 
 
 @Component({
@@ -14,7 +16,7 @@ export class startDataPipelineComponent {
   selectedS3File: string | undefined;
   selectedPipeline: any | undefined;
 
-  constructor(private backendService: BackendService) {}
+  constructor(private backendService: startdatapipeline) {}
 
   getS3Files() {
     this.backendService.getS3Files().subscribe(

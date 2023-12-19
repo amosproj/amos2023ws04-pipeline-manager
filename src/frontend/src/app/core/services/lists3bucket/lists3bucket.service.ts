@@ -6,8 +6,8 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class BackendService {
-  private baseUrl = environment.BACKEND_URL;
+export class startdatapipeline {
+  private baseUrl = environment.SERVER_URL;
 
   constructor(private http: HttpClient) {}
 
