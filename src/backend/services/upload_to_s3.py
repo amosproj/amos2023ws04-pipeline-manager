@@ -8,6 +8,7 @@ from botocore.exceptions import NoCredentialsError
 import os
 from database.models.s3_detials_entity import S3ObjectDetails
 from io import BytesIO
+import humanfriendly
 
 # AWS S3 configuration
 AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
@@ -114,6 +115,8 @@ def list_file():
         )
         response = s3.list_objects(Bucket=BUCKET_NAME)
         objects = response.get("Contents", [])
+        for size in objects:
+            size["Size"] = humanfriendly.format_size(size["Size"])
         print("s3 connected")
         return objects
     except Exception as e:

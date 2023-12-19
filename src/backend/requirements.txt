@@ -5,3 +5,4 @@ python-dotenv>=0.19,<1.0
 requests==2.31.0
 Flask-OIDC==2.1.1
 flask_cors==4.0.0
+humanfriendly==10.0
