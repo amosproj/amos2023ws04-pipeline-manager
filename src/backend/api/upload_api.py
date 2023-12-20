@@ -2,7 +2,8 @@ from flask import request, render_template, send_file, Blueprint, jsonify
 from werkzeug.utils import secure_filename
 
 from services.auth_service import secure
-from services.upload_to_s3 import upload_to_s3, download_file, list_file, file_name_check, get_upload_rul
+from services.upload_to_s3 import upload_to_s3, download_file, list_file, file_name_check, get_upload_url
+from services.store_s3metadata import insert_one_s3file_metadata
 
 from services.upload_to_s3 import upload_to_s3, download_file, list_file, file_name_check, get_upload_url
 from services.store_s3metadata import insert_one_s3file_metadata
