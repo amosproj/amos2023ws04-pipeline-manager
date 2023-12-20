@@ -14,7 +14,6 @@ import {DatapipelineModule} from "./pages/datapipeline/datapipeline.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListS3bucketfilesComponent } from './pages/s3bucketfiles/list-s3bucketfiles/list-s3bucketfiles.component';
 import { FormsModule } from '@angular/forms';
-import { PipelineComponent } from './start-data-pipeline/start-data-pipeline.component';
 import { S3UploadFilesComponent } from './pages/s3-upload-files/s3-upload-files.component';
 import { startDataPipelineComponent } from './pages/start-data-pipeline/start-data-pipeline.component';
 
@@ -29,14 +28,12 @@ import { startDataPipelineComponent } from './pages/start-data-pipeline/start-da
     UploadFileComponent,
     DownloadComponent,
     ListS3bucketfilesComponent,
-    PipelineComponent,
     S3UploadFilesComponent,
     startDataPipelineComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     HttpClientModule,
     DataTablesModule,
     DatapipelineModule,
