@@ -69,4 +69,26 @@ def delete_dp_run(id):
     else:
         return jsonify({'error': 'Entity not found'}), 400
 
+@dp_run.route('/inputData', methods=['POST'])
+# @public
+def input_endpoint():
 
+    data = request.json
+
+    error_flag = False
+    if 'error' in data:
+        error_flag = True
+    if 'executionId' not in data or 'result' not in data:
+        return jsonify({'error': 'Missing id or result in request'}), 400
+
+    d = datapipelineRunDB.find_one({"executionId": data['executionId']})
+    if not d:
+        return jsonify({'error': 'Entity not found'}), 400
+
+    if error_flag:
+        datapipelineRunDB.update_one({"executionId": data['executionId']}, {'$set': { 'state': "FAILED" }})
+    else:
+        # TODO add to result not overwrite
+        datapipelineRunDB.update_one({"executionId": data['executionId']}, {'$set': { 'state': "SUCCESSFULL", 'result': data['result'] }})
+
+    return jsonify({'executionId': d['executionId'], 'result': d['result'], 'fileId': d['fileId'], 'datapipelineId': d['datapipelineId']}), 201
