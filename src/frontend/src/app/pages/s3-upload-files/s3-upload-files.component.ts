@@ -9,6 +9,7 @@ import { S3FileUploadService } from 'src/app/core/services/s3-file-upload.servic
 export class S3UploadFilesComponent {
     private selectedFile!: File;
     public successMessage!: string;
+    public errorMessage!: string;
 
     constructor(private fileUploadService: S3FileUploadService) { }
 
@@ -58,8 +59,10 @@ export class S3UploadFilesComponent {
     const formData = this.fileUploadService.uploadCsv(this.selectedFile);
 
     this.fileUploadService.getPresignedUrl(this.selectedFile.name).subscribe(
-      (presignedUrl) => {
-        this.uploadToPresignedUrl(presignedUrl, formData, this.selectedFile.name);
+      (response: { presignedUrl: string, fileName: string }) => {
+        const { presignedUrl, fileName } = response;
+        this.uploadToPresignedUrl(presignedUrl, formData, fileName);
+        console.log(presignedUrl)
       },
       (error) => {
         console.error('Error getting presigned URL:', error);
@@ -71,12 +74,26 @@ export class S3UploadFilesComponent {
     this.fileUploadService.uploadFileToS3Presigned(presignedUrl, formData).subscribe(
       (response) => {
         this.successMessage = 'File uploaded successfully!';
+        this.store_file_data(fileName)
         console.log(response);
-        this.fileUploadService.storeFileDetails(fileName)
+
       },
       (error) => {
         console.error('Error uploading file:', error);
+      this.errorMessage = 'Error uploading file. Please try again.';
+
       }
     );
   }
+  private store_file_data(fileName: string): void {
+    this.fileUploadService.storeFileDetails(fileName).subscribe(
+      (response) =>{
+      },
+      (error) => {
+        console.error('Error storing file:', error);
+      this.errorMessage = 'Error Storing file. Please try again.';
+
+      })
+  }
 }
+

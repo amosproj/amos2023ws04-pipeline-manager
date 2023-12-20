@@ -2,7 +2,8 @@ from flask import request, render_template, send_file, Blueprint, jsonify
 from werkzeug.utils import secure_filename
 
 from services.auth_service import secure
-from services.upload_to_s3 import upload_to_s3, download_file, list_file, file_name_check, get_upload_rul
+from services.upload_to_s3 import upload_to_s3, download_file, list_file, file_name_check, get_upload_url
+from services.store_s3metadata import insert_one_s3file_metadata
 
 upload_api = Blueprint("upload_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {'csv'}
@@ -13,7 +14,7 @@ ALLOWED_EXTENSIONS = {'csv'}
 def upload_url():
     file_name = request.args.get('fileName')
     if file_name:
-        return jsonify(get_upload_rul(file_name))
+        return jsonify(get_upload_url(file_name))
 
 
 @upload_api.route('/upload', methods=['GET', 'POST'])
@@ -66,39 +67,20 @@ def download_file_csv(filename):
         return f"Error: {e}"
 
 
-'''@upload_api.route('/uploadcsv', methods=['POST'])
-def uploadcsv():
-    BUCKET_NAME = os.getenv('BUCKET_NAME')
-
-    try:
-        # Check if the file part is present
-        if 'file' not in request.files:
-            return jsonify({'error': 'No file part'})
-
-        file = request.files['file']
-
-        # Check if the file is uploaded
-        if file.filename == '':
-            return jsonify({'error': 'No selected file'})
-
-        # Save the file to a temporary location
-        temp_file_path = '/tmp/' + file.filename
-        file.save(temp_file_path)
-
-        # Upload the file to AWS S3
-        s3_key = 'uploads/' + file.filename  # S3 object key (adjust as needed)
-        if upload_to_s3(temp_file_path, BUCKET_NAME, s3_key):
-            return jsonify({'message': 'File uploaded successfully'})
-        else:
-            return jsonify({'error': 'Failed to upload file to AWS S3'})
-
-    except Exception as e:
-        return jsonify({'error': str(e)})'''
-
-
 @upload_api.route('/ping', methods=['POST'])
 def ping():
     return jsonify({'message': 'Ping successfully'})
+
+
+@upload_api.route('/store_file_data', methods=['GET'])
+@secure
+def store_file_data():
+    file_name = request.args.get('fileName')
+    print(file_name)
+    insert_one_s3file_metadata(file_name)
+
+    if file_name:
+        return jsonify({'message': 'Saved successfully'})
 
 
 def allowed_file(filename):
