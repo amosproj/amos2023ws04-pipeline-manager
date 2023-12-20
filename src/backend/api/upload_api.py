@@ -7,19 +7,23 @@ from services.upload_to_s3 import (
     download_file,
     list_file,
     file_name_check,
-    get_upload_rul,
+    get_upload_url,
     delete_s3file,
 )
 
+from services.store_s3metadata import insert_one_s3file_metadata
 
 upload_api = Blueprint("upload_api", __name__, template_folder="templates")
 ALLOWED_EXTENSIONS = {"csv"}
 
 
-@upload_api.route("/upload_url", methods=["GET"])
+@upload_api.route('/upload_url', methods=['GET'])
 @secure
 def upload_url():
-    return jsonify(get_upload_rul())
+    file_name = request.args.get('fileName')
+    if file_name:
+        return jsonify(get_upload_url(file_name))
+
 
 
 @upload_api.route("/upload", methods=["GET", "POST"])
@@ -54,7 +58,11 @@ def download():
     try:
         objects = list_file()
         if objects:
-            return jsonify(objects)
+            files = [obj['Key'] for obj in objects]
+            # return render_template('list.html', files=files)
+            return jsonify({"files": files})
+        else:
+            return "The bucket is empty."
 
     except Exception as e:
         return jsonify({f"Error: {e}"})
@@ -113,6 +121,17 @@ def uploadcsv():
 @upload_api.route("/ping", methods=["POST"])
 def ping():
     return jsonify({"message": "Ping successfully"})
+
+
+@upload_api.route('/store_file_data', methods=['GET'])
+@secure
+def store_file_data():
+    file_name = request.args.get('fileName')
+    print(file_name)
+    insert_one_s3file_metadata(file_name)
+
+    if file_name:
+        return jsonify({'message': 'Saved successfully'})
 
 
 def allowed_file(filename):
