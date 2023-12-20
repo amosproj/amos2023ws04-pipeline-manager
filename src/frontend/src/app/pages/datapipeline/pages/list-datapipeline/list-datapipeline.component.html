@@ -17,9 +17,13 @@
         {{ datapipeline.name }}
       </td>
       <td>{{ datapipeline.config }}</td>
-      <td><button type="button" class="btn btn-primary" (click)="edit(datapipeline.uuid)" >Edit</button>
-      <button type="button" class="btn btn-danger" (click)="delete(datapipeline.uuid)">Delete</button>
-        <button type="button" class="btn btn-info" (click)="upload(datapipeline.uuid)">Upload</button></td>
+      <td>
+        <form action="">
+          <button type="button" class="btn btn-primary" (click)="edit(datapipeline.uuid)" >Edit</button>
+          <button class="btn btn-danger" (click)="delete(datapipeline.uuid)">Delete</button>
+          <button type="button" class="btn btn-info" (click)="upload(datapipeline.uuid)">Upload</button>
+        </form>
+    </td>
     </tr>
   </ng-container>
   </tbody>
