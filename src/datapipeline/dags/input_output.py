@@ -1,11 +1,11 @@
 import requests
-from airflow import DAG, HttpOperator
-from datetime import datetime, timedelta
+from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 import pandas as pd
-from airflow.models import Variable
+from datetime import datetime, timedelta
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 import json
+import io
 from airflow.providers.http.operators.http import SimpleHttpOperator
 
 default_args = {
@@ -16,10 +16,19 @@ default_args = {
 
 
 def read_and_count_words(**kwargs):
-    download_url = Variable.get("download_url", default_var="")
-    if not download_url:
-        print("Download URL not provided.")
+    download_url = kwargs['dag_run'].conf.get('download_url')
+    executionId = kwargs['dag_run'].conf.get('executionId')
+
+    if not executionId:
+        kwargs['ti'].xcom_push(key="test-identifier", value={"error": "executionId not provided."})
+        print("Error download url not found")
         return
+
+    if not download_url :
+        kwargs['ti'].xcom_push(key="test-identifier", value={"error": "Download URL not provided.", "executionId": executionId })
+        print("Error download url not found")
+        return
+
 
     # Download the file from the provided URL
     response = requests.get(download_url)
@@ -28,29 +37,36 @@ def read_and_count_words(**kwargs):
 
         # Now 'file_content' contains the content of the file
         # Proceed with processing the file content as needed
-        file_reader = pd.read_csv(pd.compat.StringIO(file_content))
+        file_reader = pd.read_csv(io.StringIO(file_content))
         print("File read successfully")
         print(file_reader.head())
         concatenated_text = file_reader.apply(lambda x: ' '.join(x.astype(str)), axis=1)
-        total_word_count = concatenated_text.str.split().str.len().sum()
+        print(concatenated_text)
+        # TODO
+        total_word_count = 50 #concatenated_text.str.split().str.len().sum()
         print(f"Total word count is {total_word_count}")
+        kwargs['ti'].xcom_push(key="test-identifier", value={"result": {"word_count": total_word_count},
+                                                             "executionId": executionId})
     else:
         print(f"Failed to download file from URL: {download_url}")
+        kwargs['ti'].xcom_push(key="test-identifier", value={"error": "Failed to download file from URL",
+                                                             "executionId": executionId})
+        return
 
 
 dag = DAG(
-    dag_id="output_dag",
+    dag_id="input_output",
     default_args=default_args,
-    description="DAG counting words",
+    description="DAG to test input and output",
     start_date=datetime(2023, 11, 4, 2),
-    schedule_interval='@daily'
+    schedule_interval=None
 )
 
 trigger_task = TriggerDagRunOperator(
     task_id="triggerTask",
     trigger_dag_id="output_dag",
     conf={
-        'download_url': 'https://example.com/your-file.csv'
+        'Error': 'No conf given.'
     },
     dag=dag,
 )
@@ -62,13 +78,15 @@ task_read_and_count_words = PythonOperator(
     dag=dag,
 )
 
+
 send_response = SimpleHttpOperator(
     task_id="sendresponse",
     http_conn_id="test-connection",
     method="POST",
     endpoint="inputData",
-    data=json.dumps({'test': 'hello this is data from http operator'}),
+    data=json.dumps("{{ task_instance.xcom_pull(task_ids='readAndCountWords', key='test-identifier') }}"),
     headers={"Content-Type": "application/json"},
+    response_check=lambda response: True if response.status_code == 200 else False,
     dag=dag
 )
 
