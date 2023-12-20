@@ -1,7 +1,7 @@
-import { Component,OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { RestApiService } from 'src/app/core/services/restApi/rest-api.service';
 import {FileService} from "../../../core/services/file/file.service";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Subject, Observable} from "rxjs";
 import {s3PresignedUploadInfo} from "../../../entity/s3";
 
 
@@ -11,19 +11,38 @@ import {s3PresignedUploadInfo} from "../../../entity/s3";
   styleUrls: ['./list-s3bucketfiles.component.scss'],
 
 })
-export class ListS3bucketfilesComponent implements OnInit {
+
+export class ListS3bucketfilesComponent implements OnInit,OnDestroy {
   private selectedFile: File | null = null;
   uploadedFiles: string[] = [];
   downloadheader: any;
-  public fileDownload: Observable<any>;
-  public upload_url_info : s3PresignedUploadInfo | null = null;
+  public fileDownload: any;
+  public upload_url_info: s3PresignedUploadInfo | null = null;
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+
   constructor( private restapi: RestApiService, private fileService: FileService) {
 
-    this.fileDownload = this.fileService.download();
-    this.fileService.get_upload_url().subscribe((value) => this.upload_url_info = value);
-
+    // this.fileDownload = this.fileService.download();
   }
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.dtOptions = {
+      pagingType:"full_numbers"
+    };
+    this.s3_file_details();
+    this.fileService.get_upload_url().subscribe((value) => this.upload_url_info = value);
+  }
+  ngOnDestroy(): void {
+    
+  }
+
+  s3_file_details(): void{
+    this.fileDownload = this.fileService.download().subscribe(res => { 
+      this.fileDownload = res;
+      this.dtTrigger.next(null);
+    })
+   }
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
@@ -50,6 +69,10 @@ export class ListS3bucketfilesComponent implements OnInit {
   );
   }
 
+  handleDelete(id: string) {
+    this.fileService.deleteById(id).subscribe((value: any) =>
+    {});
+  }
 
   upload_file_to_url(file: any) {
     if (this.upload_url_info) {
