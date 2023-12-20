@@ -1,6 +1,8 @@
 import os
 import boto3
 from dotenv import load_dotenv
+from services.upload_to_s3 import get_file_details
+from database.mongo_repo import s3filename
 
 # from database.models.s3_detials_entity import S3ObjectDetails
 
@@ -29,17 +31,10 @@ def insert_all_s3files_metadata(collection):
     return response
 
 
-def insert_one_s3file_metadata(collection, s3_key):
-    s3file_metadata = s3_client.list_objects_v2(Bucket=BUCKET_NAME)
-    s3file_metadata_contents = s3file_metadata.get("Contents", [])
-    target_s3file_metadata = None
-    for d in s3file_metadata_contents:
-        if d["Key"] == s3_key:
-            target_s3file_metadata = d
-            response = collection.insert_one(target_s3file_metadata)
-            break
-    if target_s3file_metadata == None:
-        return None
+def insert_one_s3file_metadata(s3_key):
+    s3file_metadata = get_file_details(s3_key)
+    print(get_file_details(s3_key))
+    response = s3filename.insert_one(s3file_metadata)
 
     return response
 

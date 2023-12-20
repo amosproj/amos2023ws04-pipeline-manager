@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class S3FileUploadService {
 
-  private backendUrl = environment.BACKEND_URL; // actual backend URL
+  private backendUrl = environment.SERVER_URL; // actual backend URL
 
   constructor(private http: HttpClient) { }
 
@@ -23,8 +23,8 @@ export class S3FileUploadService {
     return this.http.post(`${this.backendUrl}/upload`, formData);
   }
 
- getPresignedUrl(fileName: string): Observable<string> {
-  return this.http.get<string>(`${this.backendUrl}upload_url?fileName=${fileName}`);
+ getPresignedUrl(fileName: string): Observable<{ presignedUrl: string; fileName: string }> {
+  return this.http.get<{ presignedUrl: string; fileName: string }>(`${this.backendUrl}/upload_url?fileName=${fileName}`);
  }
 
  uploadFileToS3Presigned(presignedUrl: string, formData: FormData): Observable<any> {
