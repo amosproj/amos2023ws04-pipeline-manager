@@ -7,7 +7,7 @@ from services.upload_to_s3 import (
     download_file,
     list_file,
     file_name_check,
-    get_upload_rul,
+    get_upload_url,
     delete_s3file,
 )
 
