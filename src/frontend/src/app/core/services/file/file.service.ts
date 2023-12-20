@@ -10,6 +10,7 @@ import {s3PresignedUploadInfo} from "../../../entity/s3";
 export class FileService {
 
   baseUrl = "/download";
+  deleteUrl = "/delete";
 
   constructor(private http: HttpClient) { }
 
@@ -19,6 +20,10 @@ export class FileService {
 
   downloadById(id: string) {
     return this.http.get(environment.SERVER_URL + this.baseUrl + "/" + id);
+  }
+
+  deleteById(id: string) {
+    return this.http.delete(environment.SERVER_URL + this.deleteUrl + "/" + id);
   }
 
   get_upload_url(): Observable<s3PresignedUploadInfo> {

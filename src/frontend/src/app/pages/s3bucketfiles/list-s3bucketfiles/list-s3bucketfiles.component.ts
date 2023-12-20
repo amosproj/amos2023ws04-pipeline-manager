@@ -50,6 +50,10 @@ export class ListS3bucketfilesComponent implements OnInit {
   );
   }
 
+  handleDelete(id: string) {
+    this.fileService.deleteById(id).subscribe((value: any) =>
+    {});
+  }
 
   upload_file_to_url(file: any) {
     if (this.upload_url_info) {
