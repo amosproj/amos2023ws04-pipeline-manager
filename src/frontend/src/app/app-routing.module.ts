@@ -8,7 +8,6 @@ import {EditDatapipelineComponent} from "./pages/datapipeline/pages/edit-datapip
 import { ListS3bucketfilesComponent } from './pages/s3bucketfiles/list-s3bucketfiles/list-s3bucketfiles.component';
 import { CreateDatapipelineComponent } from './pages/datapipeline/pages/create-datapipeline/create-datapipeline.component';
 import {S3UploadFilesComponent} from './pages/s3-upload-files/s3-upload-files.component';
-import {S3UploadFilesComponent} from './pages/s3-upload-files/s3-upload-files.component';
 import { startDataPipelineComponent } from './pages/start-data-pipeline/start-data-pipeline.component';
 
 const routes: Routes = [
@@ -23,7 +22,6 @@ const routes: Routes = [
   { path:'startpipeline',component: startDataPipelineComponent},
   { path: 's3list', component: ListS3bucketfilesComponent },
   {path:'newdatapipeline',component:CreateDatapipelineComponent},
-  { path:'startdatapipeline',component: PipelineComponent},
 
   { path:'s3upload',component: S3UploadFilesComponent},
   // TODO
