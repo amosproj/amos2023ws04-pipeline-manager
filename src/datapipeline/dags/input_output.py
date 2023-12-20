@@ -17,16 +17,21 @@ default_args = {
 
 def read_and_count_words(**kwargs):
     download_url = kwargs['dag_run'].conf.get('download_url')
-    if not download_url:
-        #        task_read_and_count_words.xcom_push(key="test-identifier", value='{"error": "Download URL not provided."}')
+    executionId = kwargs['dag_run'].conf.get('executionId')
+
+    if not executionId:
+        kwargs['ti'].xcom_push(key="test-identifier", value={"error": "executionId not provided."})
         print("Error download url not found")
         return
 
-    print(pd.__version__)
+    if not download_url :
+        kwargs['ti'].xcom_push(key="test-identifier", value={"error": "Download URL not provided.", "executionId": executionId })
+        print("Error download url not found")
+        return
+
 
     # Download the file from the provided URL
     response = requests.get(download_url)
-    print(response)
     if response.status_code == 200:
         file_content = response.text
 
@@ -37,12 +42,16 @@ def read_and_count_words(**kwargs):
         print(file_reader.head())
         concatenated_text = file_reader.apply(lambda x: ' '.join(x.astype(str)), axis=1)
         print(concatenated_text)
+        # TODO
         total_word_count = 50 #concatenated_text.str.split().str.len().sum()
         print(f"Total word count is {total_word_count}")
-        kwargs['ti'].xcom_push(key="test-identifier", value={"result": {"word_count": total_word_count}})
+        kwargs['ti'].xcom_push(key="test-identifier", value={"result": {"word_count": total_word_count},
+                                                             "executionId": executionId})
     else:
         print(f"Failed to download file from URL: {download_url}")
-        task_read_and_count_words.xcom_push(key="test-identifier", value={"error": "Failed to download file from URL"})
+        kwargs['ti'].xcom_push(key="test-identifier", value={"error": "Failed to download file from URL",
+                                                             "executionId": executionId})
+        return
 
 
 dag = DAG(
