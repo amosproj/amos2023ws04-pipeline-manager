@@ -10,7 +10,7 @@ from services.file_storage import (
 )
 
 from services.file_detail import insert_file_details
-from services.s3_storage import s3_delete_file
+from services.s3_storage import s3_delete_file, s3_get_download_url
 
 file = Blueprint("file", __name__, template_folder="templates")
 
@@ -37,7 +37,9 @@ def get_all_files():
 
     allData = []
     for d in data:
-        allData.append({'name': d['name'],
+        allData.append({
+                        'uuid': d['uuid'],
+                        'name': d['name'],
                         'mime_type': d['mime_type'],
                         'size': d['size'],
                         's3_uuid': d['s3_uuid'],
@@ -66,9 +68,9 @@ def create_file():
         return jsonify({'message': 'Saved successfully'})
 
 
-@file.route("/file/<file_name>", methods=['GET'])
+@file.route("/file/<id>", methods=['GET'])
 @secure
-def get_file(file_name):
+def get_file(id):
     try:
         # TODO
         return jsonify({"message": "test message"})
@@ -78,15 +80,20 @@ def get_file(file_name):
         return f"Error: {e}"
 
 
-@file.route("/file/<file_name>", methods=["DELETE"])
+@file.route("/file/<id>", methods=["DELETE"])
 @secure
-def delete_file(file_name):
+def delete_file(id):
     try:
-        # delete s3 bucket file
-        s3_delete_file(file_name)
-        # delete file detail
 
-        response = delete_file(file_name)
+        file_details = fileDetailsDB.find_one({"uuid": id})
+        s3_uuid = file_details['s3_uuid']
+
+        # delete s3 bucket file
+        s3_delete_file(s3_uuid)
+
+        # delete file detail
+        fileDetailsDB.delete_one({"uuid": id})
+
         return jsonify('Sucessfull deleted')
     except Exception as e:
         return jsonify(f"Error: {e}")
@@ -102,13 +109,16 @@ def upload_file_with_url():
     return jsonify(get_file_upload_url(data['fileName']))
 
 
-@file.route("/file/<file_name>/download", methods=['GET'])
+@file.route("/file/<id>/download", methods=['GET'])
 @secure
-def download_file(file_name):
+def download_file(id):
     try:
         # Download the object from S3
-        file = download_file(file_name)
-        return jsonify(file)
+        file_details = fileDetailsDB.find_one({"uuid": id})
+        s3_uuid = file_details['s3_uuid']
+
+        download_url = s3_get_download_url(s3_uuid)
+        return jsonify({"download_url": download_url})
 
         # Send the file for download
     except Exception as e:

@@ -19,6 +19,7 @@
 
     <tr *ngFor="let file of fileDownload ; index as i">
       <th scope="row">{{ i + 1 }}</th>
+
       <td>{{ file.name }}</td>
       <td>{{ file.mime_type }}</td>
       <td>{{ file.last_modified}}</td>
@@ -28,8 +29,8 @@
 
       <td>
         <form action="">
-          <button type="button" class="btn btn-primary" (click)="handleDownload(file.Key)" >Download</button>
-          <button class="btn btn-danger" (click)="handleDelete(file.Key)" >Delete</button>
+          <button type="button" class="btn btn-primary" (click)="handleDownload(file.uuid)" >Download</button>
+          <button class="btn btn-danger" (click)="handleDelete(file.uuid)" >Delete</button>
         </form>
       </td>
     </tr>

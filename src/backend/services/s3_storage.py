@@ -49,6 +49,7 @@ def s3_delete_file(file_name):
     s3.delete_object(Bucket=BUCKET_NAME, Key=file_name)
 
 
+
 # Function to upload a file to AWS S3
 def upload_to_s3(path, s3_key):
     try:
