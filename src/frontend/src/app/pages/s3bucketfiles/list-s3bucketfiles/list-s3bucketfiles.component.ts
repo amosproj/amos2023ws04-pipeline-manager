@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { RestApiService } from 'src/app/core/services/restApi/rest-api.service';
 import {FileService} from "../../../core/services/file/file.service";
-import {Subject, Observable} from "rxjs";
+import {Subject, Observable, Subscription} from "rxjs";
 import {s3PresignedUploadInfo} from "../../../entity/s3";
 
 
@@ -19,30 +19,27 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy {
   public fileDownload: any;
   public upload_url_info: s3PresignedUploadInfo | null = null;
 
-  dtOptions: DataTables.Settings = {};
+  dtOptions: DataTables.Settings = {
+    pagingType:"full_numbers"
+  };
   dtTrigger: Subject<any> = new Subject<any>();
+  public filesSubscription: Subscription;
+  private downloadSubscription: Subscription;
 
   constructor( private restapi: RestApiService, private fileService: FileService) {
-
-    // this.fileDownload = this.fileService.download();
-  }
-  ngOnInit(): void {
-    this.dtOptions = {
-      pagingType:"full_numbers"
-    };
-    this.s3_file_details();
-    this.fileService.get_upload_url().subscribe((value) => this.upload_url_info = value);
-  }
-  ngOnDestroy(): void {
-    
-  }
-
-  s3_file_details(): void{
-    this.fileDownload = this.fileService.download().subscribe(res => { 
+    this.filesSubscription = this.fileService.getAll().subscribe(res => {
       this.fileDownload = res;
       this.dtTrigger.next(null);
     })
-   }
+  }
+  ngOnInit(): void {
+    this.fileService.get_upload_url().subscribe((value) => this.upload_url_info = value);
+  }
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    this.filesSubscription.unsubscribe();
+    this.downloadSubscription.unsubscribe();
+  }
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
@@ -60,7 +57,11 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy {
 
   handleDownload(id: string) {
     // TODO bad subscibe as the subscription is not ending here,
-    this.fileService.downloadById(id).subscribe((value: any) =>
+    if (this.downloadSubscription) {
+      this.downloadSubscription.unsubscribe();
+    }
+
+    this.downloadSubscription = this.fileService.downloadById(id).subscribe((value: any) =>
     {
       if (value.download_url){
         window.open(value.download_url)
@@ -74,11 +75,12 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy {
     {});
   }
 
-  upload_file_to_url(file: any) {
-    if (this.upload_url_info) {
-      this.fileService.upload_file_to_url(this.upload_url_info, file);
-    }
-  }
+  // TODO
+  // upload_file_to_url(file: any) {
+  //   if (this.upload_url_info) {
+  //     this.fileService.upload_file_to_url(this.upload_url_info, file);
+  //   }
+  // }
 }
 
 

@@ -11,18 +11,21 @@
     <th scope="col">LastModified Date</th>
     <th scope="col">File Size</th>
     <th scope="col">StorageClass</th>
+    <th scope="col">S3 Uuid</th>
     <th scope="col">Action</th>
   </tr>
   </thead>
   <tbody>
-  
+
     <tr *ngFor="let file of fileDownload ; index as i">
       <th scope="row">{{ i + 1 }}</th>
-      <td>{{ file.Key }}</td>
-      <td>{{ file.StorageClass }}</td>
-      <td>{{ file.LastModified}}</td>
-      <td>{{ file.Size}}</td>
-      <td>{{ file.StorageClass}}</td>
+      <td>{{ file.name }}</td>
+      <td>{{ file.mime_type }}</td>
+      <td>{{ file.last_modified}}</td>
+      <td>{{ file.size}}</td>
+      <td>{{ file.storage_class}}</td>
+      <td>{{ file.s3_uuid}}</td>
+
       <td>
         <form action="">
           <button type="button" class="btn btn-primary" (click)="handleDownload(file.Key)" >Download</button>
