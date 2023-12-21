@@ -9,6 +9,7 @@ from api.airflow_api import airflow_api
 from api.datapipeline import datapipeline
 from api.dp_run import dp_run
 from api.fileWP import fileWP
+from api.misc import misc
 from api.upload_api import upload_api
 from services.auth_service import secure
 from flask_cors import CORS
@@ -39,6 +40,7 @@ app.register_blueprint(datapipeline, url_prefix="/")
 app.register_blueprint(fileWP)
 app.register_blueprint(airflow_api)
 app.register_blueprint(dp_run)
+app.register_blueprint(misc)
 
 
 @app.route("/")

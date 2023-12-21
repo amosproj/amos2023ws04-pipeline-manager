@@ -22,7 +22,8 @@ ALLOWED_EXTENSIONS = {"csv"}
 def upload_url():
     file_name = request.args.get('fileName')
     if file_name:
-        return jsonify(get_upload_url(file_name))
+        resp = jsonify(get_upload_url(file_name))
+        return resp
 
 
 
@@ -118,9 +119,7 @@ def uploadcsv():
         return jsonify({'error': str(e)})"""
 
 
-@upload_api.route("/ping", methods=["POST"])
-def ping():
-    return jsonify({"message": "Ping successfully"})
+
 
 
 @upload_api.route('/store_file_data', methods=['GET'])
