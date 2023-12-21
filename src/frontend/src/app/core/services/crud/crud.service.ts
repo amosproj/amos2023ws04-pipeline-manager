@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class CrudService<Entity> {
 
   protected baseUrl: string = '/';
-  constructor(private http: HttpClient,private router:Router) {
+  constructor(public http: HttpClient,private router:Router) {
   }
 
   getAll(): Observable<Entity[]> {

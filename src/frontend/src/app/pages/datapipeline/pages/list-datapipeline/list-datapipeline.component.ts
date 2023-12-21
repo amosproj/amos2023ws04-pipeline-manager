@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './list-datapipeline.component.html',
   styleUrls: ['./list-datapipeline.component.scss']
 })
-export class ListDatapipelineComponent implements OnInit{
+export class ListDatapipelineComponent implements OnInit {
 
   public datapipelines = new Observable<Datapipeline[]>;
 

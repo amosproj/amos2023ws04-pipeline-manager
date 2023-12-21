@@ -1,1 +1,33 @@
-<p>list-datapipeline-run works!</p>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">ExecutionId</th>
+    <th scope="col">DatapipelineId</th>
+    <th scope="col">FileId</th>
+    <th scope="col">Result</th>
+    <th scope="col">State</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let datapipelineRun of (datapipelineRuns | async); index as i">
+    <tr>
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        {{ datapipelineRun.executionId }}
+      </td>
+      <td>{{ datapipelineRun.datapipelineId }}</td>
+      <td>{{ datapipelineRun.fileId }}</td>
+      <td>{{ datapipelineRun.result | json}}</td>
+      <td>{{ datapipelineRun.state }}</td>
+      <td>
+        <form action="">
+          <button type="button" class="btn btn-primary" (click)="rerun(datapipelineRun.executionId)" >Rerun</button>
+<!--          <button class="btn btn-danger" (click)="delete(datapipeline.uuid)">Delete</button>-->
+<!--          <button type="button" class="btn btn-info" (click)="upload(datapipeline.uuid)">Upload</button>-->
+        </form>
+      </td>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>

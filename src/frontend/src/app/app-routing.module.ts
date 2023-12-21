@@ -9,6 +9,9 @@ import { ListS3bucketfilesComponent } from './pages/s3bucketfiles/list-s3bucketf
 import { CreateDatapipelineComponent } from './pages/datapipeline/pages/create-datapipeline/create-datapipeline.component';
 import {S3UploadFilesComponent} from './pages/s3-upload-files/s3-upload-files.component';
 import { startDataPipelineComponent } from './pages/start-data-pipeline/start-data-pipeline.component';
+import {
+  ListDatapipelineRunComponent
+} from "./pages/datapipeline-run/pages/list-datapipeline-run/list-datapipeline-run.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,6 +21,7 @@ const routes: Routes = [
   { path: 'datapipeline',component: ListDatapipelineComponent},
   { path: 'datapipeline/new',component: CreateDatapipelineComponent},
   { path: 'datapipeline/:id',component: EditDatapipelineComponent},
+  { path: 'dp_run',component: ListDatapipelineRunComponent},
   // { path: 'startpipeline',component: startDataPipelineComponent},
   { path: 's3list', component: ListS3bucketfilesComponent },
   { path: 's3upload',component: S3UploadFilesComponent},
