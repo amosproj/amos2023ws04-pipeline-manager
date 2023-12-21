@@ -7,27 +7,31 @@ import {s3PresignedUploadInfo} from "../../../entity/s3";
 @Injectable({
   providedIn: 'root'
 })
-export class FileService{
+export class FileService {
 
-  baseUrl = "/download";
-  deleteUrl = "/delete";
+  baseUrl = "/file";
 
   constructor(private http: HttpClient) { }
 
-  download(){
+  getAll(){
     return this.http.get(environment.SERVER_URL + this.baseUrl) as Observable<any>;
   }
 
   downloadById(id: string) {
-    return this.http.get(environment.SERVER_URL + this.baseUrl + "/" + id);
+    return this.http.get(environment.SERVER_URL + this.baseUrl + "/" + id + "/download");
+  }
+
+  getById(id: string): Observable<Object> {
+    // TODO error handling
+    return this.http.get(environment.SERVER_URL + this.baseUrl + "/" + id) as Observable<Object>;
   }
 
   deleteById(id: string) {
-    return this.http.delete(environment.SERVER_URL + this.deleteUrl + "/" + id);
+    return this.http.delete(environment.SERVER_URL + this.baseUrl + "/" + id);
   }
 
   get_upload_url(): Observable<s3PresignedUploadInfo> {
-    return this.http.get(environment.SERVER_URL + '/upload_url') as Observable<s3PresignedUploadInfo>;
+    return this.http.get(environment.SERVER_URL + '/file/upload') as Observable<s3PresignedUploadInfo>;
   }
 
   upload_file_to_url(upload_url_info: s3PresignedUploadInfo, file: any) {

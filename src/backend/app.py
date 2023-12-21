@@ -10,7 +10,7 @@ from api.datapipeline import datapipeline
 from api.dp_run import dp_run
 from api.fileWP import fileWP
 from api.misc import misc
-from api.upload_api import upload_api
+from api.file import file
 from services.auth_service import secure
 from flask_cors import CORS
 
@@ -35,7 +35,7 @@ app.config.update(
 oidc = OpenIDConnect(app)
 
 
-app.register_blueprint(upload_api)
+app.register_blueprint(file)
 app.register_blueprint(datapipeline, url_prefix="/")
 app.register_blueprint(fileWP)
 app.register_blueprint(airflow_api)

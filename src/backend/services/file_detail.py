@@ -1,14 +1,8 @@
 import os
 import boto3
 from dotenv import load_dotenv
-from services.upload_to_s3 import get_file_details
-from database.mongo_repo import s3filename
-
-# from database.models.s3_detials_entity import S3ObjectDetails
-
-
-# import upload_to_s3
-
+from services.file_storage import get_file_details
+from database.mongo_repo import s3filename, fileDetailsDB
 
 load_dotenv()
 
@@ -31,10 +25,9 @@ def insert_all_s3files_metadata(collection):
     return response
 
 
-def insert_one_s3file_metadata(s3_key):
-    s3file_metadata = get_file_details(s3_key)
-    print(get_file_details(s3_key))
-    response = s3filename.insert_one(s3file_metadata)
+def insert_file_details(file_name, s3_uuid, mime_type):
+    new_file_details = get_file_details(file_name, s3_uuid, mime_type)
+    response = fileDetailsDB.insert_one(new_file_details)
 
     return response
 
