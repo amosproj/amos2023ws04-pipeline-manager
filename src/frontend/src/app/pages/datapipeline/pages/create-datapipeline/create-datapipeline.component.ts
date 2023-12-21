@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import {DatapipelineService} from "../../../../core/services/datapipeline/datapipeline.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -17,13 +18,14 @@ export class CreateDatapipelineComponent {
   constructor(
     private datapipelineService: DatapipelineService,
     private formBuilder: FormBuilder,
+    private router : Router,
   ) {
 
   }
 
   onSubmit(): void {
-    console.log(this.datapipelineForm.getRawValue());
     this.datapipelineService.create(this.datapipelineForm.getRawValue());
+    this.router.navigate(['/datapipeline']);
   }
 
 }

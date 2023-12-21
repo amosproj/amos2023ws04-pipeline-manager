@@ -18,7 +18,7 @@ export class DatapipelineRunService extends CrudService<DatapipelineRun>{
   }
 
 
-  datapipelineRun_run(executionId: string): Observable<string> {
+  startDatapipelineRun(executionId: string): Observable<string> {
     // TODO error handling
     return this.http.get(environment.SERVER_URL + this.baseUrl + "/" + executionId + "/run") as Observable<string>;
   }

@@ -1,27 +1,32 @@
-<button type="button" class="btn btn-primary" routerLink="/datapipeline/new" routerLinkActive="active" >Create new datapipeline</button>
+
+
 
 <table class="table table-striped">
   <thead>
   <tr>
     <th scope="col">#</th>
-    <th scope="col">Name</th>
-    <th scope="col">Config</th>
-    <th scope="col">Action</th>
+    <th scope="col">DAG Id</th>
+    <th scope="col">Description</th>
+    <th scope="col">Is active</th>
+    <th scope="col">Is paused</th>
   </tr>
   </thead>
   <tbody>
-  <ng-container *ngFor="let datapipeline of (datapipelines | async); index as i">
+  <ng-container *ngFor="let datapipeline of (dags$ | async)?.dags; index as i">
     <tr>
       <th scope="row">{{ i + 1 }}</th>
       <td>
-        {{ datapipeline.name }}
+        {{ datapipeline.dag_id }}
       </td>
-      <td>{{ datapipeline.config }}</td>
+      <td>{{ datapipeline.description }}</td>
+      <td>{{ datapipeline.is_active }}</td>
+      <td>{{ datapipeline.is_paused }}</td>
+
       <td>
         <form action="">
-          <button type="button" class="btn btn-primary" (click)="edit(datapipeline.uuid)" >Edit</button>
-          <button class="btn btn-danger" (click)="delete(datapipeline.uuid)">Delete</button>
-          <button type="button" class="btn btn-info" (click)="upload(datapipeline.uuid)">Upload</button>
+<!--          <button type="button" class="btn btn-primary" (click)="edit(datapipeline.uuid)" >Edit</button>-->
+<!--          <button class="btn btn-danger" (click)="delete(datapipeline.uuid)">Delete</button>-->
+<!--          <button type="button" class="btn btn-info" (click)="upload(datapipeline.uuid)">Upload</button>-->
         </form>
     </td>
     </tr>

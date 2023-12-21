@@ -1,25 +1,49 @@
 <div>
   <h2>Start Pipeline</h2>
 
-  <button class="btn btn-primary" (click)="getAvailablePipelines()">Get Available Pipelines</button>
-
-  <button *ngIf="selectedS3File && selectedPipeline" (click)="startPipeline()">Start Pipeline</button>
-
-  <h2>Select S3 Files</h2>
-  <button class="btn btn-primary" (click)="getS3Files()">Get S3 Files</button>
-
-  <div *ngIf="s3Files">
-      <label for="fileSelect">Select a file:</label>
-      <select id="fileSelect" [(ngModel)]="selectedS3File">
-        <option *ngFor="let file of s3Files" >{{ file }}</option>
-    </select>
+</div>
+<div class="row">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block">
+      <button type="button" class="btn btn-outline-primary" id="dagDropdown" ngbDropdownToggle>
+        Select Datapipeline
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dagDropdown">
+        <ng-container *ngFor="let dag of (dags$ | async)?.dags">
+          <button (click)="changeDag(dag)"ngbDropdownItem>{{ dag?.dag_id }}</button>
+        </ng-container>
+      </div>
+      <p>
+        Datapipeline: {{this.selectedDag?.dag_id}}
+      </p>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block">
+      <button type="button" class="btn btn-outline-primary" id="fileDropdown" ngbDropdownToggle>
+        Select File
+      </button>
+      <div ngbDropdownMenu aria-labelledby="fileDropdown">
+        <ng-container *ngFor="let file of (files$ | async)">
+          <button (click)="changeFile(file)"ngbDropdownItem>{{ file?.name }}</button>
+        </ng-container>
+      </div>
+      <p>
+        File: {{this.selectedFile?.name}}
+      </p>
+    </div>
+  </div>
 </div>
 
-<div *ngIf="pipelines">
-    <h3>Available Pipelines:</h3>
-    <ul>
-        <li *ngFor="let pipeline of pipelines">{{ pipeline.name }}</li>
-    </ul>
-</div>
+<div class="row">
+  <div class="col">
+    <div class="d-inline-block">
+      <button type="button" class="btn btn-danger" (click)="this.startPipeline()">
+        Start Pipeline
+      </button>
+    </div>
+  </div>
 </div>
 

@@ -1,7 +1,7 @@
 import { Component,OnInit} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import { DatapipelineService } from "../../../../core/services/datapipeline/datapipeline.service";
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import { Entity } from 'aws-sdk/clients/costexplorer';
 
@@ -16,6 +16,7 @@ export class EditDatapipelineComponent{
     private datapipelineService: DatapipelineService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private router : Router,
   ) {
   }
 
@@ -43,6 +44,7 @@ export class EditDatapipelineComponent{
       }
     );
     this.datapipelineService.update(this.getID(),this.datapipelineForm.getRawValue()).subscribe();
+    this.router.navigate(['/datapipeline']);
   }
 
 }
