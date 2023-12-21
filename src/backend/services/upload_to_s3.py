@@ -116,21 +116,8 @@ def list_file():
         )
         response = s3.list_objects(Bucket=BUCKET_NAME)
         objects = response.get("Contents", [])
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         for size in objects:
             size["Size"] = humanfriendly.format_size(size["Size"])
-=======
->>>>>>> 367d186 (feat(delete file in the s3bucket):created a service and endpoint for delete a file in the s3bucket)
-=======
-        for size in objects:
-            size["Size"] = humanfriendly.format_size(size["Size"])
->>>>>>> 7c73c00 (fix(make size be more readable):make s3 bucket file size more readable)
-=======
-        for size in objects:
-            size["Size"] = humanfriendly.format_size(size["Size"])
->>>>>>> 7c73c00 (fix(make size be more readable):make s3 bucket file size more readable)
         print("s3 connected")
         return objects
     except Exception as e:
