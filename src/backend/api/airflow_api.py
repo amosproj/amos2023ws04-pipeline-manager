@@ -7,7 +7,7 @@ from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
 
 from services.auth_service import secure
-from services.upload_to_s3 import download_file
+from services.file_storage import download_file
 
 
 load_dotenv()

@@ -3,9 +3,9 @@ from flask import request, jsonify, Blueprint
 from database.mongo_repo import metadataDB
 from database.models.metadata_details import MetadataDetails
 from services.auth_service import secure
-from services.store_s3metadata import (
+from services.file_detail import (
     insert_all_s3files_metadata,
-    insert_one_s3file_metadata,
+    insert_file_details,
     remove_s3metadata,
 )
 
@@ -101,17 +101,17 @@ def store_all_s3files_metadata():
     )
 
 
-@metadata.route("/metadata/store_single_s3metadata", methods=["POST"])
-@secure
-def store_single_s3metadata():
-    data = request.json
-    response = insert_one_s3file_metadata(metadataDB, data["file_name"])
-    if response != None:
-        return jsonify(
-            {"message": "The metadatas of uploaded file is stored successfully!"}
-        )
-    else:
-        return jsonify({"message": "There is no such a file in the S3 bucket!"})
+# @metadata.route("/metadata/store_single_s3metadata", methods=["POST"])
+# @secure
+# def store_single_s3metadata():
+#     data = request.json
+#     response = insert_file_details(metadataDB, data["file_name"])
+#     if response != None:
+#         return jsonify(
+#             {"message": "The metadatas of uploaded file is stored successfully!"}
+#         )
+#     else:
+#         return jsonify({"message": "There is no such a file in the S3 bucket!"})
 
 
 @metadata.route("/metadata/delete_all_metadata", methods=["DELETE"])

@@ -1,21 +1,21 @@
 version: '3.8'
 services:
-#  app:
-#    environment:
-#      - MONGODB_URL=amos_mongodb
-#      - MONGODB_PORT=27017
-#      - MONGODB_USER=root
-#      - MONGODB_PASSWORD=pass
-#      - HOST_URL=0.0.0.0
-#      - HOST_PORT=8000
-#    build: .
-#    volumes:
-#      - .:/app
-#    ports:
-#      - "8000:8000"
-#    command: python -u app.py
-#    links:
-#      - db
+  app:
+    environment:
+      - MONGODB_URL=amos_mongodb
+      - MONGODB_PORT=27017
+      - MONGODB_USER=root
+      - MONGODB_PASSWORD=pass
+      - HOST_URL=0.0.0.0
+      - HOST_PORT=8000
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    command: python -u app.py
+    links:
+      - db
   db:
     image: mongo:latest
     hostname: amos_mongodb

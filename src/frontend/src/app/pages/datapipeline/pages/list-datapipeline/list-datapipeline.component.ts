@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {DatapipelineService} from "../../../../core/services/datapipeline/datapipeline.service";
 import { Datapipeline } from "../../../../entity/datapipeline";
 import { ActivatedRoute } from '@angular/router';
+import {AirflowService} from "../../../../core/services/airflow/airflow.service";
+import {FileService} from "../../../../core/services/file/file.service";
 
 
 
@@ -13,16 +14,23 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './list-datapipeline.component.html',
   styleUrls: ['./list-datapipeline.component.scss']
 })
-export class ListDatapipelineComponent implements OnInit{
+export class ListDatapipelineComponent implements OnInit {
 
-  public datapipelines = new Observable<Datapipeline[]>;
+  public datapipelines$ = new Observable<Datapipeline[]>;
+  public dags$: Observable<any>;
+  public files$: Observable<any>;
 
-  constructor(private datapipelineService: DatapipelineService,private router : Router,private route: ActivatedRoute,) {
+  constructor(private datapipelineService: DatapipelineService,
+              private router : Router,
+              private route: ActivatedRoute,
+              private airflowService: AirflowService,
+              private fileService: FileService) {
   }
 
   ngOnInit(): void {
-    this.datapipelines = this.datapipelineService.getAll();
-
+    this.datapipelines$ = this.datapipelineService.getAll();
+    this.dags$ = this.airflowService.getAllDags();
+    this.files$ = this.fileService.getAll();
   }
 
   getID(): string {

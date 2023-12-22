@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class CrudService<Entity> {
 
   protected baseUrl: string = '/';
-  constructor(private http: HttpClient,private router:Router) {
+  constructor(public http: HttpClient,private router:Router) {
   }
 
   getAll(): Observable<Entity[]> {
@@ -23,19 +23,14 @@ export class CrudService<Entity> {
     return this.http.get(environment.SERVER_URL + this.baseUrl + "/" + id) as Observable<Entity>;
   }
 
-  create(entity: Partial<Entity>) {
-    console.log(environment.SERVER_URL + this.baseUrl + '/new');
-    this.router.navigate(['/datapipeline']);
+  create(entity: Partial<Entity>): Observable<any> {
     return this.http.post(environment.SERVER_URL + this.baseUrl + '/new', entity,
       {headers: {
           "Access-Control-Allow-Origin": "*"
-      }
-      }).subscribe((value) =>
-        console.log(value));
+      }});
   }
 
   update(id: string, updateEntity: Entity): Observable<Entity> {
-    this.router.navigate(['/datapipeline']);
     return this.http.post(environment.SERVER_URL + this.baseUrl + "/" + id, updateEntity) as Observable<Entity>;
   }
 

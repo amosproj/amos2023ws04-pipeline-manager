@@ -8,8 +8,6 @@ from services.dp_run import run
 dp_run = Blueprint("dp_run", __name__, template_folder="templates")
 
 
-
-
 @dp_run.route("/dp_run", methods=["GET"])
 @secure
 def get_all_dp_runs():

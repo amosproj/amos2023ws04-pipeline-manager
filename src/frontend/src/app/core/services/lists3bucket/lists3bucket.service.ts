@@ -12,12 +12,12 @@ export class startdatapipeline {
   constructor(private http: HttpClient) {}
 
   getS3Files(): Observable<{ files: string[] }> {
-    const url = `${this.baseUrl}/download`;
+    const url = `${this.baseUrl}/file`;
     return  this.http.get<{ files: string[] }>(url);
   }
 
   getAvailablePipelines(): Observable<any[]> {
-    const url = `${this.baseUrl}/datapipelines`;
+    const url = `${this.baseUrl}/dags`;
     return this.http.get<any[]>(url);
   }
 

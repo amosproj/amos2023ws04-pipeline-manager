@@ -13,7 +13,7 @@ export class S3FileUploadService {
 
   constructor(private http: HttpClient) { }
 
-  uploadCsv(file: File): FormData {
+  getFormDataFromFile(file: File): FormData {
     const formData = new FormData();
     formData.append('file', file);
     return formData;
@@ -23,16 +23,21 @@ export class S3FileUploadService {
     return this.http.post(`${this.backendUrl}/upload`, formData);
   }
 
- getPresignedUrl(fileName: string): Observable<{ presignedUrl: string; fileName: string }> {
-  return this.http.get<{ presignedUrl: string; fileName: string }>(`${this.backendUrl}/upload_url?fileName=${fileName}`);
+ getPresignedUrl(fileName: string): Observable<{ presignedUrl: string; fileName: string; s3_uuid: string,  }> {
+  return this.http.post<{ presignedUrl: string; fileName: string; s3_uuid: string }>(
+    `${this.backendUrl}/file/upload`,
+    {"fileName": fileName},
+    {headers: {
+        "Access-Control-Allow-Origin": "*"
+      }});
  }
 
  uploadFileToS3Presigned(presignedUrl: string, formData: FormData): Observable<any> {
   return this.http.put(presignedUrl, formData);
 
  }
- storeFileDetails(fileName: string): Observable<string> {
-  return this.http.get<string>(`${this.backendUrl}/store_file_data?fileName=${fileName}`);
+ createFileDetails(fileName: string, s3_uuid: string, mime_type: string): Observable<string> {
+  return this.http.post<string>(`${this.backendUrl}/file/new`, {"fileName": fileName, "s3_uuid": s3_uuid, "mime_type": mime_type });
  }
 }
 
