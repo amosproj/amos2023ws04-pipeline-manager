@@ -1,16 +1,16 @@
+<div class="d-flex justify-content-center">
+  <div class="col-6">
 
+    <p>Selected File: {{ this.selectedFile?.name }}</p>
 
-<body>
+    <input type="file" class="form-control" #fileInput (change)="selectFile()"/>
 
-<p>s3-upload-files!</p>
-
-<div class="upload-container">
-<div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
-<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-    <input type="file" #fileInput />
     <button type="button" class="btn btn-primary" (click)="selectFile()">SELECT</button>
-<!--    <button type="button" class="btn btn-primary" (click)="uploadFile()">UPLOAD</button>-->
     <button type="button" class="btn btn-primary" (click)="uploadFileWithUrl()">UPLOAD_WITH_URL</button>
+
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  </div>
 </div>
 
-</body>

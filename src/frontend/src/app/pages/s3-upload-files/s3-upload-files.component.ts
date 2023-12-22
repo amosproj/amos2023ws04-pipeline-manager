@@ -7,7 +7,7 @@ import { S3FileUploadService } from 'src/app/core/services/s3-file-upload.servic
   styleUrls: ['./s3-upload-files.component.scss']
 })
 export class S3UploadFilesComponent {
-    private selectedFile!: File;
+    public selectedFile!: File;
     public successMessage!: string;
     public errorMessage!: string;
 
@@ -29,28 +29,6 @@ export class S3UploadFilesComponent {
       }
     }
 
-
-    // uploadFile() {
-    //   if (!this.selectedFile) {
-    //     return;
-    //   }
-    //
-    //   const formData = this.fileUploadService.getFormDataFromFile(this.selectedFile);
-    //
-    //   this.fileUploadService.uploadFileToS3(formData).subscribe(
-    //     response => {
-    //       this.successMessage = 'File uploaded successfully!';
-    //       console.log(response);
-    //     },
-    //     error => {
-    //       console.error('Error uploading file:', error);
-    //     }
-    //   );
-    // }
-
-
-
-
   uploadFileWithUrl() {
     if (!this.selectedFile) {
       return;
@@ -71,34 +49,6 @@ export class S3UploadFilesComponent {
       }
     );
   }
-
-  // testUploadUrl() {
-  //   if (!this.selectedFile) {
-  //     return;
-  //   }
-  //
-  //   const formData = this.fileUploadService.getFormDataFromFile(this.selectedFile);
-  //
-  //
-  //   const fileUpload$ = this.fileUploadService.getPresignedUrl(this.selectedFile.name);
-  //   const uploadToPresignedUrl$ = this.uploadToPresignedUrl(presignedUrl, formData, fileName);
-  //
-  //
-  //
-  //   this.fileUploadService.getPresignedUrl(this.selectedFile.name).subscribe(
-  //     (response: { presignedUrl: string, fileName: string }) => {
-  //       const { presignedUrl, fileName } = response;
-  //
-  //       this.uploadToPresignedUrl(presignedUrl, formData, fileName, s3_uuid);
-  //
-  //       console.log(presignedUrl)
-  //     },
-  //     (error) => {
-  //       console.error('Error getting presigned URL:', error);
-  //     }
-  //   );
-  // }
-
 
 
 
