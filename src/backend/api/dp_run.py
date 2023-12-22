@@ -1,3 +1,5 @@
+import json
+
 from flask import request, jsonify, Blueprint
 
 from database.models.dp_run import DatapipelineRun
@@ -72,6 +74,12 @@ def delete_dp_run(id):
 def input_endpoint():
 
     data = request.json
+
+    #TODO this is bad
+    data = data.replace("\'", "\"")
+
+    data = json.loads(data)
+
 
     error_flag = False
     if 'error' in data:
