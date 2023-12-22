@@ -37,8 +37,12 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy {
   }
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
-    this.filesSubscription.unsubscribe();
-    this.downloadSubscription.unsubscribe();
+    if (this.filesSubscription) {
+      this.filesSubscription.unsubscribe();
+    }
+    if (this.downloadSubscription) {
+      this.downloadSubscription.unsubscribe();
+    }
   }
 
   onFileSelected(event: any): void {
