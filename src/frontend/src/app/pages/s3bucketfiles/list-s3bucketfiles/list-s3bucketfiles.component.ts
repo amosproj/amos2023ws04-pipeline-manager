@@ -59,13 +59,13 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy {
     }
   }
 
-  handleDownload(id: string) {
+  handleDownload(id: string,file_name:string) {
     // TODO bad subscibe as the subscription is not ending here,
     if (this.downloadSubscription) {
       this.downloadSubscription.unsubscribe();
     }
 
-    this.downloadSubscription = this.fileService.downloadById(id).subscribe((value: any) =>
+    this.downloadSubscription = this.fileService.downloadById(id,file_name).subscribe((value: any) =>
     {
       if (value.download_url){
         window.open(value.download_url)
