@@ -112,16 +112,14 @@ def upload_file_with_url():
     return jsonify(get_file_upload_url(data["fileName"]))
 
 
-@file.route("/file/download", methods=["POST"])
+@file.route("/file/<id>/download", methods=["GET"])
 @secure
-def download_file():
-    data = request.json
-    id = data["id"]
-    file_name = data["file_name"]
+def download_file(id):
     try:
         # Download the object from S3
         file_details = fileDetailsDB.find_one({"uuid": id})
         s3_uuid = file_details["s3_uuid"]
+        file_name = file_details["name"]
 
         download_url = s3_get_download_url(s3_uuid, file_name)
         return jsonify({"download_url": download_url})
