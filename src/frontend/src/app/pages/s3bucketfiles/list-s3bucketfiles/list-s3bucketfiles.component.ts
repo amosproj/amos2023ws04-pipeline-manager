@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy} from '@angular/core';
 import { RestApiService } from 'src/app/core/services/restApi/rest-api.service';
 import {FileService} from "../../../core/services/file/file.service";
 import {Subject, Observable, Subscription} from "rxjs";
-import {s3PresignedUploadInfo} from "../../../entity/s3";
+import { s3PresignedUploadInfo } from "../../../entity/s3";
+
 
 
 @Component({
@@ -76,8 +77,9 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy {
 
   handleDelete(id: string) {
     this.fileService.deleteById(id).subscribe((value: any) =>
-    {});
+    { window.location.reload();});
   }
+
 
   // TODO
   // upload_file_to_url(file: any) {
