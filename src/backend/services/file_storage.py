@@ -34,7 +34,7 @@ def generated_key_check(file_name):
 
 def get_file_upload_url(file_name):
     try:
-        s3_uuid = str(uuid.uuid4()) + file_name
+        s3_uuid = str(uuid.uuid4())
         url = s3_generate_presigned_url(s3_uuid)
         response_data = {"presignedUrl": url, "fileName": file_name, "s3_uuid": s3_uuid}
 
