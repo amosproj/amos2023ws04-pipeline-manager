@@ -48,6 +48,7 @@ def get_all_files():
                 "storage_class": d["storage_class"],
                 "last_modified": d["last_modified"],
                 "created_at": d["created_at"],
+                "user": d["user"],
             }
         )
 

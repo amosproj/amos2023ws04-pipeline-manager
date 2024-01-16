@@ -31,6 +31,7 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy {
     this.filesSubscription = this.fileService.getAll().subscribe(res => {
       this.fileDownload = res;
       this.dtTrigger.next(null);
+      console.log(this.fileDownload)
     })
   }
   ngOnInit(): void {

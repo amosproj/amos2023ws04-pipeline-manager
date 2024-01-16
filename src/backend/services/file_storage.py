@@ -59,6 +59,7 @@ def get_file_details(file_name, s3_uuid, mime_type):
             size=humanfriendly.format_size(response["ContentLength"]),
             content_type=response["ContentType"],
             storage_class="dummy storage class",
+            user_name="user1",
         )
         return new_file_details.to_json()
 
