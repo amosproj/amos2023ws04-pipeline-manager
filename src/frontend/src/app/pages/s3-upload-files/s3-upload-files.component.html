@@ -1,10 +1,12 @@
 <div class="d-flex justify-content-center">
   <div class="col-6">
 
-    <p>Selected File: {{ this.selectedFile?.name }}</p>
+    <p>Selected File:
+      <span class = "filename">{{ selectedFileName }}</span>
+    </p>
 
-    <input type="file" class="form-control" #fileInput (change)="selectFile()"/>
-
+    <input type="file" class="form-control" hidden #fileInput (change)="selectFile()"/>
+    
     <button type="button" class="btn btn-primary" (click)="selectFile()">SELECT</button>
     <button type="button" class="btn btn-primary" (click)="uploadFileWithUrl()">UPLOAD_WITH_URL</button>
 
