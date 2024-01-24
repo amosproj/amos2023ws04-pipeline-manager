@@ -1,6 +1,7 @@
 from flask import request, Blueprint, jsonify
 
 from database.mongo_repo import fileDetailsDB
+from database.mongo_repo import datapipelineRunDB
 from services.auth_service import secure
 from services.file_storage import (
     list_file,
@@ -128,3 +129,24 @@ def download_file(id):
         # Send the file for download
     except Exception as e:
         return f"Error: {e}"
+
+
+@file.route('/file/search', methods=['POST'])
+@secure
+def get_data():
+    # Get query parameters from the request
+    query = request.args.get('query')
+    projection = request.args.get('projection')
+    options = request.args.get('options')
+
+    query = json.loads(query) if query else {}
+
+    projection = json.loads(projection) if projection else {}
+
+    options = json.loads(options) if options else {}
+
+    result = datapipelineRunDB.find(query, projection, **options)
+
+    result_list = list(result)
+
+    return jsonify(result_list)

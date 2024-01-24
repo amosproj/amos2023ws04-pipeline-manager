@@ -10,6 +10,8 @@ import { StartDataPipelineComponent } from './pages/start-data-pipeline/start-da
 import {
   ListDatapipelineRunComponent
 } from "./pages/datapipeline-run/pages/list-datapipeline-run/list-datapipeline-run.component";
+import { ResultSearchComponent } from './pages/result-search/result-search.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +23,7 @@ const routes: Routes = [
   { path: 'startpipeline',component: StartDataPipelineComponent},
   { path: 's3list', component: ListS3bucketfilesComponent },
   { path: 's3upload',component: S3UploadFilesComponent},
+  { path: 'resultSearch',component: ResultSearchComponent},
   // TODO
   // { path: '**', component: PageNotFoundComponent }
 ];
