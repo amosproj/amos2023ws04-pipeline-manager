@@ -5,7 +5,7 @@ import uuid
 from botocore.exceptions import NoCredentialsError
 
 from database.models.file_details import FileDetails
-import humanfriendly
+#import humanfriendly
 
 from services.s3_storage import s3_generate_presigned_url, s3_get_head_object, s3_get_download_url, s3_list_objects, \
     s3_delete_file
