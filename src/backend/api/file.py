@@ -1,3 +1,5 @@
+import json
+
 from flask import request, Blueprint, jsonify
 
 from database.mongo_repo import fileDetailsDB
@@ -41,18 +43,17 @@ def get_all_files():
         allData.append(
             {
                 "uuid": d["uuid"],
-                "name": d["name"],
-                "mime_type": d["mime_type"],
-                "size": d["size"],
-                "s3_uuid": d["s3_uuid"],
-                "content_type": d["content_type"],
-                "storage_class": d["storage_class"],
-                "last_modified": d["last_modified"],
-                # "create_date": d["create_date"] if d["create_date"] else None,
+            "name": d["name"],
+            "mime_type": d["mime_type"],
+            "size": d["size"],
+            "s3_uuid": d["s3_uuid"],
+            "content_type": d["content_type"],
+            "storage_class": d["storage_class"],
+            "last_modified": d["last_modified"],
+            # "create_date": d["create_date"] if d["create_date"] else None,
                 "user": d["user"] if "user" in d else 'No user',
             }
-        )
-
+)
     return jsonify(allData), 201
 
 
