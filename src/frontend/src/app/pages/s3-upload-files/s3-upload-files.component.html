@@ -1,12 +1,9 @@
 <div class="d-flex mb-3">
   <div class="col-6 d-flex flex-row">
-
     <p style="margin-top: 15px">Selected File:
       <span class = "file_name_display">{{ selectedFileName }}</span>
     </p>
-
     <input type="file" class="form-control" hidden #fileInput (change)="selectFile()"/>
-
     <button type="button" class="btn btn-primary" (click)="selectFile()">SELECT</button>
     <button type="button" class="btn btn-success" (click)="uploadFileWithUrl()">UPLOAD</button>
 
@@ -15,4 +12,43 @@
 
   </div>
 </div>
+<div class="d-flex justify-content-center">
+<div>
+  <label>
+    <input type="checkbox" [(ngModel)]="startPipelineWithFile"> Select pipeline to Start
+  </label>
+  <div *ngIf="startPipelineWithFile">
+<div>
+  <h2>Start Pipeline</h2>
+</div>
+<div class="row">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block">
+      <button type="button" class="btn btn-outline-primary" id="dagDropdown" ngbDropdownToggle>
+        Select Datapipeline
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dagDropdown">
+        <ng-container *ngFor="let dag of (dags$ | async)?.dags">
+          <button (click)="changeDag(dag)"ngbDropdownItem>{{ dag?.dag_id }}</button>
+        </ng-container>
+      </div>
+      <p>
+        Datapipeline: {{this.selectedDag?.dag_id}}
+      </p>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="d-inline-block">
+      <button type="button" class="btn btn-danger" (click)="this.startPipeline()">
+        Start Pipeline
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+</div></div>
+
+
 

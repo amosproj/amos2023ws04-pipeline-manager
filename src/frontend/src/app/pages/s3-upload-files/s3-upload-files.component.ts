@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AirflowService } from 'src/app/core/services/airflow/airflow.service';
+import { DatapipelineRunService } from 'src/app/core/services/datapipeline-run/datapipeline-run.service';
+import { FileService } from 'src/app/core/services/file/file.service';
 import { S3FileUploadService } from 'src/app/core/services/s3-file-upload.service';
 
 @Component({
@@ -7,12 +11,20 @@ import { S3FileUploadService } from 'src/app/core/services/s3-file-upload.servic
   styleUrls: ['./s3-upload-files.component.scss']
 })
 export class S3UploadFilesComponent {
+    startPipelineWithFile: boolean = false;
     public selectedFile!: File;
     public successMessage!: string;
     public errorMessage!: string;
     selectedFileName: string = 'File Name';
+    public dags$: Observable<any>;
+    public files$: Observable<any>;
+    selectedDag: any;
+    get_s3_uuid: any;
 
-    constructor(private fileUploadService: S3FileUploadService) { }
+    constructor(private fileUploadService: S3FileUploadService,
+      private dpRunService: DatapipelineRunService,
+              private airflowService: AirflowService,
+              private fileService: FileService) { }
 
     selectFile() {
       const fileInput: HTMLInputElement | null = document.querySelector('input[type="file"]');
@@ -42,6 +54,7 @@ export class S3UploadFilesComponent {
     this.fileUploadService.getPresignedUrl(this.selectedFile.name).subscribe(
       (response: { presignedUrl: string, fileName: string, s3_uuid: string}) => {
         const { presignedUrl, fileName, s3_uuid } = response;
+        const get_s3_uuid = s3_uuid;
 
         this.uploadToPresignedUrl(presignedUrl, formData, fileName, s3_uuid, this.selectedFile.type);
 
@@ -71,8 +84,10 @@ export class S3UploadFilesComponent {
     );
   }
   private createFileDetails(fileName: string, s3_uuid: string, mime_type: string): void {
+    this.get_s3_uuid = s3_uuid
     this.fileUploadService.createFileDetails(fileName, s3_uuid, mime_type).subscribe(
       (response) =>{
+        console.log(this.get_s3_uuid)
       },
       (error) => {
         console.error('Error storing file:', error);
@@ -80,6 +95,27 @@ export class S3UploadFilesComponent {
 
       })
   }
+
+  ngOnInit(): void {
+    this.dags$ = this.airflowService.getAllDags();
+    }
+
+  startPipeline() {
+    if (this.selectedFile && this.selectedDag) {
+      this.dpRunService.create({"datapipelineId": this.selectedDag.dag_id, "fileId": this.get_s3_uuid})
+        .subscribe((value: any) => {
+          const executionId = value?.object.executionId;
+          console.log(executionId);
+          console.log(this.get_s3_uuid);
+          // TODO dont subscribe in a subscribe q_q but for now it can work
+          this.dpRunService.startDatapipelineRun(executionId).subscribe();
+        } );
+    } else {
+      throw Error("File and/or dag not selected.");
+    }
+  }
+
+  changeDag(dag: any) {
+    this.selectedDag = dag;
+  }
 }
-
-
