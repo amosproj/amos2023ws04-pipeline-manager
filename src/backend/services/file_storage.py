@@ -7,14 +7,24 @@ from botocore.exceptions import NoCredentialsError
 from database.models.file_details import FileDetails
 import humanfriendly
 
-from services.s3_storage import s3_generate_presigned_url, s3_get_head_object, s3_get_download_url, s3_list_objects, \
-    s3_delete_file
+from services.s3_storage import (
+    s3_generate_presigned_url,
+    s3_get_head_object,
+    s3_get_download_url,
+    s3_list_objects,
+    s3_delete_file,
+)
 
 
 def generated_key_check(file_name):
     if file_name_check(file_name):
         get_name = file_name.split("_")
-        key = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(10))
+        key = "".join(
+            random.choice(
+                string.ascii_uppercase + string.ascii_lowercase + string.digits
+            )
+            for _ in range(10)
+        )
         file_name = str(key) + "_" + get_name[1]
         generated_key_check(file_name)
         return file_name
@@ -26,7 +36,7 @@ def get_file_upload_url(file_name):
     try:
         s3_uuid = str(uuid.uuid4())
         url = s3_generate_presigned_url(s3_uuid)
-        response_data = {'presignedUrl': url, 'fileName': file_name, 's3_uuid': s3_uuid}
+        response_data = {"presignedUrl": url, "fileName": file_name, "s3_uuid": s3_uuid}
 
         return response_data
     except Exception as e:
@@ -38,7 +48,6 @@ def get_file_upload_url(file_name):
 def get_file_details(file_name, s3_uuid, mime_type):
     # Get details of a specific file
     try:
-
         response = s3_get_head_object(s3_uuid)
 
         new_file_details = FileDetails(
@@ -47,9 +56,10 @@ def get_file_details(file_name, s3_uuid, mime_type):
             mime_type=mime_type,
             s3_uuid=s3_uuid,
             last_modified=response["LastModified"],
-            size=response["ContentLength"],
+            size=humanfriendly.format_size(response["ContentLength"]),
             content_type=response["ContentType"],
-            storage_class="dummy storage class"
+            storage_class="dummy storage class",
+            user_name="user1",
         )
         return new_file_details.to_json()
 
@@ -105,6 +115,9 @@ def delete_file(file_name):
     except Exception as e:
         return [{f"Error: {e}"}]
 
+
 ALLOWED_EXTENSIONS = {"csv"}
+
+
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS

@@ -10,6 +10,7 @@ export class S3UploadFilesComponent {
     public selectedFile!: File;
     public successMessage!: string;
     public errorMessage!: string;
+    selectedFileName: string = 'File Name';
 
     constructor(private fileUploadService: S3FileUploadService) { }
 
@@ -19,15 +20,17 @@ export class S3UploadFilesComponent {
       if (fileInput !== null) {
         fileInput.click();
 
-        fileInput.addEventListener('change', (event) => {
+        fileInput.addEventListener('change', () => {
           const selectedFile: File | undefined = fileInput.files?.[0];
 
           if (selectedFile !== undefined) {
             this.selectedFile = selectedFile;
+            this.selectedFileName = selectedFile.name;
           }
         });
       }
-    }
+  }
+
 
   uploadFileWithUrl() {
     if (!this.selectedFile) {

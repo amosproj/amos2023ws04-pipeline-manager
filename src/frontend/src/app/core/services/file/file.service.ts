@@ -18,7 +18,7 @@ export class FileService {
   }
 
   downloadById(id: string) {
-    return this.http.get(environment.SERVER_URL + this.baseUrl + "/" + id + "/download");
+    return this.http.get(environment.SERVER_URL + this.baseUrl+"/"+ id + "/download");
   }
 
   getById(id: string): Observable<Object> {

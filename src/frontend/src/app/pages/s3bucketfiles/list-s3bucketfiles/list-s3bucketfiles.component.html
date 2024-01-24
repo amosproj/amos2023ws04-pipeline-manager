@@ -8,6 +8,7 @@
     <th scope="col">File Size</th>
     <th scope="col">StorageClass</th>
     <th scope="col">S3 Uuid</th>
+    <th scope="col">User</th>
     <th scope="col">Action</th>
   </tr>
   </thead>
@@ -22,11 +23,11 @@
       <td>{{ file.size}}</td>
       <td>{{ file.storage_class}}</td>
       <td>{{ file.s3_uuid}}</td>
-
+      <td>{{ file.user}}</td>
       <td>
         <form action="">
           <button type="button" class="btn btn-primary" (click)="handleDownload(file.uuid)" >Download</button>
-          <button class="btn btn-danger" (click)="handleDelete(file.uuid)" >Delete</button>
+          <button  class="btn btn-danger" (click)="handleDelete(file.uuid)" >Delete</button>
         </form>
       </td>
     </tr>
