@@ -53,7 +53,7 @@ def create_datapipeline():
     if 'name' not in data or 'config' not in data:
         return jsonify({'error': 'Missing id or name in request'}), 400
 
-    # Filters all unnecessary data from json
+    # Filters all unnecessary data frpipom json
     datapipeline = Datapipeline(data['name'], data['config'])
     datapipelineDB.insert_one(datapipeline.to_json())
 
