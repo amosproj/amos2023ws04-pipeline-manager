@@ -44,6 +44,7 @@ export class S3UploadFilesComponent {
   }
 
 
+
   uploadFileWithUrl() {
     if (!this.selectedFile) {
       return;
@@ -66,15 +67,16 @@ export class S3UploadFilesComponent {
     );
   }
 
-
-
   private uploadToPresignedUrl(presignedUrl: string, formData: FormData, fileName: string, s3_uuid: string, mime_type: string): void {
     this.fileUploadService.uploadFileToS3Presigned(presignedUrl, formData).subscribe(
       (response) => {
         this.successMessage = 'File uploaded successfully!';
         this.createFileDetails(fileName, s3_uuid, mime_type)
         console.log(response);
-
+        if(this.startPipelineWithFile==true)
+        {
+          this.startPipeline()
+        }
       },
       (error) => {
         console.error('Error uploading file:', error);
@@ -99,7 +101,7 @@ export class S3UploadFilesComponent {
   ngOnInit(): void {
     this.dags$ = this.airflowService.getAllDags();
     }
-
+    
   startPipeline() {
     if (this.selectedFile && this.selectedDag) {
       this.dpRunService.create({"datapipelineId": this.selectedDag.dag_id, "fileId": this.get_s3_uuid})
@@ -109,6 +111,7 @@ export class S3UploadFilesComponent {
           console.log(this.get_s3_uuid);
           // TODO dont subscribe in a subscribe q_q but for now it can work
           this.dpRunService.startDatapipelineRun(executionId).subscribe();
+          this.successMessage = 'File uploaded and started pipeline successfully!';
         } );
     } else {
       throw Error("File and/or dag not selected.");
