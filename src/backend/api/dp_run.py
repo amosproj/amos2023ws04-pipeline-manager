@@ -17,13 +17,17 @@ def get_all_dp_runs():
 
     allData = []
     for d in dp_run:
-            allData.append({
-                    "executionId": d["executionId"],
-                    "datapipelineId": d["datapipelineId"],
-                    "fileId": d["fileId"],
-                    "result": d["result"],
-                    "state": d["state"],
-                })
+        allData.append(
+            {
+                "executionId": d["executionId"],
+                "datapipelineId": d["datapipelineId"],
+                "fileId": d["fileId"],
+                "result": d["result"],
+                "state": d["state"],
+                # "created_date": d["created_date"],
+                # "start_by_user": d["start_by_user"],
+            }
+        )
     return jsonify(allData), 201
 
 
@@ -45,8 +49,16 @@ def create_dp_run():
 
     datapipelineRunDB.insert_one(created_dp_run.to_json())
 
-    return jsonify({"message": "Datapipeline dp_run is stored successfully",
-                    "object": created_dp_run.to_json()}), 201
+    return (
+        jsonify(
+            {
+                "message": "Datapipeline dp_run is stored successfully",
+                "object": created_dp_run.to_json(),
+            }
+        ),
+        201,
+    )
+
 
 @dp_run.route("/dp_run/<executionId>/run", methods=["GET"])
 @secure
@@ -61,40 +73,53 @@ def run_by_id(executionId):
 @dp_run.route("/dp_run/<id>", methods=["DELETE"])
 @secure
 def delete_dp_run(id):
-
     result = datapipelineRunDB.delete_one({"executionId": id})
 
     if result.deleted_count > 0:
-        return jsonify({'message': 'Sucessfully deleted'}), 201
+        return jsonify({"message": "Sucessfully deleted"}), 201
     else:
-        return jsonify({'error': 'Entity not found'}), 400
+        return jsonify({"error": "Entity not found"}), 400
 
-@dp_run.route('/inputData', methods=['POST'])
+
+@dp_run.route("/inputData", methods=["POST"])
 # @public
 def input_endpoint():
-
     data = request.json
 
-    #TODO this is bad
-    data = data.replace("\'", "\"")
+    # TODO this is bad
+    data = data.replace("'", '"')
 
     data = json.loads(data)
 
-
     error_flag = False
-    if 'error' in data:
+    if "error" in data:
         error_flag = True
-    if 'executionId' not in data or 'result' not in data:
-        return jsonify({'error': 'Missing id or result in request'}), 400
+    if "executionId" not in data or "result" not in data:
+        return jsonify({"error": "Missing id or result in request"}), 400
 
-    d = datapipelineRunDB.find_one({"executionId": data['executionId']})
+    d = datapipelineRunDB.find_one({"executionId": data["executionId"]})
     if not d:
-        return jsonify({'error': 'Entity not found'}), 400
+        return jsonify({"error": "Entity not found"}), 400
 
     if error_flag:
-        datapipelineRunDB.update_one({"executionId": data['executionId']}, {'$set': { 'state': "FAILED" }})
+        datapipelineRunDB.update_one(
+            {"executionId": data["executionId"]}, {"$set": {"state": "FAILED"}}
+        )
     else:
         # TODO add to result not overwrite
-        datapipelineRunDB.update_one({"executionId": data['executionId']}, {'$set': { 'state': "SUCCESSFULL", 'result': data['result'] }})
+        datapipelineRunDB.update_one(
+            {"executionId": data["executionId"]},
+            {"$set": {"state": "SUCCESSFULL", "result": data["result"]}},
+        )
 
-    return jsonify({'executionId': d['executionId'], 'result': d['result'], 'fileId': d['fileId'], 'datapipelineId': d['datapipelineId']}), 201
+    return (
+        jsonify(
+            {
+                "executionId": d["executionId"],
+                "result": d["result"],
+                "fileId": d["fileId"],
+                "datapipelineId": d["datapipelineId"],
+            }
+        ),
+        201,
+    )

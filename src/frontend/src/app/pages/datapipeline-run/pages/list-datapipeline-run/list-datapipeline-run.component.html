@@ -1,4 +1,140 @@
-<table class="table table-striped">
+  <mat-form-field class="big-filter">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Searching" #input>
+  </mat-form-field>
+
+  <div class="table mat-elevation-z8">
+
+  <mat-table [dataSource]="datapipelineRuns"  matSort >
+
+  <ng-container matColumnDef="search_bar_name">
+    <th mat-header-cell *matHeaderCellDef > 
+        <input matInput [formControl]="nameFilter"placeholder="File name" #input>
+    </th>
+</ng-container>
+
+<ng-container matColumnDef="search_bar_executionId">
+  <th mat-header-cell *matHeaderCellDef > 
+      <input matInput [formControl]="executionIdFilter"placeholder="Execution Id" #input>
+  </th>
+</ng-container>
+
+  <ng-container matColumnDef="search_bar_datapipelineId">
+    <th mat-header-cell *matHeaderCellDef > 
+        <input matInput [formControl]="datapipelineIdFilter"placeholder="Datapipeline Id" #input>
+    </th>
+  </ng-container>
+
+  <ng-container matColumnDef="search_bar_fileId">
+  <th th mat-header-cell *matHeaderCellDef > 
+    <input matInput [formControl]="fileIdFilter"placeholder="File ID" #input>
+  </th>
+  </ng-container>
+  <ng-container matColumnDef="search_bar_createdDate">
+    <th th mat-header-cell *matHeaderCellDef > 
+      <input matInput [formControl]="createdDateFilter"placeholder="createdDate" #input>
+    </th>
+    </ng-container>
+
+ 
+
+  <ng-container matColumnDef="search_bar_startByUser">
+    <th th mat-header-cell *matHeaderCellDef > 
+      <input matInput [formControl]="startByUserFilter"placeholder="start By User" #input>
+    </th>
+    </ng-container>
+    <ng-container matColumnDef="search_bar_result">
+      <th th mat-header-cell *matHeaderCellDef > 
+        <input matInput [formControl]="resultFilter"placeholder="Result" #input>
+      </th>
+      </ng-container>
+      <ng-container matColumnDef="search_bar_state">
+        <th th mat-header-cell *matHeaderCellDef > 
+          <input matInput [formControl]="stateFilter"placeholder="State" #input>
+        </th>
+        </ng-container>
+
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> File Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+
+  <ng-container matColumnDef="executionId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by executionId"> Execution Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.executionId}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="datapipelineId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by datapipelineId"> Datapipeline Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.datapipelineId}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fileId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by fileId"> File Id</th>
+    <td mat-cell *matCellDef="let element"> {{element.fileId}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="createdDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by startByUser"> Created Date</th>
+    <td mat-cell *matCellDef="let element"> {{element.created_date}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="startByUser">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by startByUser"> Start By User</th>
+    <td mat-cell *matCellDef="let element"> {{element.startByUser}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="result">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by result"> Result</th>
+    <td mat-cell *matCellDef="let element"> {{element.result}} </td>
+  </ng-container>
+  <ng-container matColumnDef="state">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by state"> State</th>
+    <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+  </ng-container>
+
+
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef> Action</th>
+    <td id = "action"*matCellDef="let element">
+      <button type="button" class="btn btn-primary" (click)="rerun(element.executionId)" >Rerun</button>
+    </td>
+
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns" > </tr>
+  <tr mat-header-row *matHeaderRowDef="['search_bar_name','search_bar_executionId','search_bar_datapipelineId','search_bar_fileId',
+  'search_bar_startByUser','search_bar_result']"
+    >
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No data matching the filter</td>
+  </tr>
+  
+  
+</mat-table>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"showFirstLastButtons></mat-paginator>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <table class="table table-striped">
   <thead>
   <tr>
     <th scope="col">#</th>
@@ -23,11 +159,11 @@
       <td>
         <form action="">
           <button type="button" class="btn btn-primary" (click)="rerun(datapipelineRun.executionId)" >Rerun</button>
-<!--          <button class="btn btn-danger" (click)="delete(datapipeline.uuid)">Delete</button>-->
-<!--          <button type="button" class="btn btn-info" (click)="upload(datapipeline.uuid)">Upload</button>-->
-        </form>
+         <button class="btn btn-danger" (click)="delete(datapipeline.uuid)">Stop</button>-->
+
+        <!-- </form>
       </td>
     </tr>
   </ng-container>
   </tbody>
-</table>
+</table> -->

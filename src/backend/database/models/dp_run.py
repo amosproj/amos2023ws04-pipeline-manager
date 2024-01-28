@@ -18,8 +18,9 @@ class DatapipelineRun:
         self.datapipelineId = datapipelineId
         self.fileId = fileId
         self.result = []
-        self.create_date = datetime.now()
+        self.created_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.state = "PENDING"
+        self.start_by_user = "user1"
 
     def to_json(self):
         return {
@@ -27,6 +28,7 @@ class DatapipelineRun:
             "datapipelineId": self.datapipelineId,
             "fileId": self.fileId,
             "result": self.result,
-            "create_date": self.create_date,
+            # "created_date": self.created_date,
             "state": self.state,
+            # "start_by_user": self.start_by_user,
         }
