@@ -3,6 +3,7 @@ export interface Filelist {
     mime_type: string;
     last_modified: string;
     size: string;
+    result: string;
     s3_uuid: string;
     user: string;
 }
