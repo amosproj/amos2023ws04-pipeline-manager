@@ -6,54 +6,46 @@
 <div class="table mat-elevation-z8">
 
   <mat-table [dataSource]="fileDownload"  matSort >
-    <!-- <ng-container matColumnDef="number">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-    </ng-container> -->
-  
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container> 
 
     <ng-container matColumnDef="search_bar_name">
       <th mat-header-cell *matHeaderCellDef > 
-          <input matInput [formControl]="nameFilter"placeholder="Ex. Mia" #input>
+          <input matInput [formControl]="nameFilter"placeholder="File name" #input>
       </th>
   </ng-container>
+
   <ng-container matColumnDef="search_bar_fileType">
     <th mat-header-cell *matHeaderCellDef > 
-        <input matInput [formControl]="fileTypeFilter"placeholder="Ex. Mia" #input>
+        <input matInput [formControl]="fileTypeFilter"placeholder="File Type" #input>
     </th>
   </ng-container>
   
     <ng-container matColumnDef="search_bar_lastModified">
       <th mat-header-cell *matHeaderCellDef > 
-          <input matInput [formControl]="lastModifiedFilter"placeholder="Ex. Mia" #input>
+          <input matInput [formControl]="lastModifiedFilter"placeholder="Last Modified Date" #input>
       </th>
     </ng-container>
 
     <ng-container matColumnDef="search_bar_size">
     <th th mat-header-cell *matHeaderCellDef > 
-      <input matInput [formControl]="sizeFilter"placeholder="Ex. Mia" #input>
+      <input matInput [formControl]="sizeFilter"placeholder="File Size" #input>
     </th>
     </ng-container>
 
-    <ng-container matColumnDef="search_bar_storageClass">
+    <ng-container matColumnDef="search_bar_s3Uuid">
       <th th mat-header-cell *matHeaderCellDef > 
-        <input matInput [formControl]="storageClassFilter"placeholder="Ex. Mia" #input>
+        <input matInput [formControl]="s3UuidFilter"placeholder="S3 Uuid" #input>
       </th>
-      </ng-container>
-      <ng-container matColumnDef="search_bar_s3Uuid">
-        <th th mat-header-cell *matHeaderCellDef > 
-          <input matInput [formControl]="s3UuidFilter"placeholder="Ex. Mia" #input>
-        </th>
-        </ng-container>
+    </ng-container>
 
     <ng-container matColumnDef="search_bar_user">
       <th th mat-header-cell *matHeaderCellDef > 
-        <input matInput [formControl]="userFilter"placeholder="Ex. Mia" #input>
+        <input matInput [formControl]="userFilter"placeholder="Upload By" #input>
       </th>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> File Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
 
 
@@ -64,7 +56,7 @@
   
   
     <ng-container matColumnDef="last_modified">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by last_modified_date"> LastModified Date </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by last_modified_date"> Last Modified Date </th>
       <td mat-cell *matCellDef="let element"> {{element.last_modified}} </td>
     </ng-container>
   
@@ -73,19 +65,21 @@
       <td mat-cell *matCellDef="let element"> {{element.size}} </td>
     </ng-container>
   
-    <ng-container matColumnDef="storage_class">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by storage_class"> Storage Class</th>
-      <td mat-cell *matCellDef="let element"> {{element.storage_class}} </td>
-    </ng-container>
-  
     <ng-container matColumnDef="s3_uuid">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by s3_uuid"> S3 Uuid</th>
       <td mat-cell *matCellDef="let element"> {{element.s3_uuid}} </td>
     </ng-container>
   
     <ng-container matColumnDef="user">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by user"> User</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by user"> Upload by</th>
       <td mat-cell *matCellDef="let element"> {{element.user}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="pipeline_result">
+      <th mat-header-cell *matHeaderCellDef  > Pipeline_Result</th>
+      <td id = "action"*matCellDef="let element">
+        <a href="dp_run">Pipeline_Result</a>
+      </td>
     </ng-container>
   
     <ng-container matColumnDef="action">
@@ -97,11 +91,9 @@
   
     </ng-container>
   
-   
-  
     <tr mat-header-row *matHeaderRowDef="displayedColumns" > </tr>
     <tr mat-header-row *matHeaderRowDef="['search_bar_name','search_bar_fileType','search_bar_lastModified','search_bar_size',
-    'search_bar_storageClass','search_bar_s3Uuid','search_bar_user']"
+    'search_bar_s3Uuid','search_bar_user']"
       >
     </tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

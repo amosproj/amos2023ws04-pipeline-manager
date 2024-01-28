@@ -45,9 +45,7 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy,MaterialMoud
   }
 
 
-  dtOptions: DataTables.Settings = {
-    pagingType:"full_numbers"
-  };
+
   dtTrigger: Subject<any> = new Subject<any>();
   public filesSubscription: Subscription;
   private downloadSubscription: Subscription;
@@ -59,7 +57,7 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy,MaterialMoud
   constructor(private restapi: RestApiService, private fileService: FileService) {
     
   }
-  displayedColumns: string[] = ['name', 'mime_type', 'last_modified','size','storage_class','s3_uuid','user','action'];
+  displayedColumns: string[] = ['name', 'mime_type', 'last_modified','size','s3_uuid','user','pipeline_result','action'];
 
   ngOnInit(): void {
     this.getAll();
@@ -94,13 +92,6 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy,MaterialMoud
           this.fileDownload.filter = JSON.stringify(this.filterValues);
         }
     )
-    this.storageClassFilter.valueChanges
-      .subscribe(
-        storage_class => {
-          this.filterValues.storage_class = String(storage_class);
-          this.fileDownload.filter = JSON.stringify(this.filterValues);
-        }
-    )
     this.s3UuidFilter.valueChanges
       .subscribe(
         s3_uuid => {
@@ -119,13 +110,12 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy,MaterialMoud
 
   }
   createFilter(): (data: any, filter: string) => boolean {
-    let filterFunction = function (data: { name: string; mime_type: { toString: () => string; }; last_modified: string; size: string; storage_class: string; s3_uuid: string; user: string; }, filter: string): boolean {
+    let filterFunction = function (data: { name: string; mime_type: { toString: () => string; }; last_modified: string; size: string; s3_uuid: string; user: string; }, filter: string): boolean {
       let searchTerms = JSON.parse(filter);
       return data.name.toLowerCase().indexOf(searchTerms.name) !== -1
         && data.mime_type.toString().toLowerCase().indexOf(searchTerms.mime_type) !== -1
         && data.last_modified.toLowerCase().indexOf(searchTerms.last_modified) !== -1
         && data.size.toLowerCase().indexOf(searchTerms.size) !== -1
-        && data.storage_class.toLowerCase().indexOf(searchTerms.storage_class) !== -1
         && data.s3_uuid.toLowerCase().indexOf(searchTerms.s3_uuid) !== -1
         && data.user.toLowerCase().indexOf(searchTerms.user) !== -1;
     }
@@ -208,6 +198,10 @@ export class ListS3bucketfilesComponent implements OnInit,OnDestroy,MaterialMoud
     this.fileService.deleteById(id).subscribe((value: any) =>
     { window.location.reload();});
   }
+
+  // handelPipelineResult() { 
+
+  // }
 
 
   // TODO
