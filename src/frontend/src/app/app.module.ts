@@ -17,6 +17,7 @@ import { StartDataPipelineComponent } from './pages/start-data-pipeline/start-da
 import {DatapipelineRunModule} from "./pages/datapipeline-run/datapipeline-run.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialMoudule } from "../material-moudule";
+import { FileResultsComponent } from './pages/file-results/file-results.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MaterialMoudule } from "../material-moudule";
     SideBarComponent,
     ListS3bucketfilesComponent,
     S3UploadFilesComponent,
-    StartDataPipelineComponent,  
+    StartDataPipelineComponent,
+    FileResultsComponent,  
   ],
   imports: [
     BrowserModule,
