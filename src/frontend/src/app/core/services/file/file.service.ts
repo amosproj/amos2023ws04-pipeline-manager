@@ -3,7 +3,8 @@ import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {s3PresignedUploadInfo} from "../../../entity/s3";
-import { Filelist } from 'src/app/model/filelist';
+import {FileList} from "../../../entity/fileList";
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class FileService {
 
   constructor(private http: HttpClient) { }
 
-  getAll():Observable<Filelist[]>{
-    return this.http.get<Filelist[]>(environment.SERVER_URL + this.baseUrl);
+  getAll():Observable<FileList[]>{
+    return this.http.get<FileList[]>(environment.SERVER_URL + this.baseUrl);
   }
 
   downloadById(id: string) {

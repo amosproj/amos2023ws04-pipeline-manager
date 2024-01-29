@@ -1,4 +1,4 @@
-export interface Filelist { 
+export interface FileList {
     name: string;
     mime_type: string;
     last_modified: string;
