@@ -57,7 +57,7 @@ export class ListS3bucketfilesComponent implements OnInit, OnDestroy, MaterialMo
 
   }
 
-  displayedColumns: string[] = ['name', 'mime_type', 'last_modified', 'size', 's3_uuid', 'user', 'pipeline_result', 'action'];
+  displayedColumns: string[] = ['name', 'mime_type', 'last_modified', 'size', 's3_uuid', 'user', 'action'];
 
   ngOnInit(): void {
     this.getAll();
