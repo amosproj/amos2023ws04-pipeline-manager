@@ -1,130 +1,33 @@
-<app-start-data-pipeline></app-start-data-pipeline>
-
-<mat-form-field class="big-filter">
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Searching" #input>
-</mat-form-field>
-
-<div class="table mat-elevation-z8">
-
-  <mat-table [dataSource]="datapipelineRuns" matSort>
-
-    <ng-container matColumnDef="search_bar_name">
-      <th mat-header-cell *matHeaderCellDef>
-        <input matInput [formControl]="nameFilter" placeholder="File name" #input>
-      </th>
-    </ng-container>
-
-    <ng-container matColumnDef="search_bar_executionId">
-      <th mat-header-cell *matHeaderCellDef>
-        <input matInput [formControl]="executionIdFilter" placeholder="Execution Id" #input>
-      </th>
-    </ng-container>
-
-    <ng-container matColumnDef="search_bar_datapipelineId">
-      <th mat-header-cell *matHeaderCellDef>
-        <input matInput [formControl]="datapipelineIdFilter" placeholder="Datapipeline Id" #input>
-      </th>
-    </ng-container>
-
-    <ng-container matColumnDef="search_bar_fileId">
-      <th th mat-header-cell *matHeaderCellDef>
-        <input matInput [formControl]="fileIdFilter" placeholder="File ID" #input>
-      </th>
-    </ng-container>
-    <ng-container matColumnDef="search_bar_createDate">
-      <th th mat-header-cell *matHeaderCellDef>
-        <input matInput [formControl]="createDateFilter" placeholder="Creation Date" #input>
-      </th>
-    </ng-container>
-
-
-    <ng-container matColumnDef="search_bar_user">
-      <th th mat-header-cell *matHeaderCellDef>
-        <input matInput [formControl]="userFilter" placeholder="User" #input>
-      </th>
-    </ng-container>
-    <ng-container matColumnDef="search_bar_result">
-      <th th mat-header-cell *matHeaderCellDef>
-        <input matInput [formControl]="resultFilter" placeholder="Result" #input>
-      </th>
-    </ng-container>
-    <ng-container matColumnDef="search_bar_state">
-      <th th mat-header-cell *matHeaderCellDef>
-        <input matInput [formControl]="stateFilter" placeholder="State" #input>
-      </th>
-    </ng-container>
-
-
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> File Name</th>
-      <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="executionId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by executionId"> Execution Id
-      </th>
-      <td mat-cell *matCellDef="let element"> {{ element.executionId }}</td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="datapipelineId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by datapipelineId"> Datapipeline
-        Id
-      </th>
-      <td mat-cell *matCellDef="let element"> {{ element.datapipelineId }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="fileId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by fileId"> File Id</th>
-      <td mat-cell *matCellDef="let element"> {{ element.fileId }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="createDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date"> create Date
-      </th>
-      <td mat-cell *matCellDef="let element"> {{ element.create_date }}</td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="user">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="User">User
-      </th>
-      <td mat-cell *matCellDef="let element"> {{ element.user }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="result">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by result"> Result</th>
-      <td mat-cell *matCellDef="let element"> {{ element.result | json}}</td>
-    </ng-container>
-    <ng-container matColumnDef="state">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by state"> State</th>
-      <td mat-cell *matCellDef="let element"> {{ element.state }}</td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Action</th>
-      <td id="action" *matCellDef="let element">
-        <button type="button" class="btn btn-primary" (click)="rerun(element.executionId)">Rerun</button>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">ExecutionId</th>
+    <th scope="col">DatapipelineId</th>
+    <th scope="col">FileId</th>
+    <th scope="col">Result</th>
+    <th scope="col">State</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let datapipelineRun of (datapipelineRuns | async); index as i">
+    <tr>
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        {{ datapipelineRun.executionId }}
       </td>
-
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-header-row *matHeaderRowDef="['search_bar_name','search_bar_executionId','search_bar_datapipelineId','search_bar_fileId',
-    'search_bar_createDate', 'search_bar_user','search_bar_result', 'search_bar_state']"
-    >
+      <td>{{ datapipelineRun.datapipelineId }}</td>
+      <td>{{ datapipelineRun.fileId }}</td>
+      <td>{{ datapipelineRun.result | json}}</td>
+      <td>{{ datapipelineRun.state }}</td>
+      <td>
+        <form action="">
+          <button type="button" class="btn btn-primary" (click)="rerun(datapipelineRun.executionId)" >Rerun</button>
+<!--          <button class="btn btn-danger" (click)="delete(datapipeline.uuid)">Delete</button>-->
+<!--          <button type="button" class="btn btn-info" (click)="upload(datapipeline.uuid)">Upload</button>-->
+        </form>
+      </td>
     </tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-    <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No data matching the filter</td>
-    </tr>
-
-
-  </mat-table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"
-                 [showFirstLastButtons]="true"></mat-paginator>
-</div>
+  </ng-container>
+  </tbody>
+</table>

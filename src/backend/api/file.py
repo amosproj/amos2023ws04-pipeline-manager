@@ -47,8 +47,8 @@ def get_all_files():
                 "content_type": d["content_type"],
                 "storage_class": d["storage_class"],
                 "last_modified": d["last_modified"],
-                # "create_date": d["create_date"] if d["create_date"] else None,
-                "user": d["user"] if "user" in d else 'No user',
+                "created_at": d["created_at"],
+                "user": d["user"],
             }
         )
 
