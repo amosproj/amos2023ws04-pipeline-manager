@@ -21,16 +21,15 @@ import { FileResultsComponent } from './pages/file-results/file-results.componen
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    LandingComponent,
-    SideBarComponent,
-    ListS3bucketfilesComponent,
-    S3UploadFilesComponent,
-    StartDataPipelineComponent,
-    FileResultsComponent,  
-  ],
+    declarations: [
+        AppComponent,
+        HeaderComponent,
+        LandingComponent,
+        SideBarComponent,
+        ListS3bucketfilesComponent,
+        S3UploadFilesComponent,
+        FileResultsComponent,
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -42,7 +41,8 @@ import { FileResultsComponent } from './pages/file-results/file-results.componen
     FormsModule,
     BrowserAnimationsModule,
     MaterialMoudule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StartDataPipelineComponent
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -4,13 +4,14 @@ import { ListDatapipelineRunComponent } from './pages/list-datapipeline-run/list
 import { FormControl, ReactiveFormsModule,FormsModule} from "@angular/forms";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import { MaterialMoudule } from 'src/material-moudule';
+import {StartDataPipelineComponent} from "../start-data-pipeline/start-data-pipeline.component";
 
 
 
 @NgModule({
   declarations: [
     ListDatapipelineRunComponent,
-    
+
   ],
     imports: [
         CommonModule,
@@ -18,7 +19,8 @@ import { MaterialMoudule } from 'src/material-moudule';
         RouterLink,
         RouterLinkActive,
         MaterialMoudule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        StartDataPipelineComponent
     ]
 })
 export class DatapipelineRunModule { }
