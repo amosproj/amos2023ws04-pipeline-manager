@@ -3,7 +3,7 @@ import json
 from flask import request, jsonify, Blueprint
 
 from database.models.dp_run import DatapipelineRun
-from database.mongo_repo import datapipelineRunDB
+from database.mongo_repo import datapipelineRunDB, fileDetailsDB
 from services.auth_service import secure
 from services.dp_run import run
 
@@ -17,15 +17,18 @@ def get_all_dp_runs():
 
     allData = []
     for d in dp_run:
+        file_name = fileDetailsDB.find_one({"s3_uuid": d["fileId"]})
+
         allData.append(
             {
+                "name": file_name["name"] if file_name else 'no file name given',
                 "executionId": d["executionId"],
                 "datapipelineId": d["datapipelineId"],
                 "fileId": d["fileId"],
                 "result": d["result"],
                 "state": d["state"],
-                # "created_date": d["created_date"],
-                # "start_by_user": d["start_by_user"],
+                "create_date": d["create_date"] if "create_date" in d else None,
+                "user": d["user"] if "user" in d else 'No user',
             }
         )
     return jsonify(allData), 201
