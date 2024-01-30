@@ -11,8 +11,6 @@ import {
 } from "./pages/datapipeline-run/pages/list-datapipeline-run/list-datapipeline-run.component";
 import { ResultSearchComponent } from './pages/result-search/result-search.component';
 
-import { ResultSearchComponent } from './pages/result-search/result-search.component';
-
 import { FileResultsComponent } from './pages/file-results/file-results.component';
 
 const routes: Routes = [
@@ -26,7 +24,6 @@ const routes: Routes = [
   { path: 's3upload',component: S3UploadFilesComponent},
   { path: 'resultSearch',component: ResultSearchComponent},
   { path: 'fileResults',component: FileResultsComponent},
-  { path: 'resultSearch',component: ResultSearchComponent},
   // TODO
   // { path: '**', component: PageNotFoundComponent }
 ];

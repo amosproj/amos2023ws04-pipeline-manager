@@ -19,7 +19,6 @@ import { ResultSearchComponent } from './pages/result-search/result-search.compo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialMoudule } from "../material-moudule";
 import { FileResultsComponent } from './pages/file-results/file-results.component';
-import { ResultSearchComponent } from './pages/result-search/result-search.component';
 
 
 @NgModule({
@@ -31,8 +30,6 @@ import { ResultSearchComponent } from './pages/result-search/result-search.compo
         ListS3bucketfilesComponent,
         S3UploadFilesComponent,
         FileResultsComponent,
-    ResultSearchComponent,
-    ResultSearchComponent,
     ResultSearchComponent,
   ],
   imports: [
