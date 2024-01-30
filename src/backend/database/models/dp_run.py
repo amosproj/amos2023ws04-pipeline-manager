@@ -20,6 +20,8 @@ class DatapipelineRun:
         self.result = []
         self.create_date = datetime.now()
         self.state = "PENDING"
+        # TODO get a user from some source
+        self.user = "No user"
 
     def to_json(self):
         return {
@@ -29,4 +31,5 @@ class DatapipelineRun:
             "result": self.result,
             "create_date": self.create_date,
             "state": self.state,
+            "user": self.user,
         }

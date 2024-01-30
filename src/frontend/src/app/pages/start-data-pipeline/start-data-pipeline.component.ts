@@ -1,15 +1,24 @@
 import {Component, OnInit} from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { HttpClient } from '@angular/common/http';
-import { startdatapipeline } from 'src/app/core/services/lists3bucket/lists3bucket.service';
 import {AirflowService} from "../../core/services/airflow/airflow.service";
 import {FileService} from "../../core/services/file/file.service";
 import {DatapipelineRunService} from "../../core/services/datapipeline-run/datapipeline-run.service";
+import {AsyncPipe, NgForOf} from "@angular/common";
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
   selector: 'app-start-data-pipeline',
   templateUrl: './start-data-pipeline.component.html',
+  standalone: true,
+  imports: [
+    AsyncPipe,
+    NgForOf,
+    NgbDropdownMenu,
+    NgbDropdown,
+    NgbDropdownItem,
+    NgbDropdownToggle
+  ],
   styleUrls: ['./start-data-pipeline.component.scss']
 })
 
