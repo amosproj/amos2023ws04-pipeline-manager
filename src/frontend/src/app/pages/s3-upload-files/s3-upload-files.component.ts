@@ -45,6 +45,7 @@ export class S3UploadFilesComponent {
 
 
 
+
   uploadFileWithUrl() {
     if (!this.selectedFile) {
       return;
@@ -101,7 +102,7 @@ export class S3UploadFilesComponent {
   ngOnInit(): void {
     this.dags$ = this.airflowService.getAllDags();
     }
-    
+
   startPipeline() {
     if (this.selectedFile && this.selectedDag) {
       this.dpRunService.create({"datapipelineId": this.selectedDag.dag_id, "fileId": this.get_s3_uuid})

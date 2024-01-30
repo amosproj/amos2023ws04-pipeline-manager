@@ -38,7 +38,6 @@
       </div></div>
 
       <p>Selected File: {{ this.selectedFile?.name }}</p>
-
     <input type="file" class="form-control" #fileInput (change)="selectFile()"/>
     <button type="button" class="btn btn-primary" (click)="selectFile()">Select</button>
     <button type="button" class="btn btn-primary" (click)="uploadFileWithUrl()">
