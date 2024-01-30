@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-center">
+  
+  <!-- <div class="col-6">
+
+    <button (click)="search()">Search</button>
+    <ul>
+      <li *ngFor="let result of results">{{ result.field_name }}</li>
+    </ul>
+  </div> -->
+</div>
+
+<div>
+  <div class="form-group">
+    <label for="queryInput">Query:</label>
+    <input type="text" id="queryInput" class="form-control" [(ngModel)]="query" placeholder="Enter query">
+  </div>
+
+  <div class="form-group">
+    <label for="projectionInput">Projection:</label>
+    <input type="text" id="projectionInput" class="form-control" [(ngModel)]="projection" placeholder="Enter projection">
+  </div>
+
+  <div class="form-group">
+    <label for="optionsInput">Options:</label>
+    <input type="text" id="optionsInput" class="form-control" [(ngModel)]="options" placeholder="Enter options">
+  </div>
+
+  <button class="btn btn-primary" (click)="fetchData()">Get Results</button>
+</div>
+
+<div *ngIf="responseData.length > 0">
+  <h2>Fetched Data:</h2>
+  <ul>
+    <li *ngFor="let item of responseData">{{ item | json }}</li>
+  </ul>
+</div>
+
+
+

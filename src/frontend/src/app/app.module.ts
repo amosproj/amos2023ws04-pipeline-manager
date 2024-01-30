@@ -15,6 +15,7 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { S3UploadFilesComponent } from './pages/s3-upload-files/s3-upload-files.component';
 import { StartDataPipelineComponent } from './pages/start-data-pipeline/start-data-pipeline.component';
 import {DatapipelineRunModule} from "./pages/datapipeline-run/datapipeline-run.module";
+import { ResultSearchComponent } from './pages/result-search/result-search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialMoudule } from "../material-moudule";
 import { FileResultsComponent } from './pages/file-results/file-results.component';
@@ -29,7 +30,8 @@ import { FileResultsComponent } from './pages/file-results/file-results.componen
         ListS3bucketfilesComponent,
         S3UploadFilesComponent,
         FileResultsComponent,
-    ],
+    ResultSearchComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
