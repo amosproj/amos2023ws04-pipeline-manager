@@ -33,6 +33,7 @@ import { ResultSearchComponent } from './pages/result-search/result-search.compo
         FileResultsComponent,
     ResultSearchComponent,
     ResultSearchComponent,
+    ResultSearchComponent,
   ],
   imports: [
     BrowserModule,
