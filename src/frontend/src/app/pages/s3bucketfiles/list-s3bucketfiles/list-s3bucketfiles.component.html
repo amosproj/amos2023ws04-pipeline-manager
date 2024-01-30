@@ -87,10 +87,10 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action</th>
       <td id="action" *matCellDef="let element">
-        <button id="action_bt" type="button" class="btn btn-primary btn-space" (click)="handleDownload(element.uuid)">
+        <button id="action_download_bt" type="button" class="btn btn-primary btn-space" (click)="handleDownload(element.uuid)">
           Download
         </button>
-        <button id="action_bt" type="button" class="btn btn-danger " (click)="handleDelete(element.uuid)">Delete
+        <button id="action_delete_bt" type="button" class="btn btn-danger " (click)="handleDelete(element.uuid)">Delete
         </button>
       </td>
 
@@ -110,7 +110,8 @@
 
   </mat-table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"
-                 showFirstLastButtons></mat-paginator>
+                 [showFirstLastButtons]="true">
+  </mat-paginator>
 </div>
 
 

@@ -32,7 +32,7 @@
     </ng-container>
     <ng-container matColumnDef="search_bar_createDate">
       <th th mat-header-cell *matHeaderCellDef>
-        <input matInput [formControl]="createDateFilter" placeholder="createDate" #input>
+        <input matInput [formControl]="createDateFilter" placeholder="Creation Date" #input>
       </th>
     </ng-container>
 
@@ -80,7 +80,7 @@
     </ng-container>
 
     <ng-container matColumnDef="createDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by user"> create Date
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date"> create Date
       </th>
       <td mat-cell *matCellDef="let element"> {{ element.create_date }}</td>
     </ng-container>
@@ -112,7 +112,7 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-header-row *matHeaderRowDef="['search_bar_name','search_bar_executionId','search_bar_datapipelineId','search_bar_fileId',
-  'search_bar_user','search_bar_result']"
+    'search_bar_createDate', 'search_bar_user','search_bar_result', 'search_bar_state']"
     >
     </tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -124,5 +124,5 @@
 
   </mat-table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"
-                 showFirstLastButtons></mat-paginator>
+                 [showFirstLastButtons]="true"></mat-paginator>
 </div>
