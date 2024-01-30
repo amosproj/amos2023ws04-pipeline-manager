@@ -89,8 +89,10 @@ def delete_dp_run(id):
 def input_endpoint():
     data = request.json
 
-    # TODO this is bad
-    data = data.replace("'", '"')
+    # TODO this is bad, dont touch this. for some reason apache airflow
+    #  is sending the jsonified string with single quotes single quotes are not valid json,
+    #  thats why we double quote to json.load afterwards
+    data = data.replace("\'", "\"")
 
     data = json.loads(data)
 
