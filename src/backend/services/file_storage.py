@@ -67,10 +67,10 @@ def get_file_details(file_name, s3_uuid, mime_type):
         print(f"Error: {e}")
 
 
-def download_file(file_name):
+def download_file(s3_file_uuid):
     try:
         try:
-            url = s3_get_download_url(file_name)
+            url = s3_get_download_url(s3_file_uuid)
             return {"download_url": url}
 
         except NoCredentialsError:

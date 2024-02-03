@@ -122,8 +122,9 @@ def download_file(id):
         # Download the object from S3
         file_details = fileDetailsDB.find_one({"uuid": id})
         s3_uuid = file_details['s3_uuid']
+        file_name = file_details['name']
 
-        download_url = s3_get_download_url(s3_uuid)
+        download_url = s3_get_download_url(s3_uuid, file_name)
         return jsonify({"download_url": download_url})
 
         # Send the file for download
