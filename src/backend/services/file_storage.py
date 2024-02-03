@@ -5,7 +5,7 @@ import uuid
 from botocore.exceptions import NoCredentialsError
 
 from database.models.file_details import FileDetails
-import humanfriendly
+#import humanfriendly
 
 from services.s3_storage import (
     s3_generate_presigned_url,
@@ -56,7 +56,7 @@ def get_file_details(file_name, s3_uuid, mime_type):
             mime_type=mime_type,
             s3_uuid=s3_uuid,
             last_modified=response["LastModified"],
-            size=humanfriendly.format_size(response["ContentLength"]),
+            size=(response["ContentLength"]),
             content_type=response["ContentType"],
             storage_class="dummy storage class",
             user_name="user1",
