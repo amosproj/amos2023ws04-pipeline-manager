@@ -39,18 +39,29 @@ def s3_get_head_object(file_name):
     return response
 
 
-def s3_get_download_url(file_name, file_name_original):
+def s3_get_download_url(s3_file_uuid, file_name_original=None):
     s3 = get_s3_client()
 
-    url = s3.generate_presigned_url(
-        "get_object",
-        Params={
-            "Bucket": BUCKET_NAME,
-            "Key": file_name,
-            "ResponseContentDisposition": f"attachment; filename = {file_name_original}",
-        },
-        ExpiresIn=3600,
-    )
+    if file_name_original:
+        url = s3.generate_presigned_url(
+            "get_object",
+            Params={
+                "Bucket": BUCKET_NAME,
+                "Key": s3_file_uuid,
+                "ResponseContentDisposition": f"attachment; filename = {file_name_original}",
+            },
+            ExpiresIn=3600,
+        )
+    else:
+        url = s3.generate_presigned_url(
+            "get_object",
+            Params={
+                "Bucket": BUCKET_NAME,
+                "Key": s3_file_uuid,
+            },
+            ExpiresIn=3600,
+        )
+
     return url
 
 
