@@ -73,7 +73,7 @@ def read_and_count_vowel(**kwargs):
         vowel_count = 0
         for char in value_string:
             for ch in char:
-                if ch not in vowels:
+                if ch in vowels:
                     vowel_count += 1
 
         print("vowel_count", vowel_count)
