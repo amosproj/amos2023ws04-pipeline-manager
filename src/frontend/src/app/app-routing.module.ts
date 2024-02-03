@@ -23,9 +23,7 @@ const routes: Routes = [
   { path: 's3list', component: ListS3bucketfilesComponent },
   { path: 's3upload',component: S3UploadFilesComponent},
   { path: 'resultSearch',component: ResultSearchComponent},
-
-  { path: 'fileResults/:s3_uuid',component: FileResultsComponent},
-
+  { path: 'fileResults',component: FileResultsComponent},
   // TODO
   // { path: '**', component: PageNotFoundComponent }
 ];
