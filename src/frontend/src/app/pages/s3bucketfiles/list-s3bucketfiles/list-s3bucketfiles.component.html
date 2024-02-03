@@ -94,6 +94,8 @@
         </button>
         <button id="action_delete_bt" type="button" class="btn btn-danger " (click)="handleDelete(element.uuid)">Delete
         </button>
+        <button id="action_delete_bt" type="button" class="btn btn-primary btn-space " [routerLink]="['/fileResults/', element.uuid]">Result
+        </button>
       </td>
 
     </ng-container>
