@@ -27,7 +27,7 @@ def get_all_dp_runs():
                 "fileId": d["fileId"],
                 "result": d["result"],
                 "state": d["state"],
-                "create_date": d["create_date"] if "create_date" in d else None,
+                "create_date": d["create_date"] if "create_date" in d else 'no date provided',
                 "user": d["user"] if "user" in d else 'No user',
             }
         )

@@ -35,7 +35,8 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
     fileId: '',
     executionId: '',
     datapipelineId: '',
-    createDate: '',
+    fileId: '',
+    create_date: '',
     user: '',
     result: '',
     state: ''
@@ -46,7 +47,7 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
               private router: Router, private route: ActivatedRoute,) {
   }
 
-  displayedColumns: string[] = ['name','fileId','datapipelineId','executionId','createDate', 'user', 'result', 'state'];
+  displayedColumns: string[] = ['name', 'executionId', 'datapipelineId', 'fileId', 'create_date', 'user', 'result', 'state', "action"];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -64,9 +65,6 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
     this.executionIdFilter.valueChanges
       .subscribe(
         executionId => {
-          if (!executionId) {
-            return;
-          }
           this.filterValues.executionId = String(executionId);
           this.datapipelineRuns.filter = JSON.stringify(this.filterValues);
         }
@@ -74,9 +72,6 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
     this.datapipelineIdFilter.valueChanges
       .subscribe(
         datapipelineId => {
-          if (!datapipelineId) {
-            return;
-          }
           this.filterValues.datapipelineId = String(datapipelineId);
           this.datapipelineRuns.filter = JSON.stringify(this.filterValues);
         }
@@ -84,29 +79,20 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
     this.fileIdFilter.valueChanges
       .subscribe(
         fileId => {
-          if (!fileId) {
-            return;
-          }
           this.filterValues.fileId = String(fileId);
           this.datapipelineRuns.filter = JSON.stringify(this.filterValues);
         }
       )
     this.createDateFilter.valueChanges
       .subscribe(
-        createDate => {
-          if (!createDate) {
-            return;
-          }
-          this.filterValues.createDate = String(createDate);
+        create_date => {
+          this.filterValues.create_date = String(create_date);
           this.datapipelineRuns.filter = JSON.stringify(this.filterValues);
         }
       )
     this.userFilter.valueChanges
       .subscribe(
         user => {
-          if (!user) {
-            return;
-          }
           this.filterValues.user = String(user);
           this.datapipelineRuns.filter = JSON.stringify(this.filterValues);
         }
@@ -114,9 +100,6 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
     this.resultFilter.valueChanges
       .subscribe(
         result => {
-          if (!result) {
-            return;
-          }
           this.filterValues.result = String(result);
           this.datapipelineRuns.filter = JSON.stringify(this.filterValues);
         }
@@ -124,9 +107,6 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
     this.stateFilter.valueChanges
       .subscribe(
         state => {
-          if (!state) {
-            return;
-          }
           this.filterValues.state = String(state);
           this.datapipelineRuns.filter = JSON.stringify(this.filterValues);
         }
@@ -153,15 +133,17 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
       fileId: string;
       create_date: string;
       user: string;
-      result: string;
+      result: any;
       state: string
     }, filter: string): boolean {
       let searchTerms = JSON.parse(filter);
+
+      const resultString = JSON.stringify(data.result);
       return data.name.toLowerCase().indexOf(searchTerms.name) !== -1
         && data.executionId.toString().toLowerCase().indexOf(searchTerms.executionId) !== -1
         && data.datapipelineId.toLowerCase().indexOf(searchTerms.datapipelineId) !== -1
         && data.fileId.toLowerCase().indexOf(searchTerms.fileId) !== -1
-        && data.result.toLowerCase().indexOf(searchTerms.result) !== -1
+        && resultString.toLowerCase().indexOf(searchTerms.result) !== -1
         && data.state.toLowerCase().indexOf(searchTerms.state) !== -1
         && data.create_date.toLowerCase().indexOf(searchTerms.create_date) !== -1
         && data.user.toLowerCase().indexOf(searchTerms.user) !== -1;
