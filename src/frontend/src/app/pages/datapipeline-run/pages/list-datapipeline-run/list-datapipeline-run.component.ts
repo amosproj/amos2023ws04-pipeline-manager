@@ -32,9 +32,9 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
 
   filterValues = {
     name: '',
+    fileId: '',
     executionId: '',
     datapipelineId: '',
-    fileId: '',
     createDate: '',
     user: '',
     result: '',
@@ -46,7 +46,7 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
               private router: Router, private route: ActivatedRoute,) {
   }
 
-  displayedColumns: string[] = ['name', 'executionId', 'datapipelineId', 'fileId', 'createDate', 'user', 'result', 'state', "action"];
+  displayedColumns: string[] = ['name','fileId','datapipelineId','executionId','createDate', 'user', 'result', 'state'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
