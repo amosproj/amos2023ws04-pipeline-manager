@@ -151,3 +151,34 @@ def get_data():
     result_list = list(result)
 
     return jsonify(result_list)
+
+
+@file.route("/file/<file_uuid>/dp_run", methods=["GET"])
+@secure
+def get_all_dp_runs_by_file_name(file_uuid):
+    dp_run_data = datapipelineRunDB.find()
+    all_data_by_file = []
+    file_name_by_id = fileDetailsDB.find_one({"s3_uuid": file_uuid})
+    for d in dp_run_data:
+        file_name = fileDetailsDB.find_one({"s3_uuid": d["fileId"]})
+        if file_uuid == d["fileId"]:
+            all_data_by_file.append(
+                {
+                    "name": file_name["name"] if file_name else 'no file name given',
+                    "executionId": d["executionId"],
+                    "datapipelineId": d["datapipelineId"],
+                    "fileId": d["fileId"],
+                    "result": d["result"],
+                    "state": d["state"],
+                    "create_date": d["create_date"] if "create_date" in d else None,
+                    "user": d["user"] if "user" in d else 'No user',
+                }
+            )
+
+    if all_data_by_file is not None:
+        result = all_data_by_file
+    else:
+        result = {"message": f"{file_name_by_id} has no results or pipeline results not published"}
+
+    return jsonify(result), 201
+

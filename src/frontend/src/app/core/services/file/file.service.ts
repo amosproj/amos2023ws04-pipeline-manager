@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {s3PresignedUploadInfo} from "../../../entity/s3";
 import {FileList} from "../../../entity/fileList";
+import { DatapipelineRun } from 'src/app/entity/datapipelineRun';
 
 
 @Injectable({
@@ -27,7 +28,10 @@ export class FileService {
     // TODO error handling
     return this.http.get(environment.SERVER_URL + this.baseUrl + "/" + id) as Observable<Object>;
   }
-
+  getDpRunById(id: string): Observable<DatapipelineRun[]> {
+    // TODO error handling
+    return this.http.get(environment.SERVER_URL + this.baseUrl + "/"  + id + "/dp_run") as Observable<DatapipelineRun[]>;
+  }
   deleteById(id: string) {
     return this.http.delete(environment.SERVER_URL + this.baseUrl + "/" + id);
   }
