@@ -107,7 +107,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action</th>
       <td id="action" *matCellDef="let element">
-        <button type="button" class="btn btn-primary" (click)="rerun(element.executionId)">Rerun</button>
+        <button type="button" class="btn btn-primary" (click)="delete(element.executionId)">Delete</button>
       </td>
 
     </ng-container>

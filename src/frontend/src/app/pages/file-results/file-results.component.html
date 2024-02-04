@@ -79,7 +79,7 @@
     </ng-container>
   
     <ng-container matColumnDef="createdDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by startByUser"> Created Date</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by createdDate"> Created Date</th>
       <td mat-cell *matCellDef="let element"> {{element.created_date}} </td>
     </ng-container>
   
@@ -103,7 +103,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action</th>
       <td id = "action"*matCellDef="let element">
-        <button type="button" class="btn btn-primary" (click)="rerun(element.executionId)" >Rerun</button>
+        <button type="button" class="btn btn-primary" (click)="delete(element.executionId)" >Delete</button>
       </td>
   
     </ng-container>
