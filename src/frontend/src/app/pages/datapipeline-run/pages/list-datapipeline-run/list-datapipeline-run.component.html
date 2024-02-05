@@ -32,6 +32,7 @@
         <input matInput [formControl]="fileIdFilter" placeholder="File ID" #input>
       </th>
     </ng-container>
+
     <ng-container matColumnDef="search_bar_createDate">
       <th th mat-header-cell *matHeaderCellDef>
         <input matInput [formControl]="createDateFilter" placeholder="Creation Date" #input>
@@ -113,7 +114,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-header-row *matHeaderRowDef="['search_bar_name','search_bar_fileId','search_bar_datapipelineId','search_bar_executionId',
+    <tr mat-header-row *matHeaderRowDef="['search_bar_name','search_bar_executionId','search_bar_datapipelineId','search_bar_fileId',
     'search_bar_createDate', 'search_bar_user','search_bar_result', 'search_bar_state']"
     >
     </tr>
