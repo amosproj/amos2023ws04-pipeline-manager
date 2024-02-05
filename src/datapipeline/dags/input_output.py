@@ -86,7 +86,7 @@ send_response = SimpleHttpOperator(
     endpoint="inputData",
     data=json.dumps("{{ task_instance.xcom_pull(task_ids='readAndCountWords', key='test-identifier') }}"),
     headers={"Content-Type": "application/json"},
-    response_check=lambda response: True if response.status_code == 200 else False,
+    response_check=lambda response: True if (response.status_code == 200 | response.status_code == 201) else False,
     dag=dag
 )
 

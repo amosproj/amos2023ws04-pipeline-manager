@@ -32,6 +32,7 @@
         <input matInput [formControl]="fileIdFilter" placeholder="File ID" #input>
       </th>
     </ng-container>
+
     <ng-container matColumnDef="search_bar_createDate">
       <th th mat-header-cell *matHeaderCellDef>
         <input matInput [formControl]="createDateFilter" placeholder="Creation Date" #input>
@@ -81,7 +82,7 @@
       <td mat-cell *matCellDef="let element"> {{ element.fileId }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="createDate">
+    <ng-container matColumnDef="create_date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date"> create Date
       </th>
       <td mat-cell *matCellDef="let element"> {{ element.create_date }}</td>
