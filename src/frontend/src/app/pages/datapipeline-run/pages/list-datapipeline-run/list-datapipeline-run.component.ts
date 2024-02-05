@@ -35,7 +35,6 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
     fileId: '',
     executionId: '',
     datapipelineId: '',
-    fileId: '',
     create_date: '',
     user: '',
     result: '',
