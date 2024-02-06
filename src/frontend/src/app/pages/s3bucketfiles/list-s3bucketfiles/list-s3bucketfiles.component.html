@@ -1,13 +1,8 @@
-<app-s3-upload-files></app-s3-upload-files>
-
-<mat-form-field class="big-filter">
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Searching" #input>
-</mat-form-field>
+<app-s3-upload-files (refreshEvent)="refresh($event)"></app-s3-upload-files>
 
 <div class="table mat-elevation-z8">
 
-  <mat-table [dataSource]="fileDownload" matSort>
+  <mat-table [dataSource]="fileDownload$.getValue()" matSort>
 
     <ng-container matColumnDef="search_bar_name">
       <th mat-header-cell *matHeaderCellDef>
