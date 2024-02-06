@@ -3,9 +3,7 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 import pandas as pd
 from datetime import datetime, timedelta
-from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 import json
-import io
 from airflow.providers.http.operators.http import SimpleHttpOperator
 
 default_args = {
@@ -57,18 +55,16 @@ def read_and_count_bracket(**kwargs):
     if response.status_code == 200:
         file_content = response.text
 
-        # Now 'file_content' contains the content of the file
-        # Proceed with processing the file content as needed
-        file_reader = pd.read_csv(io.StringIO(file_content))
+
         # Save the content to a temporary file
         with open("temp_file.csv", "wb") as temp_file:
-            temp_file.write(response.content)
+            temp_file.write(file_content.encode('utf-8'))
+
 
         # Read the CSV content
-        df = pd.read_csv("temp_file.csv")
-        value_string = df.values[3]
+        #df = pd.read_csv("temp_file.csv")
+        value_string =  response.text    # df.values[3]
         print("File read successfully")
-        print(file_reader)
         bracket = "{}"
         bracket_count = 0
         for char in value_string:
@@ -94,15 +90,6 @@ dag = DAG(
     schedule_interval=None
 )
 
-trigger_task = TriggerDagRunOperator(
-    task_id="triggerTask",
-    trigger_dag_id="output_dag",
-    conf={
-        'Error': 'No conf given.'
-    },
-    dag=dag,
-)
-
 task_read_and_count_vowels = PythonOperator(
     task_id="readAndCountBracket",
     python_callable=read_and_count_bracket,
@@ -112,13 +99,12 @@ task_read_and_count_vowels = PythonOperator(
 
 send_response = SimpleHttpOperator(
     task_id="sendresponse",
-    http_conn_id="test-connection",
+    http_conn_id="https-connection",
     method="POST",
     endpoint="inputData",
     data=json.dumps("{{ task_instance.xcom_pull(task_ids='readAndCountBracket', key='test-identifier')}}"),
     headers={"Content-Type": "application/json"},
-    response_check=lambda response: True if response.status_code == 200 else False,
+    response_check=lambda response: True if (response.status_code == 200 | response.status_code == 201) else False,
     dag=dag
 )
-
-trigger_task >> task_read_and_count_vowels >> send_response
+task_read_and_count_vowels >> send_response
