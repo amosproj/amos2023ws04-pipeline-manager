@@ -20,8 +20,7 @@ const routes: Routes = [
   { path: 'datapipeline/new',component: CreateDatapipelineComponent},
   { path: 'datapipeline/:id',component: EditDatapipelineComponent},
   { path: 'dp_run',component: ListDatapipelineRunComponent},
-  { path: 's3list', component: ListS3bucketfilesComponent },
-  { path: 's3upload',component: S3UploadFilesComponent},
+  { path: 'data_asset_list', component: ListS3bucketfilesComponent },
   { path: 'resultSearch',component: ResultSearchComponent},
   { path: 'fileResults/:s3_uuid',component: FileResultsComponent},
   // TODO
