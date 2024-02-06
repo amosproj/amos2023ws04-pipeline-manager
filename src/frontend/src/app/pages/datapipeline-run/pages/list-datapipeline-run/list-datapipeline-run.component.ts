@@ -119,7 +119,6 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
       this.datapipelineRuns.sort = this.sort;
       this.datapipelineRuns.filterPredicate = this.createFilter();
       this.dtTrigger.next(null);
-      console.log(this.datapipelineRuns)
     })
   }
 
