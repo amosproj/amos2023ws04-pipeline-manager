@@ -178,12 +178,9 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
     this.router.navigate(['/datapipelineRun', uuid]);
   }
 
-  delete(uuid: string | null) {
-    uuid = uuid ?? 'null value'
-    this.datapipelineRunService.delete(uuid).subscribe(res => {
-      "Delete successful"
-    }, err => {
-      "Delete failed"
+  delete(uuid: string) {
+    this.datapipelineRunService.delete(uuid).subscribe((value: any) => {
+      window.location.reload();
     });
   }
 
