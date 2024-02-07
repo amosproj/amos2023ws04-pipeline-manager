@@ -3,7 +3,6 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 import pandas as pd
 from datetime import datetime, timedelta
-from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 import json
 import io
 from airflow.providers.http.operators.http import SimpleHttpOperator
@@ -37,7 +36,7 @@ def read_file(file_path):
         return f"Error reading file: {e}"
 
 
-def read_and_count_vowel(**kwargs):
+def read_and_count_vowels(**kwargs):
     download_url = kwargs['dag_run'].conf.get('download_url')
     executionId = kwargs['dag_run'].conf.get('executionId')
 
@@ -65,19 +64,21 @@ def read_and_count_vowel(**kwargs):
             temp_file.write(response.content)
 
         # Read the CSV content
-        df = pd.read_csv("temp_file.csv")
+        df = pd.read_csv("temp_file.csv", encoding='utf-8')
         value_string = df.values[3]
+        print(value_string)
+
         print("File read successfully")
         print(file_reader)
-        vowels = "aeiouAEIOU"
+        vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü']
         vowel_count = 0
         for char in value_string:
             for ch in char:
-                if ch not in vowels:
+                if ch in vowels:
                     vowel_count += 1
 
         print("vowel_count", vowel_count)
-        kwargs['ti'].xcom_push(key="test-identifier", value={"result": {"word_count": vowel_count},
+        kwargs['ti'].xcom_push(key="test-identifier", value={"result": {"word_vowel_count": vowel_count},
                                                              "executionId": executionId})
     else:
         print(f"Failed to download file from URL: {download_url}")
@@ -87,38 +88,30 @@ def read_and_count_vowel(**kwargs):
 
 
 dag = DAG(
-    dag_id="consonant_output",
+    dag_id="vowel_count_output",
     default_args=default_args,
-    description="DAG to test input and output",
+    description="DAG count the number of vowels in a file",
     start_date=datetime(2023, 11, 4, 2),
     schedule_interval=None
 )
 
-trigger_task = TriggerDagRunOperator(
-    task_id="triggerTask",
-    trigger_dag_id="output_dag",
-    conf={
-        'Error': 'No conf given.'
-    },
-    dag=dag,
-)
 
 task_read_and_count_vowels = PythonOperator(
-    task_id="readAndCountVowel",
-    python_callable=read_and_count_vowel,
+    task_id="readAndCountVowels",
+    python_callable=read_and_count_vowels,
     provide_context=True,
     dag=dag,
 )
 
 send_response = SimpleHttpOperator(
     task_id="sendresponse",
-    http_conn_id="test-connection",
+    http_conn_id="https-connection",
     method="POST",
     endpoint="inputData",
     data=json.dumps("{{ task_instance.xcom_pull(task_ids='readAndCountVowels', key='test-identifier')}}"),
     headers={"Content-Type": "application/json"},
-    response_check=lambda response: True if response.status_code == 200 else False,
+    response_check=lambda response: True if (response.status_code == 200 | response.status_code == 201) else False,
     dag=dag
 )
 
-trigger_task >> task_read_and_count_vowels >> send_response
+task_read_and_count_vowels >> send_response

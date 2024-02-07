@@ -3,7 +3,6 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 import pandas as pd
 from datetime import datetime, timedelta
-from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 import json
 import io
 from airflow.providers.http.operators.http import SimpleHttpOperator
@@ -25,7 +24,7 @@ def read_and_count_words(**kwargs):
         return
 
     if not download_url :
-        kwargs['ti'].xcom_push(key="test-identifier", value={"error": "Download URL not provided.", "executionId": executionId })
+        kwargs['ti'].xcom_push(key="test-identifier", value={"error": "Download URL not provided.", "executionId": executionId , "result": "error"})
         print("Error download url not found")
         return
 
@@ -45,12 +44,12 @@ def read_and_count_words(**kwargs):
         # TODO
         total_word_count = 50 #concatenated_text.str.split().str.len().sum()
         print(f"Total word count is {total_word_count}")
-        kwargs['ti'].xcom_push(key="test-identifier", value={"result": {"word_count": total_word_count},
-                                                             "executionId": executionId})
+        kwargs['ti'].xcom_push(key="test-identifier", value={ "result": {"word_count": total_word_count},"executionId": executionId})
     else:
         print(f"Failed to download file from URL: {download_url}")
         kwargs['ti'].xcom_push(key="test-identifier", value={"error": "Failed to download file from URL",
-                                                             "executionId": executionId})
+                                                             "executionId": executionId,
+                                                             "result": "error"})
         return
 
 
@@ -62,14 +61,6 @@ dag = DAG(
     schedule_interval=None
 )
 
-trigger_task = TriggerDagRunOperator(
-    task_id="triggerTask",
-    trigger_dag_id="output_dag",
-    conf={
-        'Error': 'No conf given.'
-    },
-    dag=dag,
-)
 
 task_read_and_count_words = PythonOperator(
     task_id="readAndCountWords",
@@ -81,7 +72,7 @@ task_read_and_count_words = PythonOperator(
 
 send_response = SimpleHttpOperator(
     task_id="sendresponse",
-    http_conn_id="test-connection",
+    http_conn_id="https-connection",
     method="POST",
     endpoint="inputData",
     data=json.dumps("{{ task_instance.xcom_pull(task_ids='readAndCountWords', key='test-identifier') }}"),
@@ -90,4 +81,4 @@ send_response = SimpleHttpOperator(
     dag=dag
 )
 
-trigger_task >> task_read_and_count_words >> send_response
+task_read_and_count_words >> send_response
