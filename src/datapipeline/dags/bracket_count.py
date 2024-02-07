@@ -69,7 +69,7 @@ def read_and_count_bracket(**kwargs):
         bracket_count = 0
         for char in value_string:
             for ch in char:
-                if ch  in bracket:
+                if ch in bracket:
                     bracket_count += 1
 
         print("vowel_count", bracket_count)
