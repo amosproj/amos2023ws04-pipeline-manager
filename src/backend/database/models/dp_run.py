@@ -22,6 +22,7 @@ class DatapipelineRun:
         self.state = "PENDING"
         # TODO get a user from some source
         self.user = "No user"
+        self.error = ""
 
     def to_json(self):
         return {
@@ -32,4 +33,5 @@ class DatapipelineRun:
             "create_date": self.create_date,
             "state": self.state,
             "user": self.user,
+            "error": self.error,
         }
