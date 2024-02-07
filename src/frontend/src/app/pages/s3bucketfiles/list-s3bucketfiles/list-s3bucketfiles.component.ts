@@ -72,12 +72,12 @@ export class ListS3bucketfilesComponent implements OnInit, OnDestroy, MaterialMo
     user: string;
   }, filter: string): boolean {
     let searchTerms = JSON.parse(filter);
-    return data.name.toLowerCase().indexOf(searchTerms.name) !== -1
-      && data.mime_type.toString().toLowerCase().indexOf(searchTerms.mime_type) !== -1
-      && data.last_modified.toLowerCase().indexOf(searchTerms.last_modified) !== -1
-      && data.size.toLowerCase().indexOf(searchTerms.size) !== -1
-      && data.s3_uuid.toLowerCase().indexOf(searchTerms.s3_uuid) !== -1
-      && data.user.toLowerCase().indexOf(searchTerms.user) !== -1;
+    return data.name.toLowerCase().indexOf(searchTerms.name.toLowerCase()) !== -1
+      && data.mime_type.toString().toLowerCase().indexOf(searchTerms.mime_type.toLowerCase()) !== -1
+      && data.last_modified.toLowerCase().indexOf(searchTerms.last_modified.toLowerCase()) !== -1
+      && data.size.toLowerCase().indexOf(searchTerms.size.toLowerCase()) !== -1
+      && data.s3_uuid.toLowerCase().indexOf(searchTerms.s3_uuid.toLowerCase()) !== -1
+      && data.user.toLowerCase().indexOf(searchTerms.user.toLowerCase()) !== -1;
   };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

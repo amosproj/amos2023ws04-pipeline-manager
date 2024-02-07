@@ -138,13 +138,13 @@ export class ListDatapipelineRunComponent implements OnInit, OnDestroy, Material
 
       const resultString = JSON.stringify(data.result);
       return data.name.toLowerCase().indexOf(searchTerms.name) !== -1
-        && data.executionId.toString().toLowerCase().indexOf(searchTerms.executionId) !== -1
-        && data.datapipelineId.toLowerCase().indexOf(searchTerms.datapipelineId) !== -1
-        && data.fileId.toLowerCase().indexOf(searchTerms.fileId) !== -1
-        && resultString.toLowerCase().indexOf(searchTerms.result) !== -1
-        && data.state.toLowerCase().indexOf(searchTerms.state) !== -1
-        && data.create_date.toLowerCase().indexOf(searchTerms.create_date) !== -1
-        && data.user.toLowerCase().indexOf(searchTerms.user) !== -1;
+        && data.executionId.toString().toLowerCase().indexOf(searchTerms.executionId.toLowerCase()) !== -1
+        && data.datapipelineId.toLowerCase().indexOf(searchTerms.datapipelineId.toLowerCase()) !== -1
+        && data.fileId.toLowerCase().indexOf(searchTerms.fileId.toLowerCase()) !== -1
+        && resultString.toLowerCase().indexOf(searchTerms.result.toLowerCase()) !== -1
+        && data.state.toLowerCase().indexOf(searchTerms.state.toLowerCase()) !== -1
+        && data.create_date.toLowerCase().indexOf(searchTerms.create_date.toLowerCase()) !== -1
+        && data.user.toLowerCase().indexOf(searchTerms.user.toLowerCase()) !== -1;
     }
     return filterFunction;
   }
