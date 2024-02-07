@@ -99,7 +99,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by result"> Result</th>
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="element.state === 'FAILED'; else showResult">
-          {{ element.error }}
+          {{ element.error | json}}
         </ng-container>
         <ng-template #showResult>
           {{ element.result | json}}

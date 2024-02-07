@@ -90,6 +90,9 @@ def delete_dp_run(id):
 def input_endpoint():
     data = request.json
 
+    if data is None:
+        return jsonify({"error": "Missing data"}), 400
+
     # TODO this is bad, dont touch this. for some reason apache airflow
     #  is sending the jsonified string with single quotes single quotes are not valid json,
     #  thats why we double quote to json.load afterwards

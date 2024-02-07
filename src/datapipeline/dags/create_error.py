@@ -11,14 +11,14 @@ default_args = {
 }
 
 
-def create_error(**kwargs):
+def create_error_func(**kwargs):
     executionId = kwargs['dag_run'].conf.get('executionId')
 
     if not executionId:
         print("Error executionId not found")
         return
 
-    kwargs['ti'].xcom_push(key="test-identifier", value={"error": {"error": "Succesfully created an error"}, "executionId": executionId})
+    kwargs['ti'].xcom_push(key="error-identifier", value={"error": {"error": "Succesfully created an error"}, "executionId": executionId})
     return
 
 
@@ -33,7 +33,7 @@ dag = DAG(
 
 task_create_error_output = PythonOperator(
     task_id="create_error_output",
-    python_callable=create_error,
+    python_callable=create_error_func,
     provide_context=True,
     dag=dag,
 )
@@ -44,7 +44,7 @@ send_response = SimpleHttpOperator(
     http_conn_id="https-connection",
     method="POST",
     endpoint="inputData",
-    data=json.dumps("{{ task_instance.xcom_pull(task_ids='readAndCountWords', key='test-identifier') }}"),
+    data=json.dumps("{{ task_instance.xcom_pull(task_ids='create_error_output', key='error-identifier') }}"),
     headers={"Content-Type": "application/json"},
     response_check=lambda response: True if (response.status_code == 200 | response.status_code == 201) else False,
     dag=dag
