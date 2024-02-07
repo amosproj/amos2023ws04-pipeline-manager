@@ -51,16 +51,11 @@ export class S3UploadFilesComponent {
       return;
     }
 
-    const formData = this.fileUploadService.getFormDataFromFile(this.selectedFile);
-
     this.fileUploadService.getPresignedUrl(this.selectedFile.name).subscribe(
       (response: { presignedUrl: string, fileName: string, s3_uuid: string }) => {
         const {presignedUrl, fileName, s3_uuid} = response;
-        const get_s3_uuid = s3_uuid;
 
-        this.uploadToPresignedUrl(presignedUrl, formData, fileName, s3_uuid, this.selectedFile.type);
-
-        console.log(presignedUrl);
+        this.uploadToPresignedUrl(presignedUrl, this.selectedFile, fileName, s3_uuid, this.selectedFile.type);
 
         this.refreshEvent.emit(null);
       },
@@ -70,13 +65,13 @@ export class S3UploadFilesComponent {
     );
   }
 
-  private uploadToPresignedUrl(presignedUrl: string, formData: FormData, fileName: string, s3_uuid: string, mime_type: string): void {
-    this.fileUploadService.uploadFileToS3Presigned(presignedUrl, formData).subscribe(
+  private uploadToPresignedUrl(presignedUrl: string, file: File, fileName: string, s3_uuid: string, mime_type: string): void {
+    this.fileUploadService.uploadFileToS3Presigned(presignedUrl, file).subscribe(
       (response) => {
         this.successMessage = 'File uploaded successfully!';
-        this.createFileDetails(fileName, s3_uuid, mime_type)
-        if (this.startPipelineWithFile == true) {
-          this.startPipeline()
+        this.createFileDetails(fileName, s3_uuid, mime_type);
+        if (this.startPipelineWithFile) {
+          this.startPipeline();
         }
       },
       (error) => {

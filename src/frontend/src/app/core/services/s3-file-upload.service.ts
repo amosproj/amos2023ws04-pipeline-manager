@@ -13,12 +13,6 @@ export class S3FileUploadService {
 
   constructor(private http: HttpClient) { }
 
-  getFormDataFromFile(file: File): FormData {
-    const formData = new FormData();
-    formData.append('file', file);
-    return formData;
-  }
-
   uploadFileToS3(formData: FormData): Observable<any> {
     return this.http.post(`${this.backendUrl}/upload`, formData);
   }
@@ -32,8 +26,8 @@ export class S3FileUploadService {
       }});
  }
 
- uploadFileToS3Presigned(presignedUrl: string, formData: FormData): Observable<any> {
-  return this.http.put(presignedUrl, formData);
+ uploadFileToS3Presigned(presignedUrl: string, file: File): Observable<any> {
+  return this.http.put(presignedUrl, file);
 
  }
  createFileDetails(fileName: string, s3_uuid: string, mime_type: string): Observable<string> {
