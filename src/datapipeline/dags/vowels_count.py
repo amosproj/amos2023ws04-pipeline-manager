@@ -90,7 +90,7 @@ def read_and_count_vowels(**kwargs):
 dag = DAG(
     dag_id="vowel_count_output",
     default_args=default_args,
-    description="DAG to test input and output",
+    description="DAG count the number of vowels in a file",
     start_date=datetime(2023, 11, 4, 2),
     schedule_interval=None
 )

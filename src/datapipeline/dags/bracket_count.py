@@ -85,7 +85,7 @@ def read_and_count_bracket(**kwargs):
 dag = DAG(
     dag_id="bracket_output",
     default_args=default_args,
-    description="DAG to test input and output",
+    description="DAG to count the bracket number in a file",
     start_date=datetime(2023, 11, 4, 2),
     schedule_interval=None
 )
