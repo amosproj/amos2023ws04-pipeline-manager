@@ -4,9 +4,6 @@ services:
     build: ./src/frontend
     ports:
       - "4200:4200"
-    volumes:
-      - ./src/frontend:/project
-      - /project/node_modules
 
   app:
     environment:
@@ -16,9 +13,17 @@ services:
       - MONGODB_PASSWORD=pass
       - HOST_URL=0.0.0.0
       - HOST_PORT=8000
-      - AIRFLOW_SERVER_URL=http://airflow-server:8080
-      - OIDC_SECRET_KEY=your_secret_key
-      - ENABLE_KEYCLOAK=False
+#      - AWS_ACCESS_KEY=<aws_access_key>
+#      - AWS_SECRET_KEY=<aws_secret_key>
+#      - REGION=<aws_region>
+#      - BUCKET_NAME=<aws_s3_bucket_name>
+#      - AIRFLOW_SERVER_URL=http://airflow-server:8080
+#      - AIRFLOW_USERNAME=airflow
+#      - AIRFLOW_PASSWORD=airflow
+#      - OIDC_SECRET_KEY='your_secret_key'
+#      - ENABLE_KEYCLOAK=False
+
+
     build: ./src/backend
     volumes:
       - ./src/backend:/app
