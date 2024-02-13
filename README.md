@@ -37,7 +37,7 @@ cp src/backend/.env.template src/backend/.env
 cp src/backend/client_secrets.template.json src/backend/client_secrets.json
 
 ```
-And then configure the environment variables to connect to your ASW connections.
+And then configure the environment variables to connect to your ASW and Apache Airflow connections.
 
 To build the images:
 ```bash
@@ -87,7 +87,6 @@ Please take a look at the SD wiki for creating personal tickets/Issues for the p
 - [Frontend Documentation](src/frontend/README.md)
 - [Backend Documentation](src/backend/README.md)
 - [Data pipeline Documentation ](src/datapipeline/README.md)
-- [IaaC terraform Documentation](src/infrastructure/terraform/README.md)
 
 
 

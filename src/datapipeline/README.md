@@ -111,6 +111,12 @@ Visit the website **[http://localhost:8080/](http://localhost:8080/)**
 
 ![Screenshot 2023-10-28 at 14.57.38.png](Documentation/screenshots/Screenshot_2023-10-28_at_14.57.38.png)
 
+For your connections to work with the backend, we need to add a connection in Admin->Connections
+![admin-connections.png](Documentation%2Fscreenshots%2Fadmin-connections.png)
+
+Make sure to add a https-connection, or change the http_conn_id to your preference. 
+![http_conn_id.png](Documentation%2Fscreenshots%2Fhttp_conn_id.png)
+
 To stop the containers:
 
 ```bash
