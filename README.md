@@ -14,8 +14,12 @@ The goal of this project is to develop a cloud-native pipelining (CNP) service t
 - Docker installed and configured
     - `docker —version` ~ Docker version 24.0.6
     - `docker compose version` ~ Docker Compose version v2.23.0-desktop.1
-- Tested OS:
-    - Mac m2 (macOS ventura 13.3.1)
+- Amazon S3 Bucket (https://aws.amazon.com/en/s3/)
+  - create and setup an S3 Bucket for file storage
+- Keycloak
+  - https/SSL is required for keycloak to work. [README.md](src%2Fkeycloak%2FREADME.md)
+  
+
 
 ## Clone the repo
 
