@@ -4,7 +4,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from "@angular/material/sort";
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import{MatInputModule}from"@angular/material/input"
+import { MatInputModule } from "@angular/material/input"
 @NgModule(
     {
         exports:[
@@ -14,11 +14,10 @@ import{MatInputModule}from"@angular/material/input"
             MatButtonModule,
             MatFormFieldModule,
             MatInputModule,
-            
         ]
     }
 )
 
-export class MaterialMoudule{ 
+export class MaterialMoudule {
 
 }
